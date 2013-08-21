@@ -1,0 +1,17 @@
+# Folders
+.bundle
+.sass-cache
+public/assets
+test
+tmp
+log
+
+# Files
+config/database.yml
+*.log
+*~
+
+#Patterns
+*.swp
+*.??~
+*.~vsd
