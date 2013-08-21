@@ -22,6 +22,6 @@ group :development, :test do
   gem 'pry'
 end
 
-group :test do
+group :production do
   gem 'pg'
 end
