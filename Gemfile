@@ -18,5 +18,10 @@ group :doc do
 end
 
 group :development, :test do
+  gem 'heroku'
   gem 'pry'
+end
+
+group :test do
+  gem 'pg'
 end
