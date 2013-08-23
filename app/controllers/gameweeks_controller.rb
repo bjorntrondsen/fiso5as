@@ -1,8 +1,8 @@
 require 'nokogiri'
 require 'open-uri'
+require 'rufus-scheduler'
 
 $game_week = 1
-$last_update = nil
 
 class Match
   attr_accessor :home, :away
@@ -70,23 +70,26 @@ class Player
 end
 
 class GameweeksController < ApplicationController
+  @@matches = []
+  scheduler = Rufus::Scheduler.new
+  scheduler.every '5m' do
+    get_matches
+  end
 
   def index
-    @matches = get_matches
+    @matches = @@matches
   end
 
   private
 
-  def get_matches
-    if $last_update.blank? || $last_update < 5.minutes.ago
-      @@matches = []
-      @@matches << Match.new(home: [470, 'Moist von Lipwig'], away: [735105,'Deanbarrono'])
-      @@matches << Match.new(home: [785, 'McNulty'], away: [675948,'Wyld'])
-      @@matches << Match.new(home: [629200, 'From4Corners'], away: [32003,'travatron'])
-      @@matches << Match.new(home: [187870, 'Sharagoz'], away: [603709,'Llama'])
-      @@matches << Match.new(home: [432374, 'Lovely_Camel'], away: [555192,'Saturn XI'])
-      $last_update = Time.zone.now
-    end
+  def self.get_matches
+    puts "Refreshing match data"
+    @@matches = []
+    @@matches << Match.new(home: [470, 'Moist von Lipwig'], away: [735105,'Deanbarrono'])
+    @@matches << Match.new(home: [785, 'McNulty'], away: [675948,'Wyld'])
+    @@matches << Match.new(home: [629200, 'From4Corners'], away: [32003,'travatron'])
+    @@matches << Match.new(home: [187870, 'Sharagoz'], away: [603709,'Llama'])
+    @@matches << Match.new(home: [432374, 'Lovely_Camel'], away: [555192,'Saturn XI'])
     return @@matches
   end
 end

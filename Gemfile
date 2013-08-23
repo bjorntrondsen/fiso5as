@@ -12,6 +12,7 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
 gem 'haml-rails'
 gem 'nokogiri'
+gem 'rufus-scheduler'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

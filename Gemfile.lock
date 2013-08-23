@@ -113,6 +113,8 @@ GEM
     rest-client (1.6.7)
       mime-types (>= 1.16)
     rubyzip (0.9.9)
+    rufus-scheduler (2.0.23)
+      tzinfo (>= 0.3.23)
     sass (3.2.10)
     sass-rails (4.0.0)
       railties (>= 4.0.0.beta, < 5.0)
@@ -163,6 +165,7 @@ DEPENDENCIES
   pry
   rails (= 4.0.0)
   rails_12factor
+  rufus-scheduler
   sass-rails (~> 4.0.0)
   sdoc
   therubyracer
