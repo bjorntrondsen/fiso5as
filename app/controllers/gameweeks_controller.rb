@@ -71,6 +71,7 @@ end
 
 class GameweeksController < ApplicationController
   @@matches = []
+
   scheduler = Rufus::Scheduler.new
   scheduler.every '5m' do
     get_matches
@@ -92,4 +93,6 @@ class GameweeksController < ApplicationController
     @@matches << Match.new(home: [432374, 'Lovely_Camel'], away: [555192,'Saturn XI'])
     return @@matches
   end
+
+  get_matches
 end
