@@ -85,7 +85,7 @@ class GameweeksController < ApplicationController
   def self.get_matches
     puts "Refreshing match data"
     @@matches = []
-    @@matches << Match.new(home: [470, 'Moist von Lipwig'], away: [735105,'Deanbarrono'])
+    @@matches << Match.new(home: [470, 'Moist von Lipwig'], away: [735104,'Deanbarrono'])
     @@matches << Match.new(home: [785, 'McNulty'], away: [675948,'Wyld'])
     @@matches << Match.new(home: [629200, 'From4Corners'], away: [32003,'travatron'])
     @@matches << Match.new(home: [187870, 'Sharagoz'], away: [603709,'Llama'])
