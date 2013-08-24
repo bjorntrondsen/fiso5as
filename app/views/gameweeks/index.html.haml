@@ -1,13 +1,13 @@
 %table.score_sheet
   - @matches.each do |match|
     %tr
-      %th= match.home.name
+      %th= link_to match.home.name, match.home.url + "/#{$game_week}", target: '_blank'
       %th.pts_total
         %span{class: match.home_ahead? ? 'ahead' : 'behind'}
           = match.home.score
         %span{class: match.away_ahead? ? 'ahead' : 'behind'}
           = match.away.score
-      %th= match.away.name
+      %th= link_to match.away.name, match.away.url + "/#{$game_week}", target: '_blank'
     %tr
       %td.squad
         - if match.home_ahead?

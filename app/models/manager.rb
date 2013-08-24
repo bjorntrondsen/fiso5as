@@ -1,9 +1,10 @@
 class Manager
-  attr_accessor :fpl_id, :name, :squad, :opponent
+  attr_accessor :fpl_id, :url, :name, :squad, :opponent
 
   def initialize(args)
     @fpl_id = args[:fpl_id]
     @name = args[:name]
+    @url = "http://fantasy.premierleague.com/entry/#{@fpl_id}/event-history"
     fetch_data
   end
 
@@ -31,8 +32,8 @@ class Manager
 
   def fetch_data
     @squad = []
-    url = "http://fantasy.premierleague.com/entry/#{@fpl_id}/event-history/#{$game_week}/"
-    @doc = Nokogiri::HTML(open(url))
+    gw_url = "#{@url}/#{$game_week}/"
+    @doc = Nokogiri::HTML(open(gw_url))
     @doc.css('.ismPitch .ismPitchElement').each do |player_element|
       player_json = player_element['class'].sub('ismPitchElement','')
       name = player_element.css('.ismPitchWebName').first.content.strip
