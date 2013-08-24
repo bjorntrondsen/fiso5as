@@ -12,9 +12,9 @@
       %td.squad
         - if match.home_ahead?
           %span.pts= "+#{match.score_diff}"
-        = (match.home.remaining_players -  match.away.remaining_players).join(" ")
+        = match.home.differentiators.collect{|p| p.info }.join(" ")
       %td
       %td.squad
         - if match.away_ahead?
           %span.pts= "+#{match.score_diff}"
-        = (match.away.remaining_players -  match.home.remaining_players).join(" ")
+        = match.away.differentiators.collect{|p| p.info }.join(" ")

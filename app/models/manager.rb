@@ -1,5 +1,5 @@
 class Manager
-  attr_accessor :fpl_id, :name
+  attr_accessor :fpl_id, :name, :squad, :opponent
 
   def initialize(args)
     @fpl_id = args[:fpl_id]
@@ -11,8 +11,20 @@ class Manager
     @score ||= @doc.css('.ismSB .ismSBPrimary > div').first.content.strip.scan(/\A\d{1,}/).first.to_i
   end
 
-  def remaining_players
-    @remaining_players ||= @squad.collect{|p| p.info if p.games_left > 0}
+  def differentiators
+    return @differentiators if @differentiators
+    @differentiators = []
+    @squad.each do |my_player|
+      their_player = opponent.find_player(my_player.name)
+      if my_player.games_left > 0  && (!their_player  || (my_player.captain? && !their_player.captain?))
+        @differentiators << my_player
+      end
+    end
+    return @differentiators
+  end
+
+  def find_player(name)
+    @squad.find{|p| p.name == name}
   end
 
   private
@@ -33,7 +45,7 @@ class Manager
       else
         games_left = matches_or_points.split(",").length
       end
-      @squad << Player.new(name: name, games_left: games_left, captain: captain)
+      @squad << Player.new(name: name, games_left: games_left, captain: captain, manager: self)
     end
   end
 end

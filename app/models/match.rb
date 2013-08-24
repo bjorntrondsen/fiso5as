@@ -4,6 +4,8 @@ class Match
   def initialize(args)
     @home = Manager.new(fpl_id: args[:home][0], name: args[:home][1])
     @away = Manager.new(fpl_id: args[:away][0], name: args[:away][1])
+    @home.opponent = @away
+    @away.opponent = @home
   end
 
   def home_ahead?
