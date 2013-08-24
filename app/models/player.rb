@@ -1,5 +1,5 @@
 class Player
-  attr_accessor :manager, :name, :games_left, :captain, :minutes_played, :position
+  attr_accessor :manager, :name, :games_left, :captain, :position, :points
 
   def initialize(args)
     @name = args[:name]
@@ -7,6 +7,7 @@ class Player
     @captain = args[:captain]
     @position = args[:position]
     @manager = args[:manager]
+    @points = args[:points]
   end
 
   def captain?

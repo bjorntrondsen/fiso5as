@@ -39,6 +39,7 @@ class Manager
       name = player_element.css('.ismPitchWebName').first.content.strip
       player_json = JSON.parse(player_json)
       captain = player_json['is_captain']
+      points = player_json['event_points']
       position = case player_json['type']
                  when 1 then "GK"
                  when 2 then "DEF"
@@ -55,7 +56,7 @@ class Manager
       else
         games_left = matches_or_points.split(",").length
       end
-      @squad << Player.new(name: name, games_left: games_left, captain: captain, position: position, manager: self)
+      @squad << Player.new(name: name, games_left: games_left, captain: captain, position: position, points: points, manager: self)
     end
   end
 end
