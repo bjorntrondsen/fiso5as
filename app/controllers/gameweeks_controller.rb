@@ -103,6 +103,7 @@ class GameweeksController < ApplicationController
   private
 
   def self.get_matches
+    puts "Getting match data #{Time.zone.now}"
     @@matches = []
     @@matches << Match.new(home: [470, 'Moist von Lipwig'], away: [735104,'Deanbarrono'])
     @@matches << Match.new(home: [785, 'McNulty'], away: [675948,'Wyld'])
