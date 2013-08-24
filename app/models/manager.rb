@@ -23,10 +23,10 @@ class Manager
     @doc = Nokogiri::HTML(open(url))
     @doc.css('.ismPitch .ismPitchElement').each do |player_element|
       player_json = player_element['class'].sub('ismPitchElement','')
+      name = player_element.css('.ismPitchWebName').first.content.strip
       captain = JSON.parse(player_json)['is_captain']
       # Has point details, currently not in use
       #player_tooltip = player_element.css('.ismTooltip').first['title']
-      name = player_element.css('.ismPitchWebName').first.content.strip
       matches_or_points = player_element.css('.ismTooltip').first.content
       if matches_or_points.scan(/\d{1,}/).length > 0
         games_left = 0
