@@ -30,12 +30,22 @@ class Manager
 
   private
 
+  #TODO: Use .at_css when there's only one hit
   def fetch_data
     @squad = []
     gw_url = "#{@url}/#{$game_week}/"
     @doc = Nokogiri::HTML(open(gw_url))
     @doc.css('.ismPitch .ismPitchElement').each do |player_element|
       player_json = player_element['class'].sub('ismPitchElement','')
+
+      tooltip = player_element.css('.ismTooltip').first['title']
+      mp_node = Nokogiri::HTML(tooltip).search("[text()*='Minutes played']").first
+      if mp_node
+        minutes_played = mp_node.next_element.content.strip.to_i
+      else
+        minutes_played = 0
+      end
+
       name = player_element.css('.ismPitchWebName').first.content.strip
       player_json = JSON.parse(player_json)
       captain = player_json['is_captain']
@@ -56,7 +66,7 @@ class Manager
       else
         games_left = matches_or_points.split(",").length
       end
-      @squad << Player.new(name: name, games_left: games_left, captain: captain, position: position, points: points, manager: self)
+      @squad << Player.new(name: name, games_left: games_left, captain: captain, position: position, points: points, minutes_played: minutes_played, manager: self)
     end
   end
 end
