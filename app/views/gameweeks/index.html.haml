@@ -18,9 +18,11 @@
       %td.squad
         .playing_now
           = match.home.playing_now.collect{|p| p.info }.join(" ")
-        = match.home.differentiators.collect{|p| p.info }.join(" ")
+        .playing_later
+          = match.home.playing_later.collect{|p| p.info }.join(" ")
       %td
       %td.squad
         .playing_now
           = match.away.playing_now.collect{|p| p.info }.join(" ")
-        = match.away.differentiators.collect{|p| p.info }.join(" ")
+        .playing_later
+          = match.away.playing_later.collect{|p| p.info }.join(" ")

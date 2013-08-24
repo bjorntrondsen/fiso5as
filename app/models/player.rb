@@ -20,6 +20,10 @@ class Player
     @minutes_played > 0 && @match_over == false
   end
 
+  def playing_later?
+    @games_left > 0
+  end
+
   def info
     str = ""
     if games_left > 1

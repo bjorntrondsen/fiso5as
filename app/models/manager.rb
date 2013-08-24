@@ -12,20 +12,12 @@ class Manager
     @score ||= @doc.css('.ismSB .ismSBPrimary > div').first.content.strip.scan(/\A\d{1,}/).first.to_i
   end
 
-  def differentiators
-    return @differentiators if @differentiators
-    @differentiators = []
-    @squad.each do |my_player|
-      their_player = opponent.find_player(my_player.name)
-      if my_player.games_left > 0  && (!their_player  || (my_player.captain? && !their_player.captain?))
-        @differentiators << my_player
-      end
-    end
-    return @differentiators
+  def playing_now
+    @playing_now ||= differentiators.collect{|p| p if(p.playing_now?)}.compact
   end
 
-  def playing_now
-    @playing_now ||= @squad.collect{|p| p if(p.playing_now?)}.compact
+  def playing_later
+    @playing_later ||= differentiators.collect{|p| p if(p.playing_later?)}.compact
   end
 
   def find_player(name)
@@ -33,6 +25,18 @@ class Manager
   end
 
   private
+
+  def differentiators
+    return @differentiators if @differentiators
+    @differentiators = []
+    @squad.each do |my_player|
+      their_player = opponent.find_player(my_player.name)
+      if !their_player  || (my_player.captain? && !their_player.captain?)
+        @differentiators << my_player
+      end
+    end
+    return @differentiators
+  end
 
   #TODO: Use .at_css when there's only one hit
   def fetch_data
@@ -54,7 +58,6 @@ class Manager
       # If the match has started we can check the fixture details and figure
       # out if the match is over by looking for players with 90 minutes played.
       team_name = player_element.at_css('.ismShirt')['title'].strip
-      puts team_name
       fixture_info = @doc.at(".ismResult:contains('#{team_name}')")
       fixture_id = fixture_info.next_element.at_css('.ismFixtureStatsLink')['data-id'].to_i if(fixture_info)
       if fixture_id && @match_over[fixture_id].blank?
