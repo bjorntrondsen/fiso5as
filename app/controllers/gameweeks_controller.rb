@@ -2,7 +2,7 @@ require 'nokogiri'
 require 'open-uri'
 require 'rufus-scheduler'
 
-$game_week = 1
+$game_week = 2
 
 class Match
   attr_accessor :home, :away
@@ -35,11 +35,11 @@ class Manager
   end
 
   def score
-    @score ||= @doc.css('.ismSB .ismSBPrimary > div').first.content.strip.scan(/\A\d*/).first.to_i
+    @score ||= @doc.css('.ismSB .ismSBPrimary > div').first.content.strip.scan(/\A\d{1,}/).first.to_i
   end
 
   def remaining_players
-    @remaining_players ||= @squad.collect{|p| p.name if p.minutes_played == 0}.join(" ")
+    @remaining_players ||= @squad.collect{|p| p.info if p.games_left > 0}.join(" ")
   end
 
   private
@@ -48,23 +48,42 @@ class Manager
     @squad = []
     url = "http://fantasy.premierleague.com/entry/#{@fpl_id}/event-history/#{$game_week}/"
     @doc = Nokogiri::HTML(open(url))
-    player_rows = @doc.css('#ismDataElements tr')
-    player_rows.each do |row|
-      name = row.css('td')[0].content
-      minutes_played = row.css('td')[2].content.to_i
-      score = row.css('td')[16].content.to_i
-      @squad << Player.new(name: name, minutes_played: minutes_played, score: score)
+    @doc.css('.ismPitch .ismPitchElement').each do |player_element|
+      player_json = player_element['class'].sub('ismPitchElement','')
+      captain = JSON.parse(player_json)['is_captain']
+      # Has point details, currently not in use
+      #player_tooltip = player_element.css('.ismTooltip').first['title']
+      name = player_element.css('.ismPitchWebName').first.content.strip
+      matches_or_points = player_element.css('.ismTooltip').first.content
+      if matches_or_points.scan(/\d{1,}/).length > 0
+        games_left = 0
+      else
+        games_left = matches_or_points.split(",").length
+      end
+      @squad << Player.new(name: name, games_left: games_left, captain: captain)
     end
   end
 end
 
 class Player
-  attr_accessor :name, :score, :minutes_played
+  attr_accessor :name, :games_left, :captain
 
   def initialize(args)
     @name = args[:name]
-    @score = args[:score]
-    @minutes_played = args[:minutes_played]
+    @games_left = args[:games_left]
+    @captain = args[:captain]
+  end
+
+  def info
+    str = ""
+    if games_left > 1
+      str += "#{games_left}x"
+    end
+    str += name
+    if captain
+      str += "(c)"
+    end
+    return str
   end
 
 end
@@ -72,25 +91,24 @@ end
 class GameweeksController < ApplicationController
   @@matches = []
 
-  scheduler = Rufus::Scheduler.new
-  scheduler.every '5m' do
-    get_matches
-  end
+  #scheduler = Rufus::Scheduler.new
+  #scheduler.every '5m' do
+    #get_matches
+  #end
 
   def index
-    @matches = @@matches
+    @matches = self.class.get_matches
   end
 
   private
 
   def self.get_matches
-    puts "Refreshing match data"
     @@matches = []
     @@matches << Match.new(home: [470, 'Moist von Lipwig'], away: [735104,'Deanbarrono'])
-    @@matches << Match.new(home: [785, 'McNulty'], away: [675948,'Wyld'])
-    @@matches << Match.new(home: [629200, 'From4Corners'], away: [32003,'travatron'])
-    @@matches << Match.new(home: [187870, 'Sharagoz'], away: [603709,'Llama'])
-    @@matches << Match.new(home: [432374, 'Lovely_Camel'], away: [555192,'Saturn XI'])
+    #@@matches << Match.new(home: [785, 'McNulty'], away: [675948,'Wyld'])
+    #@@matches << Match.new(home: [629200, 'From4Corners'], away: [32003,'travatron'])
+    #@@matches << Match.new(home: [187870, 'Sharagoz'], away: [603709,'Llama'])
+    #@@matches << Match.new(home: [432374, 'Lovely_Camel'], away: [555192,'Saturn XI'])
     return @@matches
   end
 
