@@ -79,7 +79,7 @@ class Player
     if games_left > 1
       str += "#{games_left}x"
     end
-    str += name
+    str += name.gsub(" ",'')
     if captain
       str += "(c)"
     end
@@ -91,13 +91,13 @@ end
 class GameweeksController < ApplicationController
   @@matches = []
 
-  #scheduler = Rufus::Scheduler.new
-  #scheduler.every '5m' do
-    #get_matches
-  #end
+  scheduler = Rufus::Scheduler.new
+  scheduler.every '5m' do
+    get_matches
+  end
 
   def index
-    @matches = self.class.get_matches
+    @matches = @@matches
   end
 
   private
@@ -105,10 +105,10 @@ class GameweeksController < ApplicationController
   def self.get_matches
     @@matches = []
     @@matches << Match.new(home: [470, 'Moist von Lipwig'], away: [735104,'Deanbarrono'])
-    #@@matches << Match.new(home: [785, 'McNulty'], away: [675948,'Wyld'])
-    #@@matches << Match.new(home: [629200, 'From4Corners'], away: [32003,'travatron'])
-    #@@matches << Match.new(home: [187870, 'Sharagoz'], away: [603709,'Llama'])
-    #@@matches << Match.new(home: [432374, 'Lovely_Camel'], away: [555192,'Saturn XI'])
+    @@matches << Match.new(home: [785, 'McNulty'], away: [675948,'Wyld'])
+    @@matches << Match.new(home: [629200, 'From4Corners'], away: [32003,'travatron'])
+    @@matches << Match.new(home: [187870, 'Sharagoz'], away: [603709,'Llama'])
+    @@matches << Match.new(home: [432374, 'Lovely_Camel'], away: [555192,'Saturn XI'])
     return @@matches
   end
 
