@@ -1,20 +1,26 @@
 %table.score_sheet
   - @matches.each do |match|
     %tr
-      %th= link_to match.home.name, match.home.url + "/#{$game_week}", target: '_blank'
+      %th
+        = link_to match.home.name, match.home.url + "/#{$game_week}", target: '_blank'
+        - if match.home_ahead?
+          %span.pts= "+#{match.score_diff}"
       %th.pts_total
         %span{class: match.home_ahead? ? 'ahead' : 'behind'}
           = match.home.score
         %span{class: match.away_ahead? ? 'ahead' : 'behind'}
           = match.away.score
-      %th= link_to match.away.name, match.away.url + "/#{$game_week}", target: '_blank'
+      %th
+        = link_to match.away.name, match.away.url + "/#{$game_week}", target: '_blank'
+        - if match.away_ahead?
+          %span.pts= "+#{match.score_diff}"
     %tr
       %td.squad
-        - if match.home_ahead?
-          %span.pts= "+#{match.score_diff}"
+        .playing_now
+          = match.home.playing_now.collect{|p| p.info }.join(" ")
         = match.home.differentiators.collect{|p| p.info }.join(" ")
       %td
       %td.squad
-        - if match.away_ahead?
-          %span.pts= "+#{match.score_diff}"
+        .playing_now
+          = match.away.playing_now.collect{|p| p.info }.join(" ")
         = match.away.differentiators.collect{|p| p.info }.join(" ")

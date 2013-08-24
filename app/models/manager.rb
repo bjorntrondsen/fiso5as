@@ -24,6 +24,10 @@ class Manager
     return @differentiators
   end
 
+  def playing_now
+    @playing_now ||= @squad.collect{|p| p if(p.playing_now?)}.compact
+  end
+
   def find_player(name)
     @squad.find{|p| p.name == name}
   end

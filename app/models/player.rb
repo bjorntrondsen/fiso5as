@@ -16,6 +16,10 @@ class Player
     @captain
   end
 
+  def playing_now?
+    @minutes_played > 0 && @match_over == false
+  end
+
   def info
     str = ""
     if games_left > 1
