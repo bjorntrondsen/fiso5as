@@ -39,7 +39,7 @@ class Manager
   end
 
   def remaining_players
-    @remaining_players ||= @squad.collect{|p| p.info if p.games_left > 0}.join(" ")
+    @remaining_players ||= @squad.collect{|p| p.info if p.games_left > 0}
   end
 
   private
