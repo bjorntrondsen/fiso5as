@@ -7,13 +7,20 @@ $game_week = 2
 class GameweeksController < ApplicationController
   @@matches = []
 
-  scheduler = Rufus::Scheduler.new
-  scheduler.every '5m', blocking: true do
-    get_matches
+  #TODO: Move into initializer
+  if Rails.env == 'production'
+    scheduler = Rufus::Scheduler.new
+    scheduler.every '5m', blocking: true do
+      get_matches
+    end
   end
 
   def index
-    @matches = @@matches
+    if Rails.env == 'production'
+      @matches = @@matches
+    else
+      @matches = self.class.get_matches
+    end
   end
 
   private
