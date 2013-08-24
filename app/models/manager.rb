@@ -37,7 +37,16 @@ class Manager
     @doc.css('.ismPitch .ismPitchElement').each do |player_element|
       player_json = player_element['class'].sub('ismPitchElement','')
       name = player_element.css('.ismPitchWebName').first.content.strip
-      captain = JSON.parse(player_json)['is_captain']
+      player_json = JSON.parse(player_json)
+      captain = player_json['is_captain']
+      position = case player_json['type']
+                 when 1 then "GK"
+                 when 2 then "DEF"
+                 when 3 then "MID"
+                 when 4 then "FWD"
+                 else
+                   raise "Unknown player type"
+                 end
       # Has point details, currently not in use
       #player_tooltip = player_element.css('.ismTooltip').first['title']
       matches_or_points = player_element.css('.ismTooltip').first.content
@@ -46,7 +55,7 @@ class Manager
       else
         games_left = matches_or_points.split(",").length
       end
-      @squad << Player.new(name: name, games_left: games_left, captain: captain, manager: self)
+      @squad << Player.new(name: name, games_left: games_left, captain: captain, position: position, manager: self)
     end
   end
 end
