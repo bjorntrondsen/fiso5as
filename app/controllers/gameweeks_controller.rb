@@ -92,7 +92,7 @@ class GameweeksController < ApplicationController
   @@matches = []
 
   scheduler = Rufus::Scheduler.new
-  scheduler.every '5m' do
+  scheduler.every '5m', blocking: true do
     get_matches
   end
 
