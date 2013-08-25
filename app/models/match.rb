@@ -1,22 +1,18 @@
-class Match
-  attr_accessor :home, :away
+class Match < ActiveRecord::Base
+  # Used to keep track of which prem league fixtures are finished when syncing data
+  # Done for performance reasons
+  attr_accessor :pl_match_over
 
-  def initialize(args)
-    @home = Manager.new(fpl_id: args[:home][0], name: args[:home][1])
-    @away = Manager.new(fpl_id: args[:away][0], name: args[:away][1])
-    @home.opponent = @away
-    @away.opponent = @home
+  belongs_to :home_team, class_name: 'Team'
+  belongs_to :away_team, class_name: 'Team'
+  has_many :h2h_matches, dependent: :destroy
+
+  def fpl_sync
+    puts "Getting FPL data (match #{self.id}) #{Time.zone.now}"
+    transaction do
+      h2h_matches.each{|m| m.fetch_data }
+    end
+    puts "Done (match #{self.id}) #{Time.zone.now}"
   end
 
-  def home_ahead?
-    home.score > away.score
-  end
-
-  def away_ahead?
-    away.score > home.score
-  end
-
-  def score_diff
-    @score_diff ||= (away.score - home.score).abs
-  end
 end

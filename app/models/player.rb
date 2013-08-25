@@ -1,27 +1,29 @@
-class Player
-  attr_accessor :manager, :name, :games_left, :captain, :position, :points, :minutes_played, :match_over
+class Player < ActiveRecord::Base
+  belongs_to :h2h_match
+  belongs_to :manager
+  #attr_accessor :manager, :name, :games_left, :captain, :position, :points, :minutes_played, :match_over
 
-  def initialize(args)
-    @name = args[:name]
-    @games_left = args[:games_left]
-    @captain = args[:captain]
-    @position = args[:position]
-    @manager = args[:manager]
-    @points = args[:points]
-    @minutes_played = args[:minutes_played]
-    @match_over = args[:match_over]
-  end
+  #def initialize(args)
+    #@name = args[:name]
+    #@games_left = args[:games_left]
+    #@captain = args[:captain]
+    #@position = args[:position]
+    #@manager = args[:manager]
+    #@points = args[:points]
+    #@minutes_played = args[:minutes_played]
+    #@match_over = args[:match_over]
+  #end
 
   def captain?
-    @captain
+    captain
   end
 
   def playing_now?
-    @minutes_played > 0 && @match_over == false
+    minutes_played > 0 && match_over == false
   end
 
   def playing_later?
-    @games_left > 0
+    games_left > 0
   end
 
   def info
@@ -30,7 +32,7 @@ class Player
       str += "#{games_left}x"
     end
     str += name.gsub(" ",'')
-    if captain? && !manager.opponent.find_player(self.name)
+    if captain? #&& !manager.opponent.find_player(self.name)
       str += "(c)"
     end
     return str

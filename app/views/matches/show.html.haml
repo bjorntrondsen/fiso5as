@@ -1,0 +1,28 @@
+%table.score_sheet
+  - @match.h2h_matches.each do |match|
+    %tr
+      %th
+        = link_to match.home_manager.name, match.home_manager.fpl_url + "/#{@match.game_week}", target: '_blank'
+        - if match.home_ahead?
+          %span.pts= "+#{match.score_diff}"
+      %th.pts_total
+        %span{class: match.home_ahead? ? 'ahead' : 'behind'}
+          = match.home_score
+        %span{class: match.away_ahead? ? 'ahead' : 'behind'}
+          = match.away_score
+      %th
+        = link_to match.away_manager.name, match.away_manager.fpl_url + "/#{@match.game_week}", target: '_blank'
+        - if match.away_ahead?
+          %span.pts= "+#{match.score_diff}"
+    %tr
+      %td.squad
+        .playing_now
+          = match.playing_now(:home).collect{|p| p.info }.join(" ")
+        .playing_later
+          = match.playing_later(:home).collect{|p| p.info }.join(" ")
+      %td
+      %td.squad
+        .playing_now
+          = match.playing_now(:away).collect{|p| p.info }.join(" ")
+        .playing_later
+          = match.playing_later(:away).collect{|p| p.info }.join(" ")
