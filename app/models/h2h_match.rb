@@ -33,7 +33,7 @@ class H2hMatch < ActiveRecord::Base
 
   def fetch_data
     self.players.destroy_all
-    FplScraper.fetch_data_for(self)
+    FplScraper.new(self).scrape
     self.save!
   end
 
