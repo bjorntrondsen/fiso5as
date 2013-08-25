@@ -11,11 +11,10 @@ class FplScraper
 
   private
 
-  #TODO: Use .at_css when there's only one hit
   def fetch_data(manager, side)
     gw_url = "#{manager.fpl_url}/#{@match.game_week}/"
     @doc = Nokogiri::HTML(open(gw_url))
-    score = @doc.css('.ismSB .ismSBPrimary > div').first.content.strip.scan(/\A\d{1,}/).first.to_i
+    score = @doc.at_css('.ismSB .ismSBPrimary > div').content.strip.scan(/\A\d{1,}/).first.to_i
     @h2h_match.home_score = score if(side == :home)
     @h2h_match.away_score = score if(side == :away)
     @doc.css('.ismPitch .ismPitchElement').each do |player_element|
@@ -44,14 +43,11 @@ class FplScraper
                  raise "Unknown player type"
                end
 
-    # Has point details, currently not in use
-    # player_tooltip = player_element.css('.ismTooltip').first['title']
-
    {name: name, games_left: games_left, captain: captain, position: position, points: points, minutes_played: minutes_played, match_over: match_over}
   end
 
   def get_minutes_played(player_element)
-    tooltip = player_element.css('.ismTooltip').first['title']
+    tooltip = player_element.at_css('.ismTooltip')['title']
     mp_node = Nokogiri::HTML(tooltip).search("[text()*='Minutes played']").first
     if mp_node
       minutes_played = mp_node.next_element.content.strip.to_i
@@ -61,7 +57,7 @@ class FplScraper
   end
 
   def get_games_left(player_element)
-    matches_or_points = player_element.css('.ismTooltip').first.content
+    matches_or_points = player_element.at_css('.ismTooltip').content
     if matches_or_points.scan(/\d{1,}/).length > 0
       games_left = 0
     else
@@ -74,7 +70,7 @@ class FplScraper
   end
 
   def get_player_name(player_element)
-    player_element.css('.ismPitchWebName').first.content.strip
+    player_element.at_css('.ismPitchWebName').content.strip
   end
 
   # If the match has started we can check the fixture details and figure
