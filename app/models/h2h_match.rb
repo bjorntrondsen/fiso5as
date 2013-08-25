@@ -46,12 +46,12 @@ class H2hMatch < ActiveRecord::Base
     FplScraper.new(self).scrape
     self.save!
     self.info = {home: [], away: []}
-    pending_substitutions(:home)
-    pending_substitutions(:away)
+    inform_of_pending_substitutions(:home)
+    inform_of_pending_substitutions(:away)
     self.save!
   end
 
-  def pending_substitutions(side)
+  def inform_of_pending_substitutions(side)
     if side == :home
       squad = home_squad
     elsif side == :away
