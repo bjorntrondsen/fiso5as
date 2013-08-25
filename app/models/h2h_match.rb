@@ -61,6 +61,7 @@ class H2hMatch < ActiveRecord::Base
 
       # If the match has started we can check the fixture details and figure
       # out if the match is over by looking for players with 90 minutes played.
+      # TODO: No good during DGW
       team_name = player_element.at_css('.ismShirt')['title'].strip
       fixture_info = @doc.at(".ismResult:contains('#{team_name}')")
       fixture_id = fixture_info.next_element.at_css('.ismFixtureStatsLink')['data-id'].to_i if(fixture_info)

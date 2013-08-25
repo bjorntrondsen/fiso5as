@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20130825132813) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "h2h_matches", force: true do |t|
     t.integer  "match_id"
     t.integer  "match_order"
