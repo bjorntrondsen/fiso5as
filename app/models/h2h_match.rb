@@ -48,6 +48,8 @@ class H2hMatch < ActiveRecord::Base
     self.info = {home: [], away: []}
     inform_of_pending_substitutions(:home)
     inform_of_pending_substitutions(:away)
+    inform_of_captain_change(:home)
+    inform_of_captain_change(:away)
     self.save!
   end
 
@@ -65,18 +67,37 @@ class H2hMatch < ActiveRecord::Base
       candidates = squad.might_play
       if sub = find_sub(player,candidates,squad,already_subed)
         already_subed << sub
-        self.info[side] << "#{sub.name} will replace #{player.name} (#{sub.points}pts)"
+        msg = "#{sub.name} will replace #{player.name}"
+        msg += " (#{sub.points}pts)" unless sub.playing_later?
+        self.info[side] <<  msg
       end
     end
   end
 
+  def inform_of_captain_change(side)
+    if side == :home
+      squad = home_squad
+    elsif side == :away
+      squad = away_squad
+    else
+      raise "Unknown side: #{side}"
+    end
+    if squad.might_play.where(captain: true).count == 0
+      vice_captain = squad.might_play.where(vice_captain: true).first
+      if vice_captain
+        msg = "Armband will switch to #{vice_captain.name}"
+        msg += " (#{vice_captain.points}pts)" unless vice_captain.playing_later?
+        self.info[side] << msg
+      end
+    end
+  end
 
   def find_sub(player, candidates, squad, already_subed)
     if player.goal_keeper? # GK and only replace GK
       return candidates.goal_keepers.first
-    elsif player.defender? && squad.not_benched.defenders.might_play.size < 3 # 3 defs required
+    elsif player.defender? && squad.not_benched.defenders.might_play.count < 3 # 3 defs required
       candidates = candidates.defenders.benched.might_play
-    elsif player.forward? && squad.forwards.not_benched.might_play == 0 # 1 FWD required
+    elsif player.forward? && squad.forwards.not_benched.might_play.count == 0 # 1 FWD required
       candidates = candidates.forwards.benched.might_play
     else # No special rule applies, take first sub
       candidates = candidates.outfield_players.benched.might_play
