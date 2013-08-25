@@ -7,6 +7,8 @@ class H2hMatch < ActiveRecord::Base
 
   validates_presence_of :home_manager_id, :away_manager_id
 
+  serialize :info
+
   def self.by_match_order
     self.order("match_order ASC")
   end
@@ -37,9 +39,7 @@ class H2hMatch < ActiveRecord::Base
     self.save!
   end
 
-
   private
-
 
   def differentiators(side)
     differentiators = []

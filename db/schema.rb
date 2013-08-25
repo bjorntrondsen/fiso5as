@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20130825132813) do
     t.integer  "away_manager_id"
     t.integer  "home_score"
     t.integer  "away_score"
+    t.text     "info"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

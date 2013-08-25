@@ -6,6 +6,14 @@ class Player < ActiveRecord::Base
     self.where(bench: false)
   end
 
+  def self.benched
+    self.where(bench: true)
+  end
+
+  def self.didnt_play
+    self.where(match_over: true, minutes_played: 0)
+  end
+
   def captain?
     captain
   end

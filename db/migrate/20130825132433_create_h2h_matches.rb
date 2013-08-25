@@ -7,6 +7,7 @@ class CreateH2hMatches < ActiveRecord::Migration
       t.integer :away_manager_id
       t.integer :home_score
       t.integer :away_score
+      t.text :info
 
       t.timestamps
     end

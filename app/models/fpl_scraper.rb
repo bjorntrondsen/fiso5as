@@ -34,6 +34,7 @@ class FplScraper
     name = get_player_name(player_element)
     bench = benched?(player_element)
     captain = player_json['is_captain']
+    vice_captain = player_json['is_vice_captain']
     points = player_json['event_points']
     position = case player_json['type']
                when 1 then "GK"
@@ -44,7 +45,7 @@ class FplScraper
                  raise "Unknown player type"
                end
 
-   {name: name, games_left: games_left, captain: captain, bench: bench, position: position, points: points, minutes_played: minutes_played, match_over: match_over}
+   {name: name, games_left: games_left, captain: captain, vice_captain: vice_captain, bench: bench, position: position, points: points, minutes_played: minutes_played, match_over: match_over}
   end
 
   def benched?(player_element)
