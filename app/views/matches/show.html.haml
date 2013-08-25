@@ -1,5 +1,5 @@
 %table.score_sheet
-  - @match.h2h_matches.each do |match|
+  - @match.h2h_matches.by_match_order.each do |match|
     %tr
       %th
         = link_to match.home_manager.name, match.home_manager.fpl_url + "/#{@match.game_week}", target: '_blank'
