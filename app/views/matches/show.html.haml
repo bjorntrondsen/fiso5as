@@ -16,18 +16,18 @@
           %span.pts= "+#{match.score_diff}"
     %tr
       %td.squad
-        .playing_now
+        .playing_now{title: 'Ongoing match'}
           = match.playing_now(:home).collect{|p| p.info }.join(" ")
-        .playing_later
+        .playing_later{title: 'Will play later'}
           = match.playing_later(:home).collect{|p| p.info }.join(" ")
         .info
           - match.info[:home].each do |msg|
             %div= msg
       %td
       %td.squad
-        .playing_now
+        .playing_now{title: 'Ongoing match'}
           = match.playing_now(:away).collect{|p| p.info }.join(" ")
-        .playing_later
+        .playing_later{title: 'Will play later'}
           = match.playing_later(:away).collect{|p| p.info }.join(" ")
         .info
           - match.info[:away].each do |msg|
