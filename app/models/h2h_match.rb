@@ -37,18 +37,19 @@ class H2hMatch < ActiveRecord::Base
     self.save!
   end
 
+
   private
 
 
   def differentiators(side)
     differentiators = []
     if side == :home
-      my_players = players.where(manager_id: home_manager_id)
-      their_players = players.where(manager_id: away_manager_id)
+      my_players = players.not_benched.where(manager_id: home_manager_id)
+      their_players = players.not_benched.where(manager_id: away_manager_id)
     end
     if side == :away
-      my_players = players.where(manager_id: away_manager_id)
-      their_players = players.where(manager_id: home_manager_id)
+      my_players = players.not_benched.where(manager_id: away_manager_id)
+      their_players = players.not_benched.where(manager_id: home_manager_id)
     end
     my_players.each do |my_player|
       their_player = their_players.find_by(name: my_player.name)

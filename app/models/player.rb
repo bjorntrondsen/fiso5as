@@ -1,18 +1,10 @@
 class Player < ActiveRecord::Base
   belongs_to :h2h_match
   belongs_to :manager
-  #attr_accessor :manager, :name, :games_left, :captain, :position, :points, :minutes_played, :match_over
 
-  #def initialize(args)
-    #@name = args[:name]
-    #@games_left = args[:games_left]
-    #@captain = args[:captain]
-    #@position = args[:position]
-    #@manager = args[:manager]
-    #@points = args[:points]
-    #@minutes_played = args[:minutes_played]
-    #@match_over = args[:match_over]
-  #end
+  def self.not_benched
+    self.where(bench: false)
+  end
 
   def captain?
     captain

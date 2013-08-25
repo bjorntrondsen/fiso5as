@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 20130825132813) do
     t.string   "name"
     t.integer  "games_left"
     t.boolean  "captain"
+    t.boolean  "bench"
     t.string   "position"
     t.integer  "points"
     t.integer  "minutes_played"

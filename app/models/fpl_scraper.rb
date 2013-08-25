@@ -17,7 +17,7 @@ class FplScraper
     score = @doc.at_css('.ismSB .ismSBPrimary > div').content.strip.scan(/\A\d{1,}/).first.to_i
     @h2h_match.home_score = score if(side == :home)
     @h2h_match.away_score = score if(side == :away)
-    @doc.css('.ismPitch .ismPitchElement').each do |player_element|
+    @doc.css('.ismPitch .ismPitchElement, .ismBench .ismPitchElement').each do |player_element|
       json_str = player_element['class'].sub('ismPitchElement','')
       player_json = JSON.parse(json_str)
       attributes = player_data(player_element, player_json)
@@ -32,6 +32,7 @@ class FplScraper
     team_name = get_team_name(player_element)
     match_over = match_over?(team_name)
     name = get_player_name(player_element)
+    bench = benched?(player_element)
     captain = player_json['is_captain']
     points = player_json['event_points']
     position = case player_json['type']
@@ -43,7 +44,18 @@ class FplScraper
                  raise "Unknown player type"
                end
 
-   {name: name, games_left: games_left, captain: captain, position: position, points: points, minutes_played: minutes_played, match_over: match_over}
+   {name: name, games_left: games_left, captain: captain, bench: bench, position: position, points: points, minutes_played: minutes_played, match_over: match_over}
+  end
+
+  def benched?(player_element)
+    container = player_element.parent.parent.parent['class']
+    if container == 'ismPitch'
+      return false
+    elsif container == 'ismBench'
+      return true
+    else
+      raise "Unable to figure out of the player is on the pitch or on the bench"
+    end
   end
 
   def get_minutes_played(player_element)
