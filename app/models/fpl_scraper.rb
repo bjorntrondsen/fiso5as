@@ -32,9 +32,6 @@ class FplScraper
     team_name = get_team_name(player_element)
     match_over = match_over?(team_name)
     name = get_player_name(player_element)
-    if ['Dzeko','Walcott'].include?(name)
-      minutes_played = 0
-    end
     bench = benched?(player_element)
     captain = player_json['is_captain']
     vice_captain = player_json['is_vice_captain']
