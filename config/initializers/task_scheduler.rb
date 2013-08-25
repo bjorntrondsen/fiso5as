@@ -3,7 +3,7 @@ if Rails.env == 'production'
   scheduler.every '5m', blocking: true do
     # Runs from 13:00- 23.59
     if Time.zone.now.hour > 12
-      get_matches
+      GameweeksController.get_matches
     end
   end
 end
