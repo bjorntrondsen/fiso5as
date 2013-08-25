@@ -14,6 +14,26 @@ class Player < ActiveRecord::Base
     self.where(match_over: true, minutes_played: 0)
   end
 
+  def self.might_play
+    self.where("(match_over=true AND minutes_played > 0) OR (match_over = false)")
+  end
+
+  def self.goal_keepers
+    self.where("position = 'GK'")
+  end
+
+  def self.forwards
+    self.where("position = 'FWD'")
+  end
+
+  def self.defenders
+    self.where("position = 'DEF'")
+  end
+
+  def self.outfield_players
+    self.where("position != 'GK'")
+  end
+
   def captain?
     captain
   end
@@ -24,6 +44,18 @@ class Player < ActiveRecord::Base
 
   def playing_later?
     games_left > 0
+  end
+
+  def goal_keeper?
+    position == "GK"
+  end
+
+  def defender?
+    position == "DEF"
+  end
+
+  def forward?
+    position == "FWD"
   end
 
   def info

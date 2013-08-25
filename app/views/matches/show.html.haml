@@ -20,9 +20,15 @@
           = match.playing_now(:home).collect{|p| p.info }.join(" ")
         .playing_later
           = match.playing_later(:home).collect{|p| p.info }.join(" ")
+        .info
+          - match.info[:home].each do |msg|
+            %div= msg
       %td
       %td.squad
         .playing_now
           = match.playing_now(:away).collect{|p| p.info }.join(" ")
         .playing_later
           = match.playing_later(:away).collect{|p| p.info }.join(" ")
+        .info
+          - match.info[:away].each do |msg|
+            %div= msg
