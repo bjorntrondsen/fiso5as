@@ -43,7 +43,7 @@ class Player < ActiveRecord::Base
   end
 
   def playing_later?
-    games_left > 0
+    minutes_played == 0 && match_over == false
   end
 
   def goal_keeper?
