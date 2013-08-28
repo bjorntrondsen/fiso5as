@@ -21,6 +21,16 @@ class H2hMatch < ActiveRecord::Base
     self.players.where(manager_id: away_manager_id)
   end
 
+  def opposing_squad(manager)
+    if manager == home_manager
+      home_squad
+    elsif manager == away_manager
+      away_squad
+    else
+      raise "Cant find the right manager"
+    end
+  end
+
   def home_ahead?
     home_score > away_score
   end
