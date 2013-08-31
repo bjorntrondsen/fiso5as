@@ -91,6 +91,7 @@ class FplScraper
   # TODO: No good during DGW
   def match_over?(team_name)
     @match.pl_match_over ||= []
+    return true if @doc.at(".ismFixtureTable:contains('#{team_name}')").blank? # No match
     fixture_info = @doc.at(".ismResult:contains('#{team_name}')")
     fixture_id = fixture_info.next_element.at_css('.ismFixtureStatsLink')['data-id'].to_i if(fixture_info)
     if fixture_id && @match.pl_match_over[fixture_id].blank?
