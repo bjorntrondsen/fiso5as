@@ -60,9 +60,8 @@ class FplScraper
   end
 
   def get_minutes_played(player_element)
-    tooltip = player_element.at_css('.ismTooltip')['title']
-    mp_node = Nokogiri::HTML(tooltip).search("[text()*='Minutes played']").first
-    if mp_node
+    tooltip = player_element.at_css('.ismTooltip')
+    if tooltip && mp_node = Nokogiri::HTML(tooltip['title']).search("[text()*='Minutes played']").first
       minutes_played = mp_node.next_element.content.strip.to_i
     else
       minutes_played = 0
@@ -70,8 +69,8 @@ class FplScraper
   end
 
   def get_games_left(player_element)
-    matches_or_points = player_element.at_css('.ismTooltip').content
-    if matches_or_points.scan(/\d{1,}/).length > 0
+    matches_or_points = player_element.at_css('.ismTooltip').try(:content)
+    if matches_or_points == nil || matches_or_points.scan(/\d{1,}/).length > 0
       games_left = 0
     else
       games_left = matches_or_points.split(",").length
