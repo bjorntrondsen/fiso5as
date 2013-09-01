@@ -23,9 +23,9 @@ class H2hMatch < ActiveRecord::Base
 
   def opposing_squad(manager)
     if manager == home_manager
-      home_squad
-    elsif manager == away_manager
       away_squad
+    elsif manager == away_manager
+      home_squad
     else
       raise "Cant find the right manager"
     end
