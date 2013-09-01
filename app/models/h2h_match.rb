@@ -77,8 +77,8 @@ class H2hMatch < ActiveRecord::Base
       candidates = squad.might_play
       if sub = find_sub(player,candidates,squad,already_subed)
         already_subed << sub
-        msg = "#{sub.name} will replace #{player.name}"
-        msg += " (#{sub.points}pts)" unless sub.playing_later?
+        pts =  sub.playing_later? ? '' : " (#{sub.points}pts)"
+        msg = "#{sub.name+pts} will replace #{player.name}"
         self.info[side] <<  msg
       end
     end
