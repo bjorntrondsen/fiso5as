@@ -39,4 +39,9 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = "random"
+
+  VCR.configure do |c|
+    c.cassette_library_dir = 'support/vcr_cassettes'
+    c.hook_into :webmock # or :fakeweb
+  end
 end

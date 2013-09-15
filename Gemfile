@@ -25,6 +25,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'machinist'
   gem 'vcr'
+  gem 'webmock'
 end
 
 group :production do
