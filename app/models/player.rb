@@ -58,6 +58,7 @@ class Player < ActiveRecord::Base
     position == "FWD"
   end
 
+  # TODO: Probably belongs in a decorator
   def info
     str = ""
     if games_left > 1
