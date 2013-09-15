@@ -15,7 +15,7 @@ class Player < ActiveRecord::Base
   end
 
   def self.might_play
-    self.where("(match_over=true AND minutes_played > 0) OR (match_over = false)")
+    self.where("minutes_played > 0 OR match_over = false")
   end
 
   def self.goal_keepers
