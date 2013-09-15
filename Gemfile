@@ -22,6 +22,9 @@ end
 group :development, :test do
   gem 'heroku'
   gem 'pry'
+  gem 'rspec-rails'
+  gem 'machinist'
+  gem 'vcr'
 end
 
 group :production do
