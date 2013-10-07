@@ -80,6 +80,7 @@ GEM
     minitest (4.7.5)
     multi_json (1.8.0)
     netrc (0.7.7)
+    newrelic_rpm (3.6.7.159)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
     pg (0.16.0)
@@ -179,6 +180,7 @@ DEPENDENCIES
   jbuilder (~> 1.2)
   jquery-rails
   machinist
+  newrelic_rpm
   nokogiri
   pg
   pry
