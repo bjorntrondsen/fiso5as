@@ -11,10 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130825132813) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+ActiveRecord::Schema.define(version: 20131019145313) do
 
   create_table "h2h_matches", force: true do |t|
     t.integer  "match_id"
@@ -61,6 +58,7 @@ ActiveRecord::Schema.define(version: 20130825132813) do
     t.boolean  "match_over"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "match_status",   default: "over"
   end
 
   create_table "teams", force: true do |t|

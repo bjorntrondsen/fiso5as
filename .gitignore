@@ -8,6 +8,7 @@ log
 
 # Files
 config/database.yml
+*.sqlite3
 *.log
 *~
 
