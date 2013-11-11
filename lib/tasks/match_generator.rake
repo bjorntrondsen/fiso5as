@@ -9,17 +9,17 @@ namespace :matches do
       #home4 = home_team.managers.create(fpl_id: 187870, fiso_name: 'Sharagoz')
       #home5 = home_team.managers.create(fpl_id: 470, fiso_name: 'Moist von Lipwig')
       home_team = Team.find_by(name: "Killer Bees")
-      home1 = home_team.managers.find_by(fiso_name: 'McNulty')
-      home2 = home_team.managers.find_by(fiso_name: 'Sharagoz')
-      home3 = home_team.managers.find_by(fiso_name: 'From4Corners')
+      home1 = home_team.managers.find_by(fiso_name: 'Sharagoz')
+      home2 = home_team.managers.find_by(fiso_name: 'From4Corners')
+      home3 = home_team.managers.find_by(fiso_name: 'McNulty')
       home4 = home_team.managers.find_by(fiso_name: 'Lovely_Camel')
       home5 = home_team.managers.find_by(fiso_name: 'Moist von Lipwig')
 
       away_team = Team.create!(fpl_id: 16096, name: "Reprobates")
-      away1 = away_team.managers.create!(fpl_id: 10462, fiso_name: 'Чудо Калнциемс')
-      away2 = away_team.managers.create!(fpl_id: 59442, fiso_name: 'Plastic Whistle')
-      away3 = away_team.managers.create!(fpl_id: 54539, fiso_name: 'Inter Mediocrity')
-      away4 = away_team.managers.create!(fpl_id: 59535, fiso_name: 'Real Sociopath')
+      away1 = away_team.managers.create!(fpl_id: 10462, fiso_name: 'Stemania')
+      away2 = away_team.managers.create!(fpl_id: 59442, fiso_name: 'GingerMonkey')
+      away3 = away_team.managers.create!(fpl_id: 54539, fiso_name: 'mo bot')
+      away4 = away_team.managers.create!(fpl_id: 59535, fiso_name: 'Taff Murray')
       away5 = away_team.managers.create!(fpl_id: 178802, fiso_name: 'Toffeelover')
 
       starts_at = Time.parse("2013/11/09 11:45")
@@ -32,7 +32,7 @@ namespace :matches do
       match.h2h_matches.create!(home_manager_id: home4.id, away_manager_id: away4.id, match_order: 4)
       match.h2h_matches.create!(home_manager_id: home5.id, away_manager_id: away5.id, match_order: 5)
 
-      #match.fpl_sync
+      match.fpl_sync
     end
   end
 end
