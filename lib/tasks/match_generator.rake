@@ -11,8 +11,8 @@ namespace :matches do
       home_team = Team.find_by(name: "Killer Bees")
       home1 = home_team.managers.find_by(fiso_name: 'Sharagoz')
       home2 = home_team.managers.find_by(fiso_name: 'From4Corners')
-      home4 = home_team.managers.find_by(fiso_name: 'Moist von Lipwig')
-      home3 = home_team.managers.find_by(fiso_name: 'McNulty')
+      home3 = home_team.managers.find_by(fiso_name: 'Moist von Lipwig')
+      home4 = home_team.managers.find_by(fiso_name: 'McNulty')
       home5 = home_team.managers.find_by(fiso_name: 'Lovely_Camel')
 
       away_team = Team.create!(fpl_id: 142195, name: "Spartak")
