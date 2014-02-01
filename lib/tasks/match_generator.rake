@@ -23,7 +23,7 @@ namespace :matches do
       away5 = away_team.managers.create!(fpl_id: 336140, fiso_name: 'Mintman')
 
       starts_at = Time.parse("2014/02/01 11:45")
-      ends_at = Time.parse("2014/02/30 04:00")
+      ends_at = Time.parse("2014/02/04 04:00")
       game_week = 24
       match = Match.create!(game_week: game_week, home_team_id: home_team.id, away_team_id: away_team.id, starts_at: starts_at, ends_at: ends_at)
       match.h2h_matches.create!(home_manager_id: home1.id, away_manager_id: away1.id, match_order: 1)
