@@ -5,9 +5,10 @@
   //width: 500px
   margin: auto
   background-color: #EEE
-  border: 3px solid #999
-  color: #000
+  border: 1px solid #999
   border-spacing: 0
+  border-radius: 5px
+  color: #000
   margin-bottom: 1em
 
   td, th
@@ -28,6 +29,24 @@
   td
     padding-bottom: 7px
     vertical-align: top
+
+  tr.headline th
+    background-color: #0B750B
+    color: #FFF
+    padding: 0.5em 0
+    text-align: center
+    font-size: 22px
+    text-shadow: 1px 1px 1px #555
+
+    &.vs
+      text-align: center
+      color: #CCC
+
+  tr.footer td
+    font-size: 13px
+    background-color: #999
+    padding-top: 7px
+    text-shadow: 1px 1px 1px #DDD
 
   .disadvantage, .advantage, .tctc
     display: none

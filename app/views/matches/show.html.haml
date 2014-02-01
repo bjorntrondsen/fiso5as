@@ -1,4 +1,8 @@
 %table.score_sheet
+  %tr.headline
+    %th= @match.home_team.name
+    %th.vs vs
+    %th= @match.away_team.name
   - @match.h2h_matches.by_match_order.each do |match|
     %tr
       %th
@@ -32,3 +36,13 @@
         .info
           - match.info[:away].each do |msg|
             %div= msg
+  %tr.footer
+    %td
+      .playing_now
+        = @match.playing_now(:home).collect{|name,count| "#{count}x#{name}" if count > 1}.join(' ')
+      = @match.playing_later(:home).collect{|name,count| "#{count}x#{name}" if count > 1}.join(' ')
+    %td
+    %td
+      .playing_now
+        = @match.playing_now(:away).collect{|name,count| "#{count}x#{name}" if count > 1}.join(' ')
+      = @match.playing_later(:away).collect{|name,count| "#{count}x#{name}" if count > 1}.join(' ')

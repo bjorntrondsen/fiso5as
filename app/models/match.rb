@@ -19,4 +19,21 @@ class Match < ActiveRecord::Base
     puts "Done (match #{self.id}) #{Time.zone.now}"
   end
 
+  def playing_now(side)
+    differentiators(side, :playing_now)
+  end
+
+  def playing_later(side)
+    differentiators(side, :playing_later)
+  end
+
+  private
+
+  def differentiators(side, playing)
+    player_names = h2h_matches.collect{|h2h| h2h.send(playing, side).collect{|player| player.name.gsub(' ', '')} }.flatten
+    result = Hash.new(0)
+    player_names.each { |name| result[name] += 1 }
+    result.sort_by{|name,count| count }.reverse
+  end
+
 end
