@@ -30,9 +30,13 @@ class Match < ActiveRecord::Base
   private
 
   def differentiators(side, playing)
-    player_names = h2h_matches.collect{|h2h| h2h.send(playing, side).collect{|player| player.name.gsub(' ', '')} }.flatten
+    players_pr_match = h2h_matches.collect{|h2h| h2h.send(playing, side).collect{|player| [player.name.gsub(' ', ''), player.games_left]} }
     result = Hash.new(0)
-    player_names.each { |name| result[name] += 1 }
+    players_pr_match.each do |players|
+      players.each do |name,matches_left|
+        result[name] += matches_left
+      end
+    end
     result.sort_by{|name,count| count }.reverse
   end
 
