@@ -15,12 +15,12 @@ namespace :matches do
       home4 = home_team.managers.find_by(fiso_name: 'Lovely_Camel')
       home5 = home_team.managers.find_by(fiso_name: 'Bluenosey')
 
-      away_team = Team.create!(fpl_id: 255136, name: "Dissension")
-      away1 = away_team.managers.create!(fpl_id: 20797, fiso_name: 'Rob')
-      away2 = away_team.managers.create!(fpl_id: 3570, fiso_name: 'woody71')
-      away3 = away_team.managers.create!(fpl_id: 222825, fiso_name: 'redtick')
-      away4 = away_team.managers.create!(fpl_id: 203244, fiso_name: 'coryphaeus')
-      away5 = away_team.managers.create!(fpl_id: 62853, fiso_name: 'Roga')
+      away_team = Team.create!(fpl_id: 48870, name: "Aristocrats")
+      away1 = away_team.managers.create!(fpl_id: 2122, fiso_name: 'spiderm4tt')
+      away2 = away_team.managers.create!(fpl_id: 60786, fiso_name: 'MorrisonDullforce')
+      away3 = away_team.managers.create!(fpl_id: 45224, fiso_name: 'TheDazzler')
+      away4 = away_team.managers.create!(fpl_id: 67440, fiso_name: 'theplayer')
+      away5 = away_team.managers.create!(fpl_id: 76, fiso_name: 'pascalevans')
 
       starts_at = Time.parse("2014/03/22 11:45")
       ends_at = Time.parse("2014/03/27 04:00")
