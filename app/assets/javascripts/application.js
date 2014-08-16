@@ -13,4 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= require_tree .
+//= require_self
+
+$(function(){
+  setInterval("window.location.reload()", 30000)
+})
