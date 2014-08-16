@@ -15,6 +15,8 @@ class Match < ActiveRecord::Base
     puts "Getting FPL data (match #{self.id}) #{Time.zone.now}"
     transaction do
       h2h_matches.each{|m| m.fetch_data }
+      self.touch
+      self.save
     end
     puts "Done (match #{self.id}) #{Time.zone.now}"
   end
