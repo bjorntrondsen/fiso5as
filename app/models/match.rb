@@ -38,7 +38,6 @@ class Match < ActiveRecord::Base
   end
 
   def ongoing?
-    raise ends_at.inspect
     started? && !ended?
   end
 
