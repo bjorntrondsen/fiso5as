@@ -29,6 +29,19 @@ class Match < ActiveRecord::Base
     differentiators(side, :playing_later)
   end
 
+  def ended?
+    Time.zone.now > ends_at
+  end
+
+  def started?
+    Time.zone.now > starts_at
+  end
+
+  def ongoing?
+    raise ends_at.inspect
+    started? && !ended?
+  end
+
   private
 
   def differentiators(side, playing)

@@ -47,7 +47,8 @@
         = @match.playing_now(:away).collect{|name,count| "#{count}x#{name}" if count > 1}.join(' ')
       = @match.playing_later(:away).collect{|name,count| "#{count}x#{name}" if count > 1}.join(' ')
 
-.last_update
-  Updated
-  = time_ago_in_words(@match.updated_at)
-  ago
+- if @match.ongoing?
+  .last_update
+    Updated
+    = time_ago_in_words(@match.updated_at)
+    ago
