@@ -18,7 +18,7 @@ namespace :matches do
       away_team = Team.create!(fpl_id: 12507, name: "Stokies")
       away1 = away_team.managers.create!(fpl_id: 195, fiso_name: 'Matty B')
       away2 = away_team.managers.create!(fpl_id: 38429, fiso_name: 'The Pom')
-      away3 = away_team.managers.create!(fpl_id: 970837, fiso_name: 'Suzykins')
+      away3 = away_team.managers.create!(fpl_id: 970832, fiso_name: 'Suzykins')
       away4 = away_team.managers.create!(fpl_id: 37997, fiso_name: 'Minigoku')
       away5 = away_team.managers.create!(fpl_id: 167617, fiso_name: 'Pete Tabs')
 
