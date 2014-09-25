@@ -7,6 +7,8 @@ class H2hMatch < ActiveRecord::Base
 
   validates_presence_of :home_manager_id, :away_manager_id
 
+  before_validation :set_defaults, on: :create
+
   serialize :info
 
   def self.by_match_order
@@ -55,7 +57,6 @@ class H2hMatch < ActiveRecord::Base
     self.players.destroy_all
     FplScraper.new(self).scrape
     self.save!
-    self.info = {home: [], away: []}
     inform_of_pending_substitutions(:home)
     inform_of_pending_substitutions(:away)
     inform_of_captain_change(:home)
@@ -119,6 +120,12 @@ class H2hMatch < ActiveRecord::Base
   end
 
   private
+
+  def set_defaults
+    self.home_score  ||= 0
+    self.away_score  ||= 0
+    self.info        ||= {home: [], away: []}
+  end
 
   def differentiators(side)
     differentiators = []
