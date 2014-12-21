@@ -9,22 +9,22 @@ namespace :matches do
       #home4 = home_team.managers.create(fpl_id: 16153, fiso_name: 'From4Corners')
       #home5 = home_team.managers.create(fpl_id: 1436344, fiso_name: 'Le Red')
       home_team = Team.find_by(name: "Eagles")
-      home1 = home_team.managers.find_by(fiso_name: 'Moist von Lipwig')
-      home2 = home_team.managers.find_by(fiso_name: 'From4Corners')
+      home1 = home_team.managers.find_by(fiso_name: 'From4Corners')
+      home2 = home_team.managers.find_by(fiso_name: 'Moist von Lipwig')
       home3 = home_team.managers.find_by(fiso_name: 'Wahl84')
       home4 = home_team.managers.find_by(fiso_name: 'Sharagoz')
       home5 = home_team.managers.find_by(fiso_name: 'Le Red')
 
-      away_team = Team.create!(fpl_id: 62439, name: "Bad Boys")
-      away1 = away_team.managers.create!(fpl_id: 219966, fiso_name: 'MyQ')
-      away2 = away_team.managers.create!(fpl_id: 230785, fiso_name: 'Spencer4')
-      away3 = away_team.managers.create!(fpl_id: 127437, fiso_name: 'stripes1973')
-      away4 = away_team.managers.create!(fpl_id: 44504, fiso_name: 'Bert.')
-      away5 = away_team.managers.create!(fpl_id: 67211, fiso_name: 'jeffersdn')
+      away_team = Team.create!(fpl_id: 234110, name: "Barmy Army")
+      away1 = away_team.managers.create!(fpl_id: 631, fiso_name: 'Jn77')
+      away2 = away_team.managers.create!(fpl_id: 14547, fiso_name: 'Mr John123')
+      away3 = away_team.managers.create!(fpl_id: 187215, fiso_name: 'Golden Bear')
+      away4 = away_team.managers.create!(fpl_id: 792088, fiso_name: 'Kris Fiso')
+      away5 = away_team.managers.create!(fpl_id: 225062, fiso_name: 'Owenclass')
 
-      starts_at = Time.parse("2014/12/13 11:45")
-      ends_at   = Time.parse("2014/12/16 04:00")
-      game_week = 16
+      starts_at = Time.parse("2014/12/20 11:45")
+      ends_at   = Time.parse("2014/12/23 04:00")
+      game_week = 17
 
       match = Match.create!(game_week: game_week, home_team_id: home_team.id, away_team_id: away_team.id, starts_at: starts_at, ends_at: ends_at)
       match.h2h_matches.create!(home_manager_id: home1.id, away_manager_id: away1.id, match_order: 1)
