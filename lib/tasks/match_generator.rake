@@ -11,20 +11,20 @@ namespace :matches do
       home_team = Team.find_by(name: "Eagles")
       home1 = home_team.managers.find_by(fiso_name: 'Sharagoz')
       home2 = home_team.managers.find_by(fiso_name: 'Moist von Lipwig')
-      home3 = home_team.managers.find_by(fiso_name: 'Wahl84')
-      home4 = home_team.managers.find_by(fiso_name: 'From4Corners')
+      home3 = home_team.managers.find_by(fiso_name: 'From4Corners')
+      home4 = home_team.managers.find_by(fiso_name: 'Wahl84')
       home5 = home_team.managers.find_by(fiso_name: 'Le Red')
 
-      away_team = Team.create!(fpl_id: 131917, name: "Virgins")
-      away1 = away_team.managers.create!(fpl_id: 3334, fiso_name: 'Caz Octopus')
-      away2 = away_team.managers.create!(fpl_id: 528089, fiso_name: 'Big Blue')
-      away3 = away_team.managers.create!(fpl_id: 2778, fiso_name: 'SE')
-      away4 = away_team.managers.create!(fpl_id: 31765, fiso_name: 'tiotom92')
-      away5 = away_team.managers.create!(fpl_id: 410231, fiso_name: 'w_r_10')
+      away_team = Team.create!(fpl_id: 32089, name: "Dream Killers")
+      away1 = away_team.managers.create!(fpl_id: 53322, fiso_name: 'Crooker')
+      away2 = away_team.managers.create!(fpl_id: 146915, fiso_name: 'briankidd')
+      away3 = away_team.managers.create!(fpl_id: 37286, fiso_name: 'wiseowl65')
+      away4 = away_team.managers.create!(fpl_id: 46952, fiso_name: 'Isalla')
+      away5 = away_team.managers.create!(fpl_id: 26889, fiso_name: 'Ashers')
 
-      starts_at = Time.parse("2015/02/10 11:45")
-      ends_at   = Time.parse("2015/02/12 04:00")
-      game_week = 25
+      starts_at = Time.parse("2015/02/21 11:45")
+      ends_at   = Time.parse("2015/02/23 04:00")
+      game_week = 26
 
       match = Match.create!(game_week: game_week, home_team_id: home_team.id, away_team_id: away_team.id, starts_at: starts_at, ends_at: ends_at)
       match.h2h_matches.create!(home_manager_id: home1.id, away_manager_id: away1.id, match_order: 1)
