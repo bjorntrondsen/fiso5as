@@ -15,16 +15,16 @@ namespace :matches do
       home4 = home_team.managers.find_by(fiso_name: 'From4Corners')
       home5 = home_team.managers.find_by(fiso_name: 'Le Red')
 
-      away_team = Team.create!(fpl_id: 79275, name: "Kangals")
-      away1 = away_team.managers.create!(fpl_id: 10258, fiso_name: 'fred1266')
-      away2 = away_team.managers.create!(fpl_id: 72437, fiso_name: 'chris2k_11')
-      away3 = away_team.managers.create!(fpl_id: 41737, fiso_name: 'Scottoffee')
-      away4 = away_team.managers.create!(fpl_id: 34114, fiso_name: 'Britinus')
-      away5 = away_team.managers.create!(fpl_id: 6587, fiso_name: 'bulgarche')
+      away_team = Team.create!(fpl_id: 9751, name: "Legomen")
+      away1 = away_team.managers.create!(fpl_id: 338428, fiso_name: 'Sir John Grimes')
+      away2 = away_team.managers.create!(fpl_id: 35464, fiso_name: 'Moonlightdribbler')
+      away3 = away_team.managers.create!(fpl_id: 28131, fiso_name: 'Canary Yellow')
+      away4 = away_team.managers.create!(fpl_id: 94961, fiso_name: 'Alchemist')
+      away5 = away_team.managers.create!(fpl_id: 1301, fiso_name: 'Jamies2cool')
 
-      starts_at = Time.parse("2015/04/11 11:45")
-      ends_at   = Time.parse("2015/04/14 04:00")
-      game_week = 32
+      starts_at = Time.parse("2015/04/17 11:45")
+      ends_at   = Time.parse("2015/04/20 04:00")
+      game_week = 33
 
       match = Match.create!(game_week: game_week, home_team_id: home_team.id, away_team_id: away_team.id, starts_at: starts_at, ends_at: ends_at)
       match.h2h_matches.create!(home_manager_id: home1.id, away_manager_id: away1.id, match_order: 1)
