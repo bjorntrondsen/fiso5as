@@ -14,7 +14,7 @@ class FplScraper
   def fetch_data(manager, side)
     gw_url = "#{manager.fpl_url}/#{@match.game_week}/"
     @doc = Nokogiri::HTML(open(gw_url))
-    score = @doc.at_css('.ismSB .ismSBPrimary > div').content.strip.scan(/\A\d{1,}/).first.to_i
+    score = @doc.at_css('.ism-scoreboard-panel__points').content.strip.scan(/\A\d{1,}/).first.to_i
     @h2h_match.home_score = score if(side == :home)
     @h2h_match.away_score = score if(side == :away)
     @doc.css('.ismPitch .ismPitchElement, .ismBench .ismPitchElement').each do |player_element|
