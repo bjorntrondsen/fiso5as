@@ -10,21 +10,21 @@ namespace :matches do
       #home5 = home_team.managers.create(fpl_id: 51639, fiso_name: 'Sharagoz')
       home_team = Team.find_by(name: "Eagles")
       home1 = home_team.managers.find_by(fiso_name: 'From4Corners')
-      home2 = home_team.managers.find_by(fiso_name: 'Moist von Lipwig')
-      home3 = home_team.managers.find_by(fiso_name: 'Le Red')
+      home2 = home_team.managers.find_by(fiso_name: 'Le Red')
+      home3 = home_team.managers.find_by(fiso_name: 'Moist von Lipwig')
       home4 = home_team.managers.find_by(fiso_name: 'Sharagoz')
       home5 = home_team.managers.find_by(fiso_name: 'OatFedGoat')
 
-      away_team = Team.create!(fpl_id: 364749, name: "Vipers")
-      away1 = away_team.managers.create!(fpl_id: 465, fiso_name: 'Loosecannon85')
-      away2 = away_team.managers.create!(fpl_id: 3494, fiso_name: 'Neville Wears Prada')
-      away3 = away_team.managers.create!(fpl_id: 14, fiso_name: 'deanfar')
-      away4 = away_team.managers.create!(fpl_id: 37254, fiso_name: 'mogwai')
-      away5 = away_team.managers.create!(fpl_id: 9397, fiso_name: 'Skuse Me')
+      away_team = Team.create!(fpl_id: 55768, name: "Virgins")
+      away1 = away_team.managers.create!(fpl_id: 87846, fiso_name: 'Neville Wears Prada')
+      away2 = away_team.managers.create!(fpl_id: 337714, fiso_name: 'Hödi')
+      away3 = away_team.managers.create!(fpl_id: 121185, fiso_name: 'mogwai')
+      away4 = away_team.managers.create!(fpl_id: 34148, fiso_name: 'Skuse Me')
+      away5 = away_team.managers.create!(fpl_id: 110412, fiso_name: 'deanfar')
 
-      starts_at = Time.parse("2015/09/26 11:45")
-      ends_at   = Time.parse("2015/09/29 04:00")
-      game_week = 7
+      starts_at = Time.parse("2015/10/03 11:45")
+      ends_at   = Time.parse("2015/10/06 04:00")
+      game_week = 8
 
       match = Match.create!(game_week: game_week, home_team_id: home_team.id, away_team_id: away_team.id, starts_at: starts_at, ends_at: ends_at)
       match.h2h_matches.create!(home_manager_id: home1.id, away_manager_id: away1.id, match_order: 1)
