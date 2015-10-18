@@ -1,8 +1,7 @@
 class Match < ActiveRecord::Base
   class << self
-    # Used to keep track of which prem league fixtures are finished when syncing data
-    # Done for performance reasons
-    attr_accessor :pl_match_over
+    # Fields used for caching when syncing to prevent unnecessary scraping
+    attr_accessor :pl_match_over, :player_data, :teams
   end
 
   belongs_to :home_team, class_name: 'Team'
@@ -11,6 +10,12 @@ class Match < ActiveRecord::Base
 
   def self.active
     self.where(["starts_at < ? AND ends_at > ?", Time.zone.now, Time.zone.now])
+  end
+
+  def self.sync_all
+    time = Time.zone.now
+    active.each{|m| m.fpl_sync }
+    puts Time.zone.now - time
   end
 
   def fpl_sync
@@ -57,7 +62,7 @@ class Match < ActiveRecord::Base
       rows = doc.css('table.ismStandingsTable tr')
       "Expected 6 rows, got #{rows.length}" unless rows.length == 6
       rows.each do |row|
-        unless row.children.first.name == 'th'
+        unless row.children.css("th").any?
           cells = row.css('td')
           team_name = cells[2].content
           fpl_name = cells[3].content

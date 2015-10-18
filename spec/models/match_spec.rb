@@ -7,7 +7,9 @@ describe Match do
     example 'full stack test' do
       VCR.use_cassette('gw_halftime') do
         time = Time.zone.now
+
         Match.new(home_team_id: 16137, away_team_id: 30508, game_week: 1, starts_at: '2015-10-17 11:45:00 UTC', ends_at: '2015-10-19 04:00:00 UTC').set_up_match!
+
         expect(Match.count).to eq(1)
         expect(Manager.count).to eq(10)
         expect(H2hMatch.count).to eq(5)

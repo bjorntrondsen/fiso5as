@@ -27,11 +27,15 @@ class FplScraper
   end
 
   def player_data(player_element, player_json)
+    name = get_player_name(player_element)
+    team_name = get_team_name(player_json)
+    id_str = name + team_name
+    Match.player_data ||= {}
+    return Match.player_data[id_str] if Match.player_data[id_str].present?
+
     minutes_played = get_minutes_played(player_element)
     games_left = get_games_left(player_element)
-    team_name = get_team_name(player_element)
     match_over = match_over?(team_name)
-    name = get_player_name(player_element)
     bench = benched?(player_element)
     captain = player_json['is_captain']
     vice_captain = player_json['is_vice_captain']
@@ -45,7 +49,7 @@ class FplScraper
                  raise "Unknown player type"
                end
 
-   {name: name, games_left: games_left, captain: captain, vice_captain: vice_captain, bench: bench, position: position, points: points, minutes_played: minutes_played, match_over: match_over}
+   Match.player_data[id_str] = {name: name, games_left: games_left, captain: captain, vice_captain: vice_captain, bench: bench, position: position, points: points, minutes_played: minutes_played, match_over: match_over}
   end
 
   def benched?(player_element)
@@ -77,8 +81,12 @@ class FplScraper
     end
   end
 
-  def get_team_name(player_element)
-    player_element.at_css('.ismShirt')['title'].strip
+  def get_team_name(player_json)
+    team_id = player_json['team']
+    teams[team_id]
+    #player_element.at_css('.ismShirt')['title'].strip
+    #player_element.to_s.match(/title=\"(.*)\" class=\"ismShirt\"/)[1].strip
+    #player_element.xpath("div/div/img")[0]['title']
   end
 
   def get_player_name(player_element)
@@ -98,7 +106,6 @@ class FplScraper
     fixture_info = @doc.at(".ismResult:contains('#{team_name}')")
     fixture_id = fixture_info.next_element.at_css('.ismFixtureStatsLink')['data-id'].to_i if(fixture_info)
     if fixture_id && Match.pl_match_over[team_name].blank?
-      puts "checking for #{team_name}"
       fixture_url = "http://fantasy.premierleague.com/fixture/#{fixture_id}/"
       fixture_data = Nokogiri::HTML(open(fixture_url))
       if fixture_data.content.blank?
@@ -107,6 +114,32 @@ class FplScraper
       Match.pl_match_over[team_name] = (fixture_data.xpath("//td[2][contains(text(), '90')]").length > 2) # Checking that 90 exists 3 times to be safe
     end
     return fixture_id.present? ? Match.pl_match_over[team_name] : false
+  end
+
+  def teams
+    return Match.teams if Match.teams
+    Match.teams = []
+    Match.teams[1] = 'Arsenal'
+    Match.teams[2] = 'Aston Villa'
+    Match.teams[3] = 'Bournemouth'
+    Match.teams[4] = 'Chelsea'
+    Match.teams[5] = 'Crystal Palace'
+    Match.teams[6] = 'Everton'
+    Match.teams[7] = 'Leicester City'
+    Match.teams[8] = 'Liverpool'
+    Match.teams[9] = 'Manchester City'
+    Match.teams[10] = 'Manchester United'
+    Match.teams[11] = 'Newcastle United'
+    Match.teams[12] = 'Norwich City'
+    Match.teams[13] = 'Southampton'
+    Match.teams[14] = 'Tottenham Hotspur'
+    Match.teams[15] = 'Stoke City'
+    Match.teams[16] = 'Sunderland'
+    Match.teams[17] = 'Swansea City'
+    Match.teams[18] = 'Watford'
+    Match.teams[19] = 'West Bromwich Albion'
+    Match.teams[20] = 'West Ham United'
+    Match.teams
   end
 
 end
