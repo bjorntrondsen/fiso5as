@@ -41,6 +41,45 @@ class Match < ActiveRecord::Base
     started? && !ended?
   end
 
+  def set_up_match!
+    require 'open-uri'
+
+    teams = []
+    [home_team_id, away_team_id].each do |team_id|
+      team_url = "http://fantasy.premierleague.com/my-leagues/#{team_id}/standings/"
+      doc = Nokogiri::HTML(open(team_url))
+      doc = doc.at_css('section.ismPrimaryWide')
+      team_name = doc.at_css("h2.ismTabHeading").content.sub("FISO 5AS",'').strip
+      team = Team.create!(fpl_id: team_id, name: team_name)
+      teams << team
+      rows = doc.css('table.ismStandingsTable tr')
+      "Expected 6 rows, got #{rows.length}" unless rows.length == 6
+      rows.each do |row|
+        unless row.children.first.name == 'th'
+          cells = row.css('td')
+          team_name = cells[2].content
+          fpl_name = cells[3].content
+          link = row.css('td a')[0].attributes['href'].value
+          fpl_id = link.match(/entry\/(\d*)\/event-history/)[1]
+          team.managers.create!(fpl_id: fpl_id, fpl_name: fpl_name)
+        end
+      end
+    end
+
+    self.home_team = teams[0]
+    self.away_team = teams[1]
+
+    self.save!
+
+    self.h2h_matches.create!(home_manager: home_team.managers[0], away_manager: away_team.managers[0], match_order: 1)
+    self.h2h_matches.create!(home_manager: home_team.managers[1], away_manager: away_team.managers[1], match_order: 2)
+    self.h2h_matches.create!(home_manager: home_team.managers[2], away_manager: away_team.managers[2], match_order: 3)
+    self.h2h_matches.create!(home_manager: home_team.managers[3], away_manager: away_team.managers[3], match_order: 4)
+    self.h2h_matches.create!(home_manager: home_team.managers[4], away_manager: away_team.managers[4], match_order: 5)
+
+    fpl_sync
+  end
+
   private
 
   def differentiators(side, playing)
