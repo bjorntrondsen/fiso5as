@@ -13,7 +13,7 @@ class FplScraper
 
   def fetch_data(manager, side)
     gw_url = "#{manager.fpl_url}/#{@match.game_week}/"
-    @doc = Nokogiri::HTML(open(gw_url))
+    @doc = Nokogiri::HTML(gzip_fetch(gw_url))
     score = @doc.at_css('.ism-scoreboard-panel__points').content.strip.scan(/\A\d{1,}/).first.to_i
     @h2h_match.home_score = score if(side == :home)
     @h2h_match.away_score = score if(side == :away)
@@ -107,7 +107,7 @@ class FplScraper
     fixture_id = fixture_info.next_element.at_css('.ismFixtureStatsLink')['data-id'].to_i if(fixture_info)
     if fixture_id && Match.pl_match_over[team_name].blank?
       fixture_url = "http://fantasy.premierleague.com/fixture/#{fixture_id}/"
-      fixture_data = Nokogiri::HTML(open(fixture_url))
+      fixture_data = Nokogiri::HTML(gzip_fetch(fixture_url))
       if fixture_data.content.blank?
         raise "Content is blank"
       end
@@ -140,6 +140,12 @@ class FplScraper
     Match.teams[19] = 'West Bromwich Albion'
     Match.teams[20] = 'West Ham United'
     Match.teams
+  end
+
+  def gzip_fetch(url)
+    gzipped_html = open(url, 'Accept-Encoding' => 'gzip')
+    gz = Zlib::GzipReader.new(StringIO.new(gzipped_html.read))
+    gz.read
   end
 
 end
