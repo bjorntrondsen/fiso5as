@@ -31,6 +31,7 @@ group :test do
   gem 'machinist'
   gem 'vcr'
   gem 'webmock'
+  gem 'database_cleaner'
 end
 
 group :production do
