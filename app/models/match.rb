@@ -13,6 +13,9 @@ class Match < ActiveRecord::Base
   end
 
   def self.sync_all
+    self.pl_match_over = nil
+    self.player_data = nil
+    self.teams = nil
     time = Time.zone.now
     active.each{|m| m.fpl_sync }
     puts Time.zone.now - time
