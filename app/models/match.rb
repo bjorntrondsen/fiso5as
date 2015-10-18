@@ -1,7 +1,9 @@
 class Match < ActiveRecord::Base
-  # Used to keep track of which prem league fixtures are finished when syncing data
-  # Done for performance reasons
-  attr_accessor :pl_match_over
+  class << self
+    # Used to keep track of which prem league fixtures are finished when syncing data
+    # Done for performance reasons
+    attr_accessor :pl_match_over
+  end
 
   belongs_to :home_team, class_name: 'Team'
   belongs_to :away_team, class_name: 'Team'

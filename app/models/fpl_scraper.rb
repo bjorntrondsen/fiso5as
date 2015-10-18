@@ -90,19 +90,23 @@ class FplScraper
   # The result is cached on the match object to avoid unnecessary parsing.
   # TODO: No good during DGW
   def match_over?(team_name)
-    @match.pl_match_over ||= []
-    return true if @doc.at(".ismFixtureTable:contains('#{team_name}')").blank? # No match
+    Match.pl_match_over ||= {}
+    return Match.pl_match_over[team_name] if !Match.pl_match_over[team_name].nil?
+    if @doc.at(".ismFixtureTable:contains('#{team_name}')").blank? # No match
+      return Match.pl_match_over[team_name] = true
+    end
     fixture_info = @doc.at(".ismResult:contains('#{team_name}')")
     fixture_id = fixture_info.next_element.at_css('.ismFixtureStatsLink')['data-id'].to_i if(fixture_info)
-    if fixture_id && @match.pl_match_over[fixture_id].blank?
+    if fixture_id && Match.pl_match_over[team_name].blank?
+      puts "checking for #{team_name}"
       fixture_url = "http://fantasy.premierleague.com/fixture/#{fixture_id}/"
       fixture_data = Nokogiri::HTML(open(fixture_url))
       if fixture_data.content.blank?
         raise "Content is blank"
       end
-      @match.pl_match_over[fixture_id] = (fixture_data.xpath("//td[2][contains(text(), '90')]").length > 2) # Checking that 90 exists 3 times to be safe
+      Match.pl_match_over[team_name] = (fixture_data.xpath("//td[2][contains(text(), '90')]").length > 2) # Checking that 90 exists 3 times to be safe
     end
-    return fixture_id.present? ? @match.pl_match_over[fixture_id] : false
+    return fixture_id.present? ? Match.pl_match_over[team_name] : false
   end
 
 end
