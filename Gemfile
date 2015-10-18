@@ -12,7 +12,7 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
 gem 'haml-rails'
-gem 'nokogiri'
+gem 'nokogiri', '1.6.0' # Performance drop in 1.6.6 
 gem 'rufus-scheduler'
 gem 'newrelic_rpm'
 
