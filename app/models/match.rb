@@ -1,7 +1,7 @@
 class Match < ActiveRecord::Base
   class << self
     # Fields used for caching when syncing to prevent unnecessary scraping
-    attr_accessor :pl_match_over, :player_data, :teams
+    attr_accessor :pl_match_over, :teams
   end
 
   belongs_to :home_team, class_name: 'Team'
@@ -14,7 +14,6 @@ class Match < ActiveRecord::Base
 
   def self.sync_all
     self.pl_match_over = nil
-    self.player_data = nil
     self.teams = nil
     time = Time.zone.now
     active.each{|m| m.fpl_sync }

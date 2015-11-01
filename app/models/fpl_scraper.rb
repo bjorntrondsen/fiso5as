@@ -29,10 +29,6 @@ class FplScraper
   def player_data(player_element, player_json)
     name = get_player_name(player_element)
     team_name = get_team_name(player_json)
-    id_str = name + team_name
-    Match.player_data ||= {}
-    return Match.player_data[id_str] if Match.player_data[id_str].present?
-
     minutes_played = get_minutes_played(player_element)
     games_left = get_games_left(player_element)
     match_over = match_over?(team_name)
@@ -49,7 +45,7 @@ class FplScraper
                  raise "Unknown player type"
                end
 
-   Match.player_data[id_str] = {name: name, games_left: games_left, captain: captain, vice_captain: vice_captain, bench: bench, position: position, points: points, minutes_played: minutes_played, match_over: match_over}
+   {name: name, games_left: games_left, captain: captain, vice_captain: vice_captain, bench: bench, position: position, points: points, minutes_played: minutes_played, match_over: match_over}
   end
 
   def benched?(player_element)
