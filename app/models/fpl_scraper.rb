@@ -1,3 +1,29 @@
+# FPL JSON API
+#
+# JSON API
+
+# Liga data:
+# https://fantasy.premierleague.com/drf/leagues-classic-standings/169066?phase=1&le-page=1&ls-page=1
+#
+# Managerdata
+# https://fantasy.premierleague.com/drf/entry/121565
+#
+# GW data
+# https://fantasy.premierleague.com/drf/entry/121565/event/2/picks
+#
+# Live match data:
+# https://fantasy.premierleague.com/drf/event/2/live
+# Har info om alle kampene (20stk) og poengene spillerene (515stk)
+#
+# Statiske data:
+# https://fantasy.premierleague.com/drf/bootstrap-static
+# Laginfo, spillerinfo m.m
+#
+# Diverse
+# https://fantasy.premierleague.com/drf/bootstrap-dynamic
+# Match info, labels
+# Viser om kamper er over
+
 class FplScraper
   def initialize(h2h_match)
     @h2h_match = h2h_match
