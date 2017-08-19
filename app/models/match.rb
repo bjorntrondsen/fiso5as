@@ -21,13 +21,13 @@ class Match < ActiveRecord::Base
   end
 
   def fpl_sync
-    puts "Getting FPL data (match #{self.id}) #{Time.zone.now}"
+    time = Time.zone.now
     transaction do
       h2h_matches.each{|m| m.fetch_data }
       self.touch
       self.save
     end
-    puts "Done (match #{self.id}) #{Time.zone.now}"
+    puts "Done (match #{self.id}) Took #{Time.zone.now - time}"
   end
 
   def playing_now(side)
