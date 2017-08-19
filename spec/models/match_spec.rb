@@ -13,7 +13,7 @@ describe Match do
         expect(Player.count).to eq(150)
         expect(Match.first.home_team.name).to eq('FISO 5AS The Eagles')
         expect(Match.first.away_team.name).to eq('FISO 5AS Moderators')
-        expect(Match.first.home_team.managers.first.name).to eq('Pedro Schadeck')
+        expect(Match.first.home_team.managers.first.name).to eq('Matt Dixon')
         expect(Match.first.away_team.managers.first.name).to eq('David Tonkin')
       end
     end

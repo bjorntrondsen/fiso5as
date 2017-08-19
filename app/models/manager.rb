@@ -1,8 +1,8 @@
 class Manager < ActiveRecord::Base
   validates_presence_of :fpl_id
 
-  def fpl_url
-    "http://fantasy.premierleague.com/entry/#{self.fpl_id}/event-history"
+  def gw_url(gw)
+    "https://fantasy.premierleague.com/a/team/#{fpl_id}/event/#{gw}"
   end
 
   def name

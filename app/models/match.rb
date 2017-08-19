@@ -63,7 +63,7 @@ class Match < ActiveRecord::Base
         player_data = team_data['standings']['results']
         raise "Expected 5 players, found #{player_data.length}" unless player_data.length == 5
         player_data.each do |player|
-          team.managers.create!(fpl_id: player['id'], fpl_name: player['player_name'])
+          team.managers.create!(fpl_id: player['entry'], fpl_name: player['player_name'])
         end
       end
     end

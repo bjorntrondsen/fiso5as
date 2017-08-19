@@ -25,6 +25,7 @@ group :development, :test do
   gem 'heroku'
   gem 'pry'
   gem 'ruby-prof'
+  gem 'awesome_print'
 end
 
 group :test do

@@ -41,7 +41,7 @@ RSpec.configure do |config|
   config.order = "random"
 
   VCR.configure do |c|
-    c.cassette_library_dir = 'support/vcr_cassettes'
+    c.cassette_library_dir = 'spec/support/vcr_cassettes'
     c.hook_into :webmock # or :fakeweb
   end
 

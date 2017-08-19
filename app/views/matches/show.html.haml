@@ -6,7 +6,7 @@
   - @match.h2h_matches.by_match_order.each do |match|
     %tr
       %th
-        = link_to match.home_manager.name, match.home_manager.fpl_url + "/#{@match.game_week}", target: '_blank'
+        = link_to match.home_manager.name, match.home_manager.gw_url(@match.game_week), target: '_blank'
         - if match.home_ahead?
           %span.pts= "+#{match.score_diff}"
       %th.pts_total
@@ -15,7 +15,7 @@
         %span{class: match.away_ahead? ? 'ahead' : 'behind'}
           = match.away_score
       %th
-        = link_to match.away_manager.name, match.away_manager.fpl_url + "/#{@match.game_week}", target: '_blank'
+        = link_to match.away_manager.name, match.away_manager.gw_url(@match.game_week), target: '_blank'
         - if match.away_ahead?
           %span.pts= "+#{match.score_diff}"
     %tr
