@@ -9,7 +9,7 @@ class MatchesController < ApplicationController
   end
 
   def new
-    @match = Match.new(home_team_id: 16137, game_week: (Match.maximum(:game_week) || 0) + 1, starts_at: Time.zone.now.beginning_of_week.advance(days: 5, hours: 11, minutes: 45), ends_at: Time.zone.now.beginning_of_week.advance(days: 7, hours: 4))
+    @match = Match.new(home_team_id: 169066, game_week: (Match.maximum(:game_week) || 0) + 1, starts_at: Time.zone.now.beginning_of_week.advance(days: 5, hours: 11, minutes: 45), ends_at: Time.zone.now.beginning_of_week.advance(days: 7, hours: 4))
   end
 
   def create

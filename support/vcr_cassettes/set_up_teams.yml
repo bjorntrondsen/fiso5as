@@ -1,0 +1,176 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://fantasy.premierleague.com/drf/leagues-classic-standings/169066?le-page=1&ls-page=1&phase=1
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Content-Type:
+      - application/json
+      Content-Language:
+      - plfplen
+      Allow:
+      - GET, HEAD, OPTIONS
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, max-age=0
+      X-Frame-Options:
+      - DENY
+      Set-Cookie:
+      - affiliate=; expires=Thu, 01-Jan-1970 00:00:00 GMT; Max-Age=0; Path=/
+      - one-click-join=; expires=Thu, 01-Jan-1970 00:00:00 GMT; Max-Age=0; Path=/
+      - sessionid="eyJnYW1lX2NvZGUiOiJwbGZwbCJ9:1djAJ0:2IBTDxuWpxxhg-3SfS6jzBnakNw";
+        httponly; Path=/
+      Via:
+      - 1.1 varnish
+      - 1.1 varnish
+      Fastly-Debug-Digest:
+      - fbc8a0152195d85fd9f50c19dafc71d1b1295fb1a222a53ba98c717ef0d6432b
+      Transfer-Encoding:
+      - chunked
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Sat, 19 Aug 2017 20:25:14 GMT
+      Age:
+      - '0'
+      Connection:
+      - keep-alive
+      X-Served-By:
+      - cache-lcy1147-LCY, cache-bma7033-BMA
+      X-Cache:
+      - MISS, MISS
+      X-Cache-Hits:
+      - 0, 0
+      X-Timer:
+      - S1503174314.963271,VS0,VE67
+      Vary:
+      - Cookie, Accept-Encoding
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJuZXdfZW50cmllcyI6eyJoYXNfbmV4dCI6ZmFsc2UsIm51bWJlciI6MSwi
+        cmVzdWx0cyI6W119LCJsZWFndWUiOnsiaWQiOjE2OTA2NiwibGVhZ3VlYmFu
+        X3NldCI6W10sIm5hbWUiOiJGSVNPIDVBUyBUaGUgRWFnbGVzIiwic2hvcnRf
+        bmFtZSI6bnVsbCwiY3JlYXRlZCI6IjIwMTctMDctMTlUMDc6NTA6MjlaIiwi
+        Y2xvc2VkIjpmYWxzZSwiZm9ydW1fZGlzYWJsZWQiOmZhbHNlLCJtYWtlX2Nv
+        ZGVfcHVibGljIjpmYWxzZSwicmFuayI6bnVsbCwic2l6ZSI6bnVsbCwibGVh
+        Z3VlX3R5cGUiOiJ4IiwiX3Njb3JpbmciOiJjIiwicmVwcm9jZXNzX3N0YW5k
+        aW5ncyI6ZmFsc2UsImFkbWluX2VudHJ5Ijo4ODM1LCJzdGFydF9ldmVudCI6
+        MX0sInN0YW5kaW5ncyI6eyJoYXNfbmV4dCI6ZmFsc2UsIm51bWJlciI6MSwi
+        cmVzdWx0cyI6W3siaWQiOjM2MTEwMTksImVudHJ5X25hbWUiOiJCdXR0ZXIg
+        QnJpZGdlIFVuaXRlZCIsImV2ZW50X3RvdGFsIjozMCwicGxheWVyX25hbWUi
+        OiJQZWRybyBTY2hhZGVjayIsIm1vdmVtZW50Ijoic2FtZSIsIm93bl9lbnRy
+        eSI6ZmFsc2UsInJhbmsiOjEsImxhc3RfcmFuayI6MSwicmFua19zb3J0Ijox
+        LCJ0b3RhbCI6OTAsImVudHJ5IjoxMjE1NjUsImxlYWd1ZSI6MTY5MDY2LCJz
+        dGFydF9ldmVudCI6MSwic3RvcF9ldmVudCI6Mzh9LHsiaWQiOjM2MTEwMTgs
+        ImVudHJ5X25hbWUiOiJCb29tIFhoYWthLUxhY2F6ZXR0ZSIsImV2ZW50X3Rv
+        dGFsIjozNSwicGxheWVyX25hbWUiOiJNYXR0IERpeG9uIiwibW92ZW1lbnQi
+        OiJzYW1lIiwib3duX2VudHJ5IjpmYWxzZSwicmFuayI6MiwibGFzdF9yYW5r
+        IjoyLCJyYW5rX3NvcnQiOjIsInRvdGFsIjo4MSwiZW50cnkiOjMxOTQsImxl
+        YWd1ZSI6MTY5MDY2LCJzdGFydF9ldmVudCI6MSwic3RvcF9ldmVudCI6Mzh9
+        LHsiaWQiOjYxMDAzNjEsImVudHJ5X25hbWUiOiJGQyBOb3J0aCBXaW5kIiwi
+        ZXZlbnRfdG90YWwiOjQwLCJwbGF5ZXJfbmFtZSI6IkJqw7hybiBUcm9uZHNl
+        biIsIm1vdmVtZW50Ijoic2FtZSIsIm93bl9lbnRyeSI6ZmFsc2UsInJhbmsi
+        OjMsImxhc3RfcmFuayI6MywicmFua19zb3J0IjozLCJ0b3RhbCI6NzEsImVu
+        dHJ5IjoxMTY0OTI4LCJsZWFndWUiOjE2OTA2Niwic3RhcnRfZXZlbnQiOjEs
+        InN0b3BfZXZlbnQiOjM4fSx7ImlkIjozNjExMDE2LCJlbnRyeV9uYW1lIjoi
+        QS5NLiBQb3N0YWwgU2VydmljZSIsImV2ZW50X3RvdGFsIjozNCwicGxheWVy
+        X25hbWUiOiJTY290dCBXZXN0b24iLCJtb3ZlbWVudCI6InNhbWUiLCJvd25f
+        ZW50cnkiOmZhbHNlLCJyYW5rIjo0LCJsYXN0X3JhbmsiOjQsInJhbmtfc29y
+        dCI6NCwidG90YWwiOjYyLCJlbnRyeSI6ODgzNSwibGVhZ3VlIjoxNjkwNjYs
+        InN0YXJ0X2V2ZW50IjoxLCJzdG9wX2V2ZW50IjozOH0seyJpZCI6MzYxMTAx
+        NywiZW50cnlfbmFtZSI6IkZyb200Q29ybmVycyIsImV2ZW50X3RvdGFsIjo0
+        MywicGxheWVyX25hbWUiOiJNaWNoZWwgSGFybXMiLCJtb3ZlbWVudCI6InNh
+        bWUiLCJvd25fZW50cnkiOmZhbHNlLCJyYW5rIjo1LCJsYXN0X3JhbmsiOjUs
+        InJhbmtfc29ydCI6NSwidG90YWwiOjYwLCJlbnRyeSI6MjM0OCwibGVhZ3Vl
+        IjoxNjkwNjYsInN0YXJ0X2V2ZW50IjoxLCJzdG9wX2V2ZW50IjozOH1dfSwi
+        dXBkYXRlX3N0YXR1cyI6MX0=
+    http_version: 
+  recorded_at: Sat, 19 Aug 2017 20:25:14 GMT
+- request:
+    method: get
+    uri: https://fantasy.premierleague.com/drf/leagues-classic-standings/213779?le-page=1&ls-page=1&phase=1
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Content-Type:
+      - application/json
+      Content-Language:
+      - plfplen
+      Allow:
+      - GET, HEAD, OPTIONS
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, max-age=0
+      X-Frame-Options:
+      - DENY
+      Set-Cookie:
+      - affiliate=; expires=Thu, 01-Jan-1970 00:00:00 GMT; Max-Age=0; Path=/
+      - one-click-join=; expires=Thu, 01-Jan-1970 00:00:00 GMT; Max-Age=0; Path=/
+      - sessionid="eyJnYW1lX2NvZGUiOiJwbGZwbCJ9:1djAJ0:2IBTDxuWpxxhg-3SfS6jzBnakNw";
+        httponly; Path=/
+      Via:
+      - 1.1 varnish
+      - 1.1 varnish
+      Fastly-Debug-Digest:
+      - 6fe32f835fcdb355cdffcf3484f0e70ebec05ed4c0d13d4b259697f60a23e516
+      Transfer-Encoding:
+      - chunked
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Sat, 19 Aug 2017 20:25:14 GMT
+      Age:
+      - '0'
+      Connection:
+      - keep-alive
+      X-Served-By:
+      - cache-lcy1142-LCY, cache-bma7029-BMA
+      X-Cache:
+      - MISS, MISS
+      X-Cache-Hits:
+      - 0, 0
+      X-Timer:
+      - S1503174314.150662,VS0,VE69
+      Vary:
+      - Cookie, Accept-Encoding
+    body:
+      encoding: ASCII-8BIT
+      string: '{"new_entries":{"has_next":false,"number":1,"results":[]},"league":{"id":213779,"leagueban_set":[],"name":"FISO
+        5AS Moderators","short_name":null,"created":"2017-07-22T08:47:08Z","closed":false,"forum_disabled":false,"make_code_public":false,"rank":null,"size":null,"league_type":"x","_scoring":"c","reprocess_standings":false,"admin_entry":26342,"start_event":1},"standings":{"has_next":false,"number":1,"results":[{"id":4599608,"entry_name":"Furballs","event_total":43,"player_name":"David
+        Tonkin","movement":"same","own_entry":false,"rank":1,"last_rank":1,"rank_sort":1,"total":85,"entry":29988,"league":213779,"start_event":1,"stop_event":38},{"id":4599611,"entry_name":"Bargain
+        Bin Select","event_total":39,"player_name":"Dave England","movement":"same","own_entry":false,"rank":2,"last_rank":2,"rank_sort":2,"total":72,"entry":45444,"league":213779,"start_event":1,"stop_event":38},{"id":4599609,"entry_name":"AstonTinCanDribblers","event_total":42,"player_name":"chris
+        beasley","movement":"same","own_entry":false,"rank":3,"last_rank":3,"rank_sort":3,"total":70,"entry":155655,"league":213779,"start_event":1,"stop_event":38},{"id":4599607,"entry_name":"ManJester
+        United","event_total":22,"player_name":"David King","movement":"same","own_entry":false,"rank":4,"last_rank":4,"rank_sort":4,"total":51,"entry":886939,"league":213779,"start_event":1,"stop_event":38},{"id":4599610,"entry_name":"Eli
+        Jack FC","event_total":4,"player_name":"Ashley Bloodworth","movement":"same","own_entry":false,"rank":5,"last_rank":5,"rank_sort":5,"total":43,"entry":26342,"league":213779,"start_event":1,"stop_event":38}]},"update_status":1}'
+    http_version: 
+  recorded_at: Sat, 19 Aug 2017 20:25:14 GMT
+recorded_with: VCR 2.5.0

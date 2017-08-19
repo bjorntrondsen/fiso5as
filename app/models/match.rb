@@ -52,25 +52,18 @@ class Match < ActiveRecord::Base
 
   def set_up_match!
     require 'open-uri'
-
     teams = []
-    [home_team_id, away_team_id].each do |team_id|
-      team_url = "http://fantasy.premierleague.com/my-leagues/#{team_id}/standings/"
-      doc = Nokogiri::HTML(open(team_url))
-      doc = doc.at_css('section.ismPrimaryWide')
-      team_name = doc.at_css("h2.ismTabHeading").content.sub("FISO 5AS",'').strip
-      team = Team.create!(fpl_id: team_id, name: team_name)
-      teams << team
-      rows = doc.css('table.ismStandingsTable tr')
-      "Expected 6 rows, got #{rows.length}" unless rows.length == 6
-      rows.each do |row|
-        unless row.children.css("th").any?
-          cells = row.css('td')
-          team_name = cells[2].content
-          fpl_name = cells[3].content
-          link = row.css('td a')[0].attributes['href'].value
-          fpl_id = link.match(/entry\/(\d*)\/event-history/)[1]
-          team.managers.create!(fpl_id: fpl_id, fpl_name: fpl_name)
+    ActiveRecord::Base.transaction do
+      [home_team_id, away_team_id].each do |team_id|
+        team_url = Team.fpl_url(team_id)
+        team_data = JSON.parse(open(team_url).read)
+        team_name = team_data['league']['name']
+        team = Team.create!(fpl_id: team_id, name: team_name)
+        teams << team
+        player_data = team_data['standings']['results']
+        raise "Expected 5 players, found #{player_data.length}" unless player_data.length == 5
+        player_data.each do |player|
+          team.managers.create!(fpl_id: player['id'], fpl_name: player['player_name'])
         end
       end
     end
