@@ -9,4 +9,8 @@ class Team < ActiveRecord::Base
   def fpl_url
     self.class.fpl_url(fpl_id)
   end
+
+  def short_name
+    name.sub('FISO', '').sub('5AS','').strip
+  end
 end
