@@ -60,7 +60,7 @@ class Match < ActiveRecord::Base
     teams = []
     ActiveRecord::Base.transaction do
       [home_team_id, away_team_id].each do |team_id|
-        team_url = Team.fpl_url(team_id)
+        team_url = Team.data_url(team_id)
         team_data = JSON.parse(open(team_url).read)
         team_name = team_data['league']['name']
         team = Team.create!(fpl_id: team_id, name: team_name)
