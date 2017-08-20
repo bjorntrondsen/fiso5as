@@ -73,4 +73,8 @@ class Player < ActiveRecord::Base
     return str
   end
 
+  def compact_name
+    name.gsub(' ', '')
+  end
+
 end
