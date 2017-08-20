@@ -11,6 +11,6 @@ class Team < ActiveRecord::Base
   end
 
   def short_name
-    name.sub('FISO', '').sub('5AS','').strip
+    name.sub('FISO', '').sub('5AS','').strip.titlecase
   end
 end
