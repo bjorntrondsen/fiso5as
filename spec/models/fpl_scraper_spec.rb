@@ -14,6 +14,7 @@ describe FplScraper do
 
   after :all do
     Match.destroy_all
+    Manager.destroy_all
   end
 
   let(:player_fields) { %w(captain vice_captain bench position points minutes played match_over) }
