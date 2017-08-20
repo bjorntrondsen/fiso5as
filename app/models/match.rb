@@ -12,6 +12,10 @@ class Match < ActiveRecord::Base
     self.where(["starts_at < ? AND ends_at > ?", Time.zone.now, Time.zone.now])
   end
 
+  def self.with_all_data
+    includes(:home_team, :away_team, :h2h_matches)
+  end
+
   def self.sync_all
     FplScraper.clear_cache
     self.pl_match_over = nil

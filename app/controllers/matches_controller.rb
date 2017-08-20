@@ -1,11 +1,11 @@
 class MatchesController < ApplicationController
 
   def index
-    @matches = Match.active.includes(:home_team, :away_team, {:h2h_matches => :players})
+    @matches = Match.active.with_all_data
   end
 
   def show
-    @match = Match.includes(:home_team, :away_team, {:h2h_matches => :players}).find(params[:id])
+    @match = Match.with_all_data.find(params[:id])
   end
 
   def new
