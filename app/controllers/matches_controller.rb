@@ -2,7 +2,7 @@ class MatchesController < ApplicationController
 
   def index
     @game_week = (params[:game_week] || Match.started.order(:starts_at).last.game_week).to_i
-    @matches = Match.where(game_week: @game_week).with_all_data
+    @matches = Match.where(game_week: @game_week).with_all_data.order(:id)
   end
 
   def show
