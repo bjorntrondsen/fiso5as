@@ -25,9 +25,25 @@
 # Viser om kamper er over
 
 class FplScraper
+
+  def self.static_data
+    return @static_data if @static_data
+    data_url = 'https://fantasy.premierleague.com/drf/bootstrap-static'
+    @static_data = JSON.parse(open(data_url).read)
+    @static_data
+  end
+
+  def self.live_data(game_week)
+    return @live_data if @live_data
+    data_url = "https://fantasy.premierleague.com/drf/event/#{game_week}/live"
+    @live_data = JSON.parse(open(data_url).read)
+    @live_data
+  end
+
   def initialize(h2h_match)
     @h2h_match = h2h_match
     @match = h2h_match.match
+    @game_week = @match.game_week
   end
 
   def scrape
@@ -78,7 +94,7 @@ class FplScraper
   end
 
   def get_team_name(player_details)
-    static_data['teams'].find{|t| t['code'] == player_details[:static]['team_code']}['name']
+    self.class.static_data['teams'].find{|t| t['code'] == player_details[:static]['team_code']}['name']
   end
 
   def get_player_name(player_details)
@@ -103,12 +119,12 @@ class FplScraper
 
   def match_started?(player_details)
     match_id = player_details[:live]['explain'][0][1]
-    live_data['fixtures'].find{|m| m['id'] == match_id }['started']
+    self.class.live_data(@game_week)['fixtures'].find{|m| m['id'] == match_id }['started']
   end
 
   def match_over?(player_details)
     match_id = player_details[:live]['explain'][0][1]
-    live_data['fixtures'].find{|m| m['id'] == match_id }['finished']
+    self.class.live_data(@game_week)['fixtures'].find{|m| m['id'] == match_id }['finished']
   end
 
   def gzip_fetch(url)
@@ -119,23 +135,9 @@ class FplScraper
 
   def player_details(player_id)
     {
-      static: static_data['elements'].find{|p| p['id'] == player_id},
-      live: live_data['elements'][player_id.to_s]
+      static: self.class.static_data['elements'].find{|p| p['id'] == player_id},
+      live: self.class.live_data(@game_week)['elements'][player_id.to_s]
     }
-  end
-
-  def static_data
-    return @static_data if @static_data
-    data_url = 'https://fantasy.premierleague.com/drf/bootstrap-static'
-    @static_data = JSON.parse(open(data_url).read)
-    @static_data
-  end
-
-  def live_data
-    return @live_data if @live_data
-    data_url = 'https://fantasy.premierleague.com/drf/event/2/live'
-    @live_data = JSON.parse(open(data_url).read)
-    @live_data
   end
 
 end
