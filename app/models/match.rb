@@ -39,6 +39,14 @@ class Match < ActiveRecord::Base
     puts "Done (match #{self.id}) Took #{Time.zone.now - time}"
   end
 
+  def home_score
+    h2h_matches.collect{|h| h if h.home_ahead? }.compact.length
+  end
+
+  def away_score
+    h2h_matches.collect{|h| h if h.away_ahead? }.compact.length
+  end
+
   def playing_now(side)
     differentiators(side, :playing_now)
   end

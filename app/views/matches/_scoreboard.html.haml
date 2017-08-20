@@ -2,7 +2,10 @@
 %table.scoreboard
   %tr.headline
     %th= link_to match.home_team.short_name, match.home_team.fpl_url, target: '_blank'
-    %th.vs vs
+    %th.score
+      = match.home_score
+      %span.spacer -
+      = match.away_score
     %th= link_to match.away_team.short_name, match.away_team.fpl_url, target: '_blank'
   - match.h2h_matches.each do |h2h_match|
     %tr

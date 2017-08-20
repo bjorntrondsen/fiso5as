@@ -7,6 +7,9 @@
   color: #000
   margin-bottom: 0.5em
 
+  .team-score
+    color: blue
+
   td, th
     padding: 0px 9px
     border: 0
@@ -28,15 +31,18 @@
 
   tr.headline th
     background-color: #0B750B
-    color: #FFF
     padding: 0.5em
     text-align: center
     font-size: 22px
     text-shadow: 1px 1px 1px #555
 
-    &.vs
+    &.score
       text-align: center
-      color: #CCC
+      color: #FFF
+
+      .spacer
+        color: #CCC
+        padding: 0 0.2em
 
     a
       color: #FFF
