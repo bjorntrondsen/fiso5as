@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -16,58 +15,59 @@ ActiveRecord::Schema.define(version: 20170820091832) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "h2h_matches", force: true do |t|
-    t.integer  "match_id"
-    t.integer  "match_order"
-    t.integer  "home_manager_id"
-    t.integer  "away_manager_id"
-    t.integer  "home_score"
-    t.integer  "away_score"
-    t.text     "info"
+  create_table "h2h_matches", id: :serial, force: :cascade do |t|
+    t.integer "match_id"
+    t.integer "match_order"
+    t.integer "home_manager_id"
+    t.integer "away_manager_id"
+    t.integer "home_score"
+    t.integer "away_score"
+    t.text "info"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "managers", force: true do |t|
-    t.integer  "fpl_id"
-    t.integer  "team_id"
-    t.string   "fpl_name"
-    t.string   "fiso_name"
+  create_table "managers", id: :serial, force: :cascade do |t|
+    t.integer "fpl_id"
+    t.integer "team_id"
+    t.string "fpl_name", limit: 255
+    t.string "fiso_name", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "matches", force: true do |t|
-    t.integer  "game_week"
-    t.integer  "home_team_id"
-    t.integer  "away_team_id"
+  create_table "matches", id: :serial, force: :cascade do |t|
+    t.integer "game_week"
+    t.integer "home_team_id"
+    t.integer "away_team_id"
     t.datetime "starts_at"
     t.datetime "ends_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "players", force: true do |t|
-    t.integer  "h2h_match_id"
-    t.integer  "manager_id"
-    t.string   "name"
-    t.integer  "games_left"
-    t.boolean  "captain"
-    t.boolean  "vice_captain"
-    t.boolean  "bench"
-    t.string   "position"
-    t.integer  "points"
-    t.integer  "minutes_played"
-    t.boolean  "match_over"
+  create_table "players", id: :serial, force: :cascade do |t|
+    t.integer "h2h_match_id"
+    t.integer "manager_id"
+    t.string "name", limit: 255
+    t.integer "games_left"
+    t.boolean "captain"
+    t.boolean "vice_captain"
+    t.boolean "bench"
+    t.string "position", limit: 255
+    t.integer "points"
+    t.integer "minutes_played"
+    t.boolean "match_over"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "match_status",   default: "over"
-    t.string   "side"
+    t.string "match_status", limit: 255, default: "over"
+    t.string "side"
+    t.index ["side", "h2h_match_id"], name: "index_players_on_side_and_h2h_match_id"
   end
 
-  create_table "teams", force: true do |t|
-    t.string   "name"
-    t.integer  "fpl_id"
+  create_table "teams", id: :serial, force: :cascade do |t|
+    t.string "name", limit: 255
+    t.integer "fpl_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
