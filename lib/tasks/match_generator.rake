@@ -2,40 +2,42 @@ namespace :matches do
   desc "Create match"
   task :create => :environment  do
     ActiveRecord::Base.transaction do
-      #home_team = Team.create!(fpl_id: 16137, name: "Eagles")
-      #home1 = home_team.managers.create(fpl_id: 38991, fiso_name: 'From4Corners')
-      #home2 = home_team.managers.create(fpl_id: 1861, fiso_name: 'Moist von Lipwig')
-      #home3 = home_team.managers.create(fpl_id: 26478, fiso_name: 'Le Red')
-      #home4 = home_team.managers.create(fpl_id: 120647, fiso_name: 'OatFedgoat')
-      #home5 = home_team.managers.create(fpl_id: 51639, fiso_name: 'Sharagoz')
-      home_team = Team.find_by(name: "Eagles")
-      home1 = home_team.managers.find_by(fiso_name: 'From4Corners')
-      home2 = home_team.managers.find_by(fiso_name: 'Le Red')
-      home3 = home_team.managers.find_by(fiso_name: 'Moist von Lipwig')
-      home4 = home_team.managers.find_by(fiso_name: 'Sharagoz')
-      home5 = home_team.managers.find_by(fiso_name: 'OatFedGoat')
-
-      away_team = Team.create!(fpl_id: 30508, name: "Wild Force")
-      away1 = away_team.managers.create!(fpl_id: 302538, fiso_name: 'TheBenchamark')
-      away2 = away_team.managers.create!(fpl_id: 5338, fiso_name: 'velcro')
-      away3 = away_team.managers.create!(fpl_id: 71963, fiso_name: 'deppy')
-      away4 = away_team.managers.create!(fpl_id: 27336, fiso_name: 'richt')
-      away5 = away_team.managers.create!(fpl_id: 315815, fiso_name: 'karrde')
-
-      starts_at = Time.parse("2015/10/17 11:45")
-      ends_at   = Time.parse("2015/10/20 04:00")
-      game_week = 9
-
-      match = Match.create!(game_week: game_week, home_team_id: home_team.id, away_team_id: away_team.id, starts_at: starts_at, ends_at: ends_at)
-      match.h2h_matches.create!(home_manager_id: home1.id, away_manager_id: away1.id, match_order: 1)
-      match.h2h_matches.create!(home_manager_id: home2.id, away_manager_id: away2.id, match_order: 2)
-      match.h2h_matches.create!(home_manager_id: home3.id, away_manager_id: away3.id, match_order: 3)
-      match.h2h_matches.create!(home_manager_id: home4.id, away_manager_id: away4.id, match_order: 4)
-      match.h2h_matches.create!(home_manager_id: home5.id, away_manager_id: away5.id, match_order: 5)
-
-      puts "Match #{match.id} created"
-
-      match.fpl_sync
+      game_week = 2
+      starts_at = Time.zone.now.beginning_of_week.advance(days: 5, hours: 11, minutes: 45)
+      ends_at   = Time.zone.now.beginning_of_week.advance(days: 7, hours: 4)
+      group_a = [
+        209137,
+        112989,
+        434145,
+        351221,
+        581248,
+        198390,
+        499903,
+        137931,
+        54271,
+        317753,
+        3052
+      ]
+      group_b = [
+        173853,
+        4362,
+        57214,
+        45951,
+        9229,
+        147089,
+        57126,
+        386578,
+        384311,
+        345980,
+        27056
+      ]
+      ActiveRecord::Base.transaction do
+        group_a.each_with_index do |home_team_id, index|
+          away_team_id = group_b[index]
+          match = Match.new(home_team_id: home_team_id, away_team_id: away_team_id, game_week: game_week, starts_at: starts_at, ends_at: ends_at)
+          match.set_up_match!
+        end
+      end
     end
   end
 end
