@@ -14,6 +14,7 @@ Player.blueprint do
   match_over { true }
   minutes_played { 90 }
   position { 'FWD' }
+  side { 'home' }
 end
 
 Team.blueprint do

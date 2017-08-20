@@ -6,6 +6,7 @@ namespace :matches do
       starts_at = Time.zone.now.beginning_of_week.advance(days: 5, hours: 11, minutes: 45)
       ends_at   = Time.zone.now.beginning_of_week.advance(days: 7, hours: 4)
       group_a = [
+        169066,
         209137,
         112989,
         434145,
@@ -19,6 +20,7 @@ namespace :matches do
         3052
       ]
       group_b = [
+        213779,
         173853,
         4362,
         57214,

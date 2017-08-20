@@ -67,6 +67,7 @@ class FplScraper
     picks_data['picks'].each do |player_json|
       attributes = player_data(player_json)
       attributes[:manager_id] = manager.id
+      attributes[:side] = side.to_s
       @h2h_match.players << Player.new(attributes)
     end
   end

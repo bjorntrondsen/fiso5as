@@ -2,6 +2,8 @@ class Player < ActiveRecord::Base
   belongs_to :h2h_match
   belongs_to :manager
 
+  validates_inclusion_of :side, in: %w(home away)
+
   def self.not_benched
     self.where(bench: false)
   end
