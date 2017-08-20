@@ -12,6 +12,10 @@ class Match < ActiveRecord::Base
     self.where(["starts_at < ? AND ends_at > ?", Time.zone.now, Time.zone.now])
   end
 
+  def self.started
+    where('starts_at < ?', Time.zone.now)
+  end
+
   def self.with_all_data
     includes(:home_team, :away_team, :h2h_matches => [:players, :home_manager, :away_manager])
   end
