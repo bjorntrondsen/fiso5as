@@ -26,6 +26,11 @@
 
 class FplScraper
 
+  def self.clear_cache
+    @static_data = nil
+    @live_data = nil
+  end
+
   def self.static_data
     return @static_data if @static_data
     data_url = 'https://fantasy.premierleague.com/drf/bootstrap-static'

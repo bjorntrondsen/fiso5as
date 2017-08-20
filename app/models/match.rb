@@ -13,6 +13,7 @@ class Match < ActiveRecord::Base
   end
 
   def self.sync_all
+    FplScraper.clear_cache
     self.pl_match_over = nil
     self.teams = nil
     time = Time.zone.now
