@@ -13,7 +13,7 @@ class Match < ActiveRecord::Base
   end
 
   def self.with_all_data
-    includes(:home_team, :away_team, :h2h_matches => [:home_squad, :away_squad, :home_manager, :away_manager])
+    includes(:home_team, :away_team, :h2h_matches => [:players, :home_manager, :away_manager])
   end
 
   def self.sync_all
