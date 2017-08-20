@@ -62,13 +62,7 @@ class H2hMatch < ActiveRecord::Base
   end
 
   def inform_of_pending_substitutions(side)
-    if side == :home
-      squad = home_squad
-    elsif side == :away
-      squad = away_squad
-    else
-      raise "Unknown side: #{side}"
-    end
+    squad = players.send(side)
     to_replace = squad.not_benched.didnt_play
     already_subed = []
     to_replace.each do |player|
@@ -83,13 +77,7 @@ class H2hMatch < ActiveRecord::Base
   end
 
   def inform_of_captain_change(side)
-    if side == :home
-      squad = home_squad
-    elsif side == :away
-      squad = away_squad
-    else
-      raise "Unknown side: #{side}"
-    end
+    squad = players.send(side)
     if squad.might_play.where(captain: true).count == 0
       vice_captain = squad.might_play.where(vice_captain: true).first
       if vice_captain

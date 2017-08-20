@@ -4,6 +4,14 @@ class Player < ActiveRecord::Base
 
   validates_inclusion_of :side, in: %w(home away)
 
+  def self.home
+    self.where(side: 'home')
+  end
+
+  def self.away
+    self.where(side: 'away')
+  end
+
   def self.not_benched
     self.where(bench: false)
   end
