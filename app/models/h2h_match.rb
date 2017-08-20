@@ -4,24 +4,14 @@ class H2hMatch < ActiveRecord::Base
   belongs_to :away_manager, class_name: 'Manager'
   belongs_to :match
   has_many :players, dependent: :destroy
+  has_many :home_squad, ->{where(side: 'home')}, class_name: 'Player'
+  has_many :away_squad, ->{where(side: 'away')}, class_name: 'Player'
 
   validates_presence_of :home_manager_id, :away_manager_id
 
   before_validation :set_defaults, on: :create
 
   serialize :info
-
-  def self.by_match_order
-    self.order("match_order ASC")
-  end
-
-  def home_squad
-    @home_squad ||= self.players.where(manager_id: home_manager_id)
-  end
-
-  def away_squad
-    @away_squad ||= self.players.where(manager_id: away_manager_id)
-  end
 
   def opposing_squad(manager)
     if manager == home_manager

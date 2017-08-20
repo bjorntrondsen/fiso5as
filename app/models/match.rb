@@ -6,14 +6,14 @@ class Match < ActiveRecord::Base
 
   belongs_to :home_team, class_name: 'Team'
   belongs_to :away_team, class_name: 'Team'
-  has_many :h2h_matches, dependent: :destroy
+  has_many :h2h_matches, ->{ order('match_order ASC') }, dependent: :destroy
 
   def self.active
     self.where(["starts_at < ? AND ends_at > ?", Time.zone.now, Time.zone.now])
   end
 
   def self.with_all_data
-    includes(:home_team, :away_team, :h2h_matches)
+    includes(:home_team, :away_team, :h2h_matches => [:home_squad, :away_squad, :home_manager, :away_manager])
   end
 
   def self.sync_all

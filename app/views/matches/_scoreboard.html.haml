@@ -4,7 +4,7 @@
     %th= link_to match.home_team.short_name, match.home_team.fpl_url, target: '_blank'
     %th.vs vs
     %th= link_to match.away_team.short_name, match.away_team.fpl_url, target: '_blank'
-  - match.h2h_matches.by_match_order.each do |h2h_match|
+  - match.h2h_matches.each do |h2h_match|
     %tr
       %th
         = link_to h2h_match.home_manager.name, h2h_match.home_manager.gw_url(match.game_week), target: '_blank'
