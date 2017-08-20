@@ -67,7 +67,7 @@ class Player < ActiveRecord::Base
       str += "#{games_left}x"
     end
     str += name.gsub(" ",'')
-    if captain? && !h2h_match.opposing_squad(self.manager).find_by(name: self.name)
+    if captain? && !h2h_match.opposing_squad(self.manager_id).find{|p| p.name == self.name}
       str += "(c)"
     end
     return str

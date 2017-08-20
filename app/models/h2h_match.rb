@@ -13,10 +13,10 @@ class H2hMatch < ActiveRecord::Base
 
   serialize :info
 
-  def opposing_squad(manager)
-    if manager == home_manager
+  def opposing_squad(manager_id)
+    if manager_id == home_manager_id
       away_squad
-    elsif manager == away_manager
+    elsif manager_id == away_manager_id
       home_squad
     else
       raise "Cant find the right manager"
