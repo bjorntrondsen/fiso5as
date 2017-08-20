@@ -26,6 +26,8 @@ group :development, :test do
   gem 'pry'
   gem 'ruby-prof'
   gem 'awesome_print'
+  gem 'sql_queries_count'
+  gem 'quiet_assets'
 end
 
 group :test do
