@@ -2,7 +2,7 @@ namespace :matches do
   desc "Create match"
   task :create => :environment  do
     ActiveRecord::Base.transaction do
-      game_week = 2
+      game_week = 3
       starts_at = Time.zone.now.beginning_of_week.advance(days: 5, hours: 11, minutes: 45)
       ends_at   = Time.zone.now.beginning_of_week.advance(days: 7, hours: 4)
       group_a = [
@@ -18,7 +18,7 @@ namespace :matches do
         54271,
         317753,
         3052
-      ]
+      ].shuffle
       group_b = [
         213779,
         173853,
@@ -32,7 +32,7 @@ namespace :matches do
         384311,
         345980,
         27056
-      ]
+      ].shuffle
       ActiveRecord::Base.transaction do
         group_a.each_with_index do |home_team_id, index|
           away_team_id = group_b[index]
