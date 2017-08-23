@@ -2,16 +2,34 @@
 //= require scoreboard
 //= require_self
 
+@import 'mixins'
+
+html, body
+  margin: 0
+  padding: 0
+
 html
   font-family: 'Lato'
   font-size: 16px
+
+body
+  padding-bottom: 7rem
 
 a, a:visited
   color: blue
   text-decoration: none
 
 .page-header
+  background-color: #2D0B75
   text-align: center
+  color: #FFF
+  padding: 0.5em
+  margin: 0
+  margin-bottom: 1em
+
+  a
+    padding: 0 2em
+    color: white
 
 .missing-matches
   font-size: 1.5rem
