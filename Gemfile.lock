@@ -62,6 +62,7 @@ GEM
       tzinfo
     excon (0.58.0)
     execjs (2.7.0)
+    fabrication (2.16.1)
     ffi (1.9.18)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
@@ -74,7 +75,7 @@ GEM
       haml (>= 4.0.6, < 6.0)
       html2haml (>= 1.0.1)
       railties (>= 4.0.1)
-    hashdiff (0.3.5)
+    hashdiff (0.3.6)
     heroku (3.99.1)
       heroku-api (= 0.4.2)
       launchy (= 2.4.3)
@@ -102,7 +103,6 @@ GEM
     libv8 (3.16.14.19)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
-    machinist (2.0)
     mail (2.6.6)
       mime-types (>= 1.16, < 4)
     method_source (0.8.2)
@@ -240,10 +240,10 @@ DEPENDENCIES
   awesome_print
   coffee-rails (~> 4.2)
   database_cleaner
+  fabrication
   haml-rails
   heroku
   jquery-rails
-  machinist
   newrelic_rpm
   pg
   pry
@@ -264,4 +264,4 @@ RUBY VERSION
    ruby 2.4.1p111
 
 BUNDLED WITH
-   1.15.1
+   1.15.4

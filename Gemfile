@@ -24,7 +24,7 @@ end
 
 group :test do
   gem 'rspec-rails', '3.6.1'
-  gem 'machinist'
+  gem 'fabrication'
   gem 'vcr'
   gem 'webmock'
   gem 'database_cleaner'

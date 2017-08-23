@@ -17,6 +17,7 @@ describe Match do
         expect(Match.first.away_team.managers.first.name).to eq('David Tonkin')
       end
     end
+
   end
 
 end

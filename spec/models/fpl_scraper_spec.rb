@@ -6,7 +6,7 @@ describe FplScraper do
     VCR.use_cassette('one_h2h_match') do
       @home = Manager.create!(fpl_id: 1164928, fiso_name: 'Sharagoz')
       @away = Manager.create!(fpl_id: 8835, fiso_name: 'Moist von Lipwig')
-      @match = Match.make!(game_week: 2)
+      @match = Fabricate(:match, game_week: 2)
       @h2h = @match.h2h_matches.create!(home_manager_id: @home.id, away_manager_id: @away.id, match_order: 1)
       FplScraper.new(@h2h).scrape
     end
