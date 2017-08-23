@@ -75,13 +75,16 @@ class Match < ActiveRecord::Base
         team_url = Team.data_url(team_id)
         team_data = JSON.parse(open(team_url).read)
         team_name = team_data['league']['name']
-        team = Team.create!(fpl_id: team_id, name: team_name)
+        team = Team.find_or_initialize_by(fpl_id: team_id)
+        team.name = team_name if team.name.blank?
+        team.save!
         teams << team
-        player_data = team_data['standings']['results']
-        raise "Expected 5 players, found #{player_data.length}" unless player_data.length == 5
-        player_data.each do |player|
-          manager = team.managers.find_or_create_by!(fpl_id: player['entry'])
-          manager.update_attributes!(fpl_name: player['player_name'])
+        manager_data = team_data['standings']['results']
+        raise "Expected 5 managers, found #{manager_data.length}" unless manager_data.length == 5
+        manager_data.each do |data|
+          manager = team.managers.find_or_initialize_by(fpl_id: data['entry'])
+          manager.fpl_name = data['player_name'] if manager.fpl_name.blank?
+          manager.save!
         end
       end
     end
