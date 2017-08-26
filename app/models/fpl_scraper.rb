@@ -133,7 +133,8 @@ class FplScraper
 
   def match_over?(player_details)
     match_id = player_details[:live]['explain'][0][1]
-    self.class.live_data(@game_week)['fixtures'].find{|m| m['id'] == match_id }['finished']
+    match_data = self.class.live_data(@game_week)['fixtures'].find{|m| m['id'] == match_id }
+    match_data['finished'] || match_data['finished_provisional']
   end
 
   def gzip_fetch(url)
