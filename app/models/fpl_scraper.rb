@@ -61,15 +61,18 @@ class FplScraper
   def fetch_data(manager, side)
     picks_url = "https://fantasy.premierleague.com/drf/entry/#{manager.fpl_id}/event/#{@match.game_week}/picks"
     picks_data = JSON.parse open(picks_url).read
-    score = picks_data['entry_history']['points']
-    @h2h_match.home_score = score if(side == :home)
-    @h2h_match.away_score = score if(side == :away)
+    #score = picks_data['entry_history']['points']
+    score = 0
     picks_data['picks'].each do |player_json|
       attributes = player_data(player_json)
       attributes[:manager_id] = manager.id
       attributes[:side] = side.to_s
-      @h2h_match.players << Player.new(attributes)
+      player = Player.new(attributes)
+      score += player.points unless player.bench
+      @h2h_match.players << player
     end
+    @h2h_match.home_score = score if(side == :home)
+    @h2h_match.away_score = score if(side == :away)
   end
 
   def player_data(player_json)
