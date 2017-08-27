@@ -58,7 +58,7 @@ describe FplScraper do
       "vice_captain"=>false,
       "bench"=>false,
       "position"=>"FWD",
-      "points"=>6,
+      "points"=>12,
       "match_over"=>true
     })
   end

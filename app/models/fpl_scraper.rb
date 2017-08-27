@@ -78,6 +78,7 @@ class FplScraper
   def player_data(player_json)
     player_id = player_json['element']
     player_details = player_details(player_id)
+    multiplier = player_json['multiplier']
     name            = get_player_name(player_details)
     team_name       = get_team_name(player_details)
     minutes_played  = get_minutes_played(player_details)
@@ -86,7 +87,7 @@ class FplScraper
     bench           = player_json['position'] > 11 # TODO: Verify
     captain         = player_json['is_captain']
     vice_captain    = player_json['is_vice_captain']
-    points          = get_points(player_details)
+    points          = multiplier * get_points(player_details)
     position        = get_position(player_details)
 
    { name: name, games_left: games_left, captain: captain, vice_captain: vice_captain, bench: bench, position: position, points: points, minutes_played: minutes_played, match_over: match_over }
