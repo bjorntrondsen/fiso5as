@@ -12,6 +12,10 @@ class GameWeek < ApplicationRecord
     "Game week #{gw_no}"
   end
 
+  def fpl_sync
+    matches.each(&:fpl_sync)
+  end
+
   private
 
   def generate_access_key

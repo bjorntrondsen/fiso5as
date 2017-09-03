@@ -51,7 +51,7 @@ class FplScraper
   def initialize(h2h_match)
     @h2h_match = h2h_match
     @match = h2h_match.match
-    @game_week = @match.game_week
+    @game_week = @match.game_week.gw_no
   end
 
   def scrape
@@ -62,7 +62,7 @@ class FplScraper
   private
 
   def fetch_data(manager, side)
-    picks_url = "https://fantasy.premierleague.com/drf/entry/#{manager.fpl_id}/event/#{@match.game_week}/picks"
+    picks_url = "https://fantasy.premierleague.com/drf/entry/#{manager.fpl_id}/event/#{@game_week}/picks"
     picks_data = JSON.parse open(picks_url).read
     #score = picks_data['entry_history']['points']
     score = 0

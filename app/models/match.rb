@@ -63,7 +63,7 @@ class Match < ActiveRecord::Base
   end
 
   def ended?
-    Time.zone.now > game_week.finished
+    game_week.finished
   end
 
   def started?
