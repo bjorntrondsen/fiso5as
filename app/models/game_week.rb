@@ -8,6 +8,10 @@ class GameWeek < ApplicationRecord
   before_validation :generate_access_key, on: :create
   before_validation :set_deadline, on: :create
 
+  def name
+    "Game week #{gw_no}"
+  end
+
   private
 
   def generate_access_key

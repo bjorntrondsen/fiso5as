@@ -1,0 +1,6 @@
+%h2 Warning: No auth
+
+- @game_weeks.each do |game_week|
+  = game_week.name
+  = link_to gw_url(game_week.access_key), gw_url(game_week.access_key)
+  %br/
