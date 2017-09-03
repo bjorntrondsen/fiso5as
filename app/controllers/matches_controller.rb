@@ -1,7 +1,7 @@
 class MatchesController < ApplicationController
 
   def index
-    @game_week = GameWeek.find_by(access_key: params[:access_key])
+    @game_week = GameWeek.find_by(access_token: params[:access_token])
     if @game_week
       @matches = @game_week.matches.with_all_data.order(:gw_fixture_no)
     else
@@ -10,7 +10,7 @@ class MatchesController < ApplicationController
   end
 
   def show
-    @game_week = GameWeek.find_by(access_key: params[:access_key])
+    @game_week = GameWeek.find_by(access_token: params[:access_token])
     @match = @game_week.matches.with_all_data.find_by(id: params[:id]) if @game_week
   end
 

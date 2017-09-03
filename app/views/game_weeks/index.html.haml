@@ -5,10 +5,9 @@
     = game_week.name
     %br/
     Full GW URL:
-    = link_to gw_url(game_week.access_key), gw_url(game_week.access_key)
+    = link_to gw_url(game_week.access_token), gw_url(game_week.access_token)
     %br/
     - game_week.matches.each do |match|
       = match.name
-      - url = root_url + "#{match.game_week.access_key}/matches/#{match.id}"
-      = link_to url, url
+      = link_to direct_match_link(match), direct_match_link(match)
       %br/

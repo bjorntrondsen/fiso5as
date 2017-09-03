@@ -1,11 +1,11 @@
 class GameWeek < ApplicationRecord
   has_many :matches, -> { order(:gw_fixture_no) }, dependent: :destroy
 
-  validates_presence_of :season, :gw_no, :access_key, :deadline_at
-  validates_uniqueness_of :access_key
+  validates_presence_of :season, :gw_no, :access_token, :deadline_at
+  validates_uniqueness_of :access_token
   validates_uniqueness_of :gw_no, scope: :season
 
-  before_validation :generate_access_key, on: :create
+  before_validation :generate_access_token, on: :create
   before_validation :set_deadline, on: :create
 
   def name
@@ -18,8 +18,8 @@ class GameWeek < ApplicationRecord
 
   private
 
-  def generate_access_key
-    self.access_key ||= (0...8).map{ ('A'..'Z').to_a[rand(26)] }.join
+  def generate_access_token
+    self.access_token ||= (0...8).map{ ('A'..'Z').to_a[rand(26)] }.join
   end
 
   def set_deadline
