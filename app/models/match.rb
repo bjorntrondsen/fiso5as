@@ -74,14 +74,13 @@ class Match < ActiveRecord::Base
     started? && !ended?
   end
 
-  def set_up_match!
+  def set_up_match!(skip_fpl_sync: false)
     teams = []
     ActiveRecord::Base.transaction do
-      [home_team_id, away_team_id].each do |team_id|
-        team_url = Team.data_url(team_id)
+      [home_team, away_team].each do |team|
+        team_url = Team.data_url(team.fpl_id)
         team_data = JSON.parse(open(team_url).read)
         team_name = team_data['league']['name']
-        team = Team.find_or_initialize_by(fpl_id: team_id)
         team.name = team_name if team.name.blank?
         team.save!
         teams << team
@@ -106,7 +105,7 @@ class Match < ActiveRecord::Base
     self.h2h_matches.create!(home_manager: home_team.managers[3], away_manager: away_team.managers[3], match_order: 4)
     self.h2h_matches.create!(home_manager: home_team.managers[4], away_manager: away_team.managers[4], match_order: 5)
 
-    fpl_sync
+    fpl_sync unless skip_fpl_sync
   end
 
   private
