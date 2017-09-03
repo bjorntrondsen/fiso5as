@@ -3,8 +3,11 @@
 $squad_width: 290px
 
 .scoreboard
-  max-width: 920px
+  max-width: 1000px
   margin: auto
+
+  .home_logo, .away_logo
+    height: 120px
 
   .home_logo
     float: left
@@ -44,7 +47,7 @@ $squad_width: 290px
     vertical-align: top
 
   tr.headline th
-    background-color: #0B750B
+    background-color: $scoreboard_blue
     padding: 0.5em
     text-align: center
     font-size: 22px
@@ -64,6 +67,12 @@ $squad_width: 290px
 
     &:first-child, &:last-child
       width: $squad_width
+
+  tr.odd
+    background-color: $scoreboard_light_blue
+
+  tr.even
+    background-color: $scoreboard_yellow
 
   tr.footer td
     font-size: 13px

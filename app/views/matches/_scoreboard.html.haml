@@ -10,7 +10,8 @@
         = match.away_score
       %th= link_to match.away_team.full_name, match.away_team.fpl_url, target: '_blank'
     - match.h2h_matches.each do |h2h_match|
-      %tr
+      - klass = cycle('odd','even')
+      %tr{class: klass}
         %th
           = link_to h2h_match.home_manager.name, h2h_match.home_manager.gw_url(match.game_week), target: '_blank'
           - if h2h_match.home_ahead?
@@ -24,7 +25,7 @@
           = link_to h2h_match.away_manager.name, h2h_match.away_manager.gw_url(match.game_week), target: '_blank'
           - if h2h_match.away_ahead?
             %span.pts= "+#{h2h_match.score_diff}"
-      %tr
+      %tr{class: klass}
         %td.squad
           %span.playing_now{title: 'Ongoing match'}
             = h2h_match.playing_now(:home).collect{|p| p.info }.join(" ")
@@ -42,16 +43,20 @@
           .info
             - h2h_match.info[:away].each do |msg|
               %div= msg
-    %tr.footer
-      %td
-        %span.playing_now
-          = match.playing_now(:home).collect{|name,count| "#{count}x#{name}" if count > 1}.join(' ')
-        = match.playing_later(:home).collect{|name,count| "#{count}x#{name}" if count > 1}.join(' ')
-      %td
-      %td
-        %span.playing_now
-          = match.playing_now(:away).collect{|name,count| "#{count}x#{name}" if count > 1}.join(' ')
-        = match.playing_later(:away).collect{|name,count| "#{count}x#{name}" if count > 1}.join(' ')
+    - h_now = match.playing_now(:home).collect{|name,count| "#{count}x#{name}" if count > 1}.join(' ')
+    - h_later = match.playing_now(:home).collect{|name,count| "#{count}x#{name}" if count > 1}.join(' ')
+    - a_now = match.playing_now(:away).collect{|name,count| "#{count}x#{name}" if count > 1}.join(' ')
+    - a_later = match.playing_later(:away).collect{|name,count| "#{count}x#{name}" if count > 1}.join(' ')
+    - unless h_now.blank? && h_later.blank? && a_now.blank? && a_later.blank?
+      %tr.footer
+        %td
+          %span.playing_now= h_now
+          = h_later
+        %td
+        %td
+          %span.playing_now
+            = a_now
+          = a_later
 
   - if match.ongoing?
     .last_update

@@ -1,10 +1,8 @@
 - if @game_week
   %h1.page-header
-    -#- unless @game_week == 1
-      -#= link_to '<', {game_week: @game_week - 1}
-    Five-a-side GW#{@game_week.gw_no}
-    -#- unless @game_week == 38
-      -#= link_to '>', {game_week: @game_week + 1}
+    Gameweek
+    %br/
+    = @game_week.gw_no
 
 - if @matches.any?
   - @matches.each do |match|
