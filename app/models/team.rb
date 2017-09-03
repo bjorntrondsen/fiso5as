@@ -15,7 +15,7 @@ class Team < ActiveRecord::Base
     "2017_logos/#{fiso_team_id}.png"
   end
 
-  def short_name
-    name.sub('FISO', '').sub('5AS','').strip.titlecase
+  def full_name
+    "FISO 5AS #{name}"
   end
 end
