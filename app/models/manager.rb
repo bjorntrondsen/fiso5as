@@ -1,7 +1,7 @@
 class Manager < ActiveRecord::Base
   belongs_to :team
 
-  validates_presence_of :fpl_id
+  validates_presence_of :fpl_id, :team
   validates_uniqueness_of :fpl_id
 
   def gw_url(gw)

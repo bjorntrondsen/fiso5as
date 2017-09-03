@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170820091832) do
+ActiveRecord::Schema.define(version: 20170903211437) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "game_weeks", force: :cascade do |t|
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.string "season"
+    t.integer "gw_no"
+    t.string "access_key"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "h2h_matches", id: :serial, force: :cascade do |t|
     t.integer "match_id"
@@ -34,6 +44,7 @@ ActiveRecord::Schema.define(version: 20170820091832) do
     t.string "fiso_name", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string "squad_name"
   end
 
   create_table "matches", id: :serial, force: :cascade do |t|
@@ -44,6 +55,8 @@ ActiveRecord::Schema.define(version: 20170820091832) do
     t.datetime "ends_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer "gw_fixture_no"
+    t.integer "game_week_id"
   end
 
   create_table "players", id: :serial, force: :cascade do |t|
@@ -70,6 +83,7 @@ ActiveRecord::Schema.define(version: 20170820091832) do
     t.integer "fpl_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer "fiso_team_id"
   end
 
 end
