@@ -1,60 +1,62 @@
-
-%table.scoreboard
-  %tr.headline
-    %th= link_to match.home_team.full_name, match.home_team.fpl_url, target: '_blank'
-    %th.score
-      = match.home_score
-      %span.spacer -
-      = match.away_score
-    %th= link_to match.away_team.full_name, match.away_team.fpl_url, target: '_blank'
-  - match.h2h_matches.each do |h2h_match|
-    %tr
-      %th
-        = link_to h2h_match.home_manager.name, h2h_match.home_manager.gw_url(match.game_week), target: '_blank'
-        - if h2h_match.home_ahead?
-          %span.pts= "+#{h2h_match.score_diff}"
-      %th.pts_total
-        %span{class: h2h_match.home_ahead? ? 'ahead' : 'behind'}
-          = h2h_match.home_score
-        %span{class: h2h_match.away_ahead? ? 'ahead' : 'behind'}
-          = h2h_match.away_score
-      %th
-        = link_to h2h_match.away_manager.name, h2h_match.away_manager.gw_url(match.game_week), target: '_blank'
-        - if h2h_match.away_ahead?
-          %span.pts= "+#{h2h_match.score_diff}"
-    %tr
-      %td.squad
-        %span.playing_now{title: 'Ongoing match'}
-          = h2h_match.playing_now(:home).collect{|p| p.info }.join(" ")
-        %span.playing_later{title: 'Will play later'}
-          = h2h_match.playing_later(:home).collect{|p| p.info }.join(" ")
-        .info
-          - h2h_match.info[:home].each do |msg|
-            %div= msg
+.scoreboard
+  = image_tag match.home_team.logo_path, class: 'home_logo'
+  = image_tag match.away_team.logo_path, class: 'away_logo'
+  %table
+    %tr.headline
+      %th= link_to match.home_team.full_name, match.home_team.fpl_url, target: '_blank'
+      %th.score
+        = match.home_score
+        %span.spacer -
+        = match.away_score
+      %th= link_to match.away_team.full_name, match.away_team.fpl_url, target: '_blank'
+    - match.h2h_matches.each do |h2h_match|
+      %tr
+        %th
+          = link_to h2h_match.home_manager.name, h2h_match.home_manager.gw_url(match.game_week), target: '_blank'
+          - if h2h_match.home_ahead?
+            %span.pts= "+#{h2h_match.score_diff}"
+        %th.pts_total
+          %span{class: h2h_match.home_ahead? ? 'ahead' : 'behind'}
+            = h2h_match.home_score
+          %span{class: h2h_match.away_ahead? ? 'ahead' : 'behind'}
+            = h2h_match.away_score
+        %th
+          = link_to h2h_match.away_manager.name, h2h_match.away_manager.gw_url(match.game_week), target: '_blank'
+          - if h2h_match.away_ahead?
+            %span.pts= "+#{h2h_match.score_diff}"
+      %tr
+        %td.squad
+          %span.playing_now{title: 'Ongoing match'}
+            = h2h_match.playing_now(:home).collect{|p| p.info }.join(" ")
+          %span.playing_later{title: 'Will play later'}
+            = h2h_match.playing_later(:home).collect{|p| p.info }.join(" ")
+          .info
+            - h2h_match.info[:home].each do |msg|
+              %div= msg
+        %td
+        %td.squad
+          %span.playing_now{title: 'Ongoing match'}
+            = h2h_match.playing_now(:away).collect{|p| p.info }.join(" ")
+          %span.playing_later{title: 'Will play later'}
+            = h2h_match.playing_later(:away).collect{|p| p.info }.join(" ")
+          .info
+            - h2h_match.info[:away].each do |msg|
+              %div= msg
+    %tr.footer
       %td
-      %td.squad
-        %span.playing_now{title: 'Ongoing match'}
-          = h2h_match.playing_now(:away).collect{|p| p.info }.join(" ")
-        %span.playing_later{title: 'Will play later'}
-          = h2h_match.playing_later(:away).collect{|p| p.info }.join(" ")
-        .info
-          - h2h_match.info[:away].each do |msg|
-            %div= msg
-  %tr.footer
-    %td
-      %span.playing_now
-        = match.playing_now(:home).collect{|name,count| "#{count}x#{name}" if count > 1}.join(' ')
-      = match.playing_later(:home).collect{|name,count| "#{count}x#{name}" if count > 1}.join(' ')
-    %td
-    %td
-      %span.playing_now
-        = match.playing_now(:away).collect{|name,count| "#{count}x#{name}" if count > 1}.join(' ')
-      = match.playing_later(:away).collect{|name,count| "#{count}x#{name}" if count > 1}.join(' ')
+        %span.playing_now
+          = match.playing_now(:home).collect{|name,count| "#{count}x#{name}" if count > 1}.join(' ')
+        = match.playing_later(:home).collect{|name,count| "#{count}x#{name}" if count > 1}.join(' ')
+      %td
+      %td
+        %span.playing_now
+          = match.playing_now(:away).collect{|name,count| "#{count}x#{name}" if count > 1}.join(' ')
+        = match.playing_later(:away).collect{|name,count| "#{count}x#{name}" if count > 1}.join(' ')
 
-- if match.ongoing?
-  .last_update
-    Scores updated
-    = time_ago_in_words(match.updated_at)
-    ago
-    - unless params[:action] == 'show'
-      = link_to 'direct link', match
+  - if match.ongoing?
+    .last_update
+      Scores updated
+      = time_ago_in_words(match.updated_at)
+      ago
+      - unless params[:action] == 'show'
+        = link_to 'direct link', match

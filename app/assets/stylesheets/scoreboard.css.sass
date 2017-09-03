@@ -1,13 +1,25 @@
 @import 'mixins'
 
+$squad_width: 290px
+
 .scoreboard
-  width: 600px
+  max-width: 920px
   margin: auto
-  background-color: #EEE
-  border: 1px solid #999
-  border-spacing: 0
-  color: #000
-  margin-bottom: 1em
+
+  .home_logo
+    float: left
+
+  .away_logo
+    float: right
+
+  table
+    width: 700px
+    margin: auto
+    background-color: #EEE
+    border: 1px solid #999
+    border-spacing: 0
+    color: #000
+    margin-bottom: 1em
 
   .team-score
     color: blue
@@ -50,6 +62,9 @@
       color: #FFF
       text-decoration: none
 
+    &:first-child, &:last-child
+      width: $squad_width
+
   tr.footer td
     font-size: 13px
     background-color: #999
@@ -77,7 +92,7 @@
     text-shadow: 1px 1px 0px #FFF261
 
   .squad
-    width: 240px
+    width: $squad_width
     font-size: 13px
 
   .playing_now
