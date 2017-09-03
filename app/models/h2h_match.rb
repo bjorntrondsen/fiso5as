@@ -1,4 +1,5 @@
 require 'open-uri'
+
 class H2hMatch < ActiveRecord::Base
   belongs_to :home_manager, class_name: 'Manager'
   belongs_to :away_manager, class_name: 'Manager'

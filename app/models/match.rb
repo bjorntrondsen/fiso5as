@@ -1,19 +1,26 @@
+require 'open-uri'
+
 class Match < ActiveRecord::Base
-  class << self
+  class << self # TODO: No longer in use?
     # Fields used for caching when syncing to prevent unnecessary scraping
     attr_accessor :pl_match_over, :teams
   end
 
+  belongs_to :game_week
   belongs_to :home_team, class_name: 'Team'
   belongs_to :away_team, class_name: 'Team'
   has_many :h2h_matches, ->{ order('match_order ASC') }, dependent: :destroy
 
+  validates_presence_of :game_week, :home_team, :away_team
+
   def self.active
-    self.where(["starts_at < ? AND ends_at > ?", Time.zone.now, Time.zone.now])
+    raise "No longer works"
+    #self.where(["starts_at < ? AND ends_at > ?", Time.zone.now, Time.zone.now])
   end
 
   def self.started
-    where('starts_at < ?', Time.zone.now)
+    raise "No longer works"
+    #where('starts_at < ?', Time.zone.now)
   end
 
   def self.with_all_data
@@ -56,11 +63,11 @@ class Match < ActiveRecord::Base
   end
 
   def ended?
-    Time.zone.now > ends_at
+    Time.zone.now > game_week.finished
   end
 
   def started?
-    Time.zone.now > starts_at
+    Time.zone.now > game_week.deadline_at + 30.minutes
   end
 
   def ongoing?
@@ -68,7 +75,6 @@ class Match < ActiveRecord::Base
   end
 
   def set_up_match!
-    require 'open-uri'
     teams = []
     ActiveRecord::Base.transaction do
       [home_team_id, away_team_id].each do |team_id|

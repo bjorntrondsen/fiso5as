@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 ruby File.read(".ruby-version").strip
 
-
 gem 'rails', '5.1.3'
 gem 'pg'
 gem 'sass-rails', '~> 5.0'
@@ -13,6 +12,7 @@ gem 'turbolinks'
 gem 'haml-rails'
 gem 'rufus-scheduler'
 gem 'newrelic_rpm'
+gem "roo", "~> 2.7"
 
 group :development, :test do
   gem 'heroku'

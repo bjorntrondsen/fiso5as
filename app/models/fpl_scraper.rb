@@ -1,3 +1,4 @@
+#
 # FPL JSON API
 #
 # JSON API
@@ -23,6 +24,8 @@
 # https://fantasy.premierleague.com/drf/bootstrap-dynamic
 # Match info, labels
 # Viser om kamper er over
+
+require 'open-uri'
 
 class FplScraper
 
