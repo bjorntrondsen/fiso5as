@@ -1,14 +1,14 @@
 %h2 Warning: No auth
 
-%table
-  %tr
-    %th Gameweek
-    %th Actions
-    %th URL
-  - @game_weeks.each do |game_week|
-    %tr
-      %td= game_week.name
-      %td
-        %button Set up
-        %button Sync scores
-      %td= link_to gw_url(game_week.access_key), gw_url(game_week.access_key)
+- @game_weeks.each do |game_week|
+  %p
+    = game_week.name
+    %br/
+    Full GW URL:
+    = link_to gw_url(game_week.access_key), gw_url(game_week.access_key)
+    %br/
+    - game_week.matches.each do |match|
+      = match.name
+      - url = root_url + "#{match.game_week.access_key}/matches/#{match.id}"
+      = link_to url, url
+      %br/

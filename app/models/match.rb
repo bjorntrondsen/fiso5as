@@ -74,6 +74,10 @@ class Match < ActiveRecord::Base
     started? && !ended?
   end
 
+  def name
+    "#{home_team.name} v #{away_team.name}"
+  end
+
   def set_up_match!(skip_fpl_sync: false)
     teams = []
     ActiveRecord::Base.transaction do

@@ -1,5 +1,5 @@
 class GameWeek < ApplicationRecord
-  has_many :matches, dependent: :destroy
+  has_many :matches, -> { order(:gw_fixture_no) }, dependent: :destroy
 
   validates_presence_of :season, :gw_no, :access_key, :deadline_at
   validates_uniqueness_of :access_key

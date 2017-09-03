@@ -10,7 +10,8 @@ class MatchesController < ApplicationController
   end
 
   def show
-    @match = Match.with_all_data.find(params[:id])
+    @game_week = GameWeek.find_by(access_key: params[:access_key])
+    @match = @game_week.matches.with_all_data.find_by(id: params[:id]) if @game_week
   end
 
   def new
