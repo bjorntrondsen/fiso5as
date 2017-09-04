@@ -1,13 +1,14 @@
-%h2 Warning: No auth
+#game_weeks
+  %h2 Game week links
 
-- @game_weeks.each do |game_week|
-  %p
-    = game_week.name
-    %br/
-    Full GW URL:
-    = link_to gw_url(game_week.access_token), gw_url(game_week.access_token)
-    %br/
-    - game_week.matches.each do |match|
-      = match.name
-      = link_to direct_match_link(match), direct_match_link(match)
+  - @game_weeks.each do |game_week|
+    %p
+      %b= game_week.name
       %br/
+      %span.match-name Full GW URL:
+      = link_to gw_url(game_week.access_token), gw_url(game_week.access_token)
+      %br/
+      - game_week.matches.each do |match|
+        %span.match-name= match.name
+        = link_to match_url(match), match_url(match)
+        %br/
