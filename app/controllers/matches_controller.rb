@@ -10,7 +10,12 @@ class MatchesController < ApplicationController
   end
 
   def show
-    @match = Match.with_all_data.find_by(id: params[:id])
+    if params[:id].present?
+      @match = Match.with_all_data.find_by(id: params[:id])
+    elsif params[:season].present? && params[:game_week].present? && params[:fixture].present?
+      game_week = GameWeek.find_by(season: params[:season], gw_no: params[:game_week])
+      @match = game_week.matches.with_all_data.find_by(gw_fixture_no: params[:fixture]) if game_week
+    end
   end
 
   def new

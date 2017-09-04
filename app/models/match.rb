@@ -11,7 +11,7 @@ class Match < ActiveRecord::Base
   belongs_to :away_team, class_name: 'Team'
   has_many :h2h_matches, ->{ order('match_order ASC') }, dependent: :destroy
 
-  validates_presence_of :game_week, :home_team, :away_team
+  validates_presence_of :game_week, :home_team, :away_team, :gw_fixture_no
 
   def self.active
     raise "No longer works"

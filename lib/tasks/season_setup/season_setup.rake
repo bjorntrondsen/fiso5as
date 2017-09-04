@@ -23,7 +23,7 @@ task :season_setup => :environment  do
     doc.sheet(2).each do |row|
       next if row[0] == 'GW'
       next if row[1].blank? # GW without fixtures
-      game_week = GameWeek.find_or_create_by!(season: '17/18', gw_no: row[0])
+      game_week = GameWeek.find_or_create_by!(season: '201718', gw_no: row[0])
       home_team = teams[row[2]]
       away_team = teams[row[3]]
       Match.create!(game_week: game_week, gw_fixture_no: row[1], home_team: home_team, away_team: away_team)

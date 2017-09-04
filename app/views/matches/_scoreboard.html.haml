@@ -66,4 +66,4 @@
       = time_ago_in_words(match.updated_at)
       ago
       - unless params[:action] == 'show'
-        = link_to 'direct link', match
+        = link_to 'direct link', friendly_match_url(match)
