@@ -13,6 +13,7 @@ gem 'haml-rails'
 gem 'rufus-scheduler'
 gem 'newrelic_rpm'
 gem "roo", "~> 2.7"
+gem "figaro"
 
 group :development, :test do
   gem 'heroku'
