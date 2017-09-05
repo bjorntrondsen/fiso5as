@@ -6,7 +6,7 @@ class Match < ActiveRecord::Base
     attr_accessor :pl_match_over, :teams
   end
 
-  belongs_to :game_week
+  belongs_to :game_week, inverse_of: :matches
   belongs_to :home_team, class_name: 'Team'
   belongs_to :away_team, class_name: 'Team'
   has_many :h2h_matches, ->{ order('match_order ASC') }, dependent: :destroy

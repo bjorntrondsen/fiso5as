@@ -3,7 +3,7 @@ require 'open-uri'
 class H2hMatch < ActiveRecord::Base
   belongs_to :home_manager, class_name: 'Manager'
   belongs_to :away_manager, class_name: 'Manager'
-  belongs_to :match
+  belongs_to :match, inverse_of: :game_week
   has_many :players, dependent: :destroy
 
   validates_presence_of :home_manager_id, :away_manager_id
