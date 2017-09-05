@@ -10,17 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170903235550) do
+ActiveRecord::Schema.define(version: 20170905155825) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "game_weeks", force: :cascade do |t|
-    t.datetime "starts_at"
-    t.datetime "ends_at"
+    t.datetime "deadline_at"
     t.string "season"
     t.integer "gw_no"
     t.string "access_token"
+    t.boolean "finished", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -70,7 +70,6 @@ ActiveRecord::Schema.define(version: 20170903235550) do
     t.boolean "match_over"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string "match_status", limit: 255, default: "over"
     t.string "side"
     t.index ["side", "h2h_match_id"], name: "index_players_on_side_and_h2h_match_id"
   end
