@@ -6,7 +6,7 @@
       %b= game_week.name
       %br/
       %span.match-name All scoreboards:
-      = link_to gw_url(game_week.access_token), gw_url(game_week.access_token)
+      = link_to fiveaside_gw_url(game_week.access_token), fiveaside_gw_url(game_week.access_token)
       %br/
       - game_week.matches.each do |match|
         %span.match-name= match.name

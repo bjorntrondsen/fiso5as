@@ -1,4 +1,4 @@
-class MatchesController < ApplicationController
+class Fiveaside::MatchesController < ApplicationController
 
   def index
     @game_week = GameWeek.find_by(access_token: params[:access_token])
