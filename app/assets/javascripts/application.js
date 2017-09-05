@@ -16,5 +16,6 @@
 //= require_self
 
 $(function(){
-  setInterval("window.location.reload()", 30000)
+  if($('.scoreboard').size() > 0)
+    setInterval("window.location.reload()", 30000)
 })
