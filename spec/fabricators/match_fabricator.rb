@@ -1,7 +1,6 @@
 Fabricator(:match) do
-  game_week { 1 }
+  game_week { Fabricate(:game_week) }
   home_team { Fabricate(:team) }
   away_team { Fabricate(:team) }
-  starts_at { Time.zone.now }
-  ends_at { 1.day.from_now }
+  gw_fixture_no 1
 end

@@ -4,15 +4,16 @@ require 'spec_helper'
 describe FplScraper do
   before :all do
     VCR.use_cassette('one_h2h_match') do
-      @home = Manager.create!(fpl_id: 1164928, fiso_name: 'Sharagoz')
-      @away = Manager.create!(fpl_id: 8835, fiso_name: 'Moist von Lipwig')
-      @match = Fabricate(:match, game_week: 2)
+      @home = Fabricate(:manager, fpl_id: 1164928, fiso_name: 'Sharagoz')
+      @away = Fabricate(:manager, fpl_id: 8835, fiso_name: 'Moist von Lipwig')
+      @match = Fabricate(:match, game_week: Fabricate(:game_week, gw_no: 2))
       @h2h = @match.h2h_matches.create!(home_manager_id: @home.id, away_manager_id: @away.id, match_order: 1)
       FplScraper.new(@h2h).scrape
     end
   end
 
   after :all do
+    GameWeek.destroy_all
     Match.destroy_all
     Manager.destroy_all
   end
