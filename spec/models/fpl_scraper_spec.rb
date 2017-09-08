@@ -2,7 +2,11 @@
 require 'spec_helper'
 
 describe FplScraper do
-  before :all do
+  before :each do
+    GameWeek.destroy_all # DatabaseCleaner broken?
+    Match.destroy_all # DatabaseCleaner broken?
+    Manager.destroy_all # DatabaseCleaner broken?
+    Player.destroy_all # DatabaseCleaner brokern?
     VCR.use_cassette('one_h2h_match') do
       @home = Fabricate(:manager, fpl_id: 1164928, fiso_name: 'Sharagoz')
       @away = Fabricate(:manager, fpl_id: 8835, fiso_name: 'Moist von Lipwig')
@@ -10,12 +14,6 @@ describe FplScraper do
       @h2h = @match.h2h_matches.create!(home_manager_id: @home.id, away_manager_id: @away.id, match_order: 1)
       FplScraper.new(@h2h).scrape
     end
-  end
-
-  after :all do
-    GameWeek.destroy_all
-    Match.destroy_all
-    Manager.destroy_all
   end
 
   let(:player_fields) { %w(captain vice_captain bench position points minutes played match_over) }

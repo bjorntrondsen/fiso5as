@@ -78,39 +78,38 @@ class Match < ActiveRecord::Base
     "#{home_team.name} v #{away_team.name}"
   end
 
-  def set_up_match!(skip_fpl_sync: false)
-    teams = []
+ def set_up_match!(skip_fpl_sync: false)
     ActiveRecord::Base.transaction do
-      [home_team, away_team].each do |team|
-        team_url = Team.data_url(team.fpl_id)
-        team_data = JSON.parse(open(team_url).read)
-        team_name = team_data['league']['name']
-        team.name = team_name if team.name.blank?
-        team.save!
-        teams << team
-        manager_data = team_data['standings']['results']
-        raise "Expected 5 managers, found #{manager_data.length}" unless manager_data.length == 5
-        manager_data.each do |data|
-          manager = team.managers.find_or_initialize_by(fpl_id: data['entry'])
-          manager.fpl_name = data['player_name'] if manager.fpl_name.blank?
-          manager.save!
-        end
+      h2h = {
+        home: managers_sorted_by_league_order(home_team),
+        away: managers_sorted_by_league_order(away_team)
+      }
+
+      h2h[:home].each_with_index do|home_manager, index|
+        self.h2h_matches.create!(home_manager: home_manager, away_manager: h2h[:away][index], match_order: index + 1)
       end
+
+      fpl_sync unless skip_fpl_sync
     end
-
-    self.home_team = teams[0]
-    self.away_team = teams[1]
-
-    self.save!
-
-    self.h2h_matches.create!(home_manager: home_team.managers[0], away_manager: away_team.managers[0], match_order: 1)
-    self.h2h_matches.create!(home_manager: home_team.managers[1], away_manager: away_team.managers[1], match_order: 2)
-    self.h2h_matches.create!(home_manager: home_team.managers[2], away_manager: away_team.managers[2], match_order: 3)
-    self.h2h_matches.create!(home_manager: home_team.managers[3], away_manager: away_team.managers[3], match_order: 4)
-    self.h2h_matches.create!(home_manager: home_team.managers[4], away_manager: away_team.managers[4], match_order: 5)
-
-    fpl_sync unless skip_fpl_sync
   end
+
+ def managers_sorted_by_league_order(team)
+   managers_sorted = []
+   team_url = Team.data_url(team.fpl_id)
+   team_data = JSON.parse(open(team_url).read)
+   team_name = team_data['league']['name']
+   team.name = team_name if team.name.blank?
+   team.save!
+   manager_data = team_data['standings']['results']
+   raise "Expected 5 managers, found #{manager_data.length}" unless manager_data.length == 5
+   manager_data.each do |data|
+     manager = team.managers.find_or_initialize_by(fpl_id: data['entry'])
+     manager.fpl_name = data['player_name'] if manager.fpl_name.blank?
+     manager.save!
+     managers_sorted << manager
+   end
+   managers_sorted
+ end
 
   private
 

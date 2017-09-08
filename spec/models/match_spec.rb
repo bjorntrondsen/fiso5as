@@ -38,16 +38,18 @@ describe Match do
     end
 
     it "should set the match order based on the current in-game order" do
-      team = Fabricate(:team, fpl_id: 169066)
+      Team.destroy_all # DatabaseCleaner broken?
+      home_team = Fabricate(:team, fpl_id: 169066)
       eagle_fpl_ids.shuffle.each do |fpl_id|
-        Manager.create!(fpl_id: fpl_id, team: team)
+        home_team.managers.create!(fpl_id: fpl_id)
       end
-      team = Fabricate(:team, fpl_id: 213779)
+      away_team = Fabricate(:team, fpl_id: 213779)
       moderator_fpl_ids.shuffle.each do |fpl_id|
-        Manager.create!(fpl_id: fpl_id, team: team)
+        away_team.managers.create!(fpl_id: fpl_id)
       end
+      match = Fabricate(:match, home_team: home_team, away_team: away_team, game_week: Fabricate(:game_week, gw_no: 2))
       VCR.use_cassette('set_up_teams') do
-        match.set_up_match!
+        expect { match.set_up_match! }.to_not change { Manager.count }
         expect(H2hMatch.order(:match_order).collect { |h2h| h2h.home_manager.fpl_id }).to eq(eagle_fpl_ids)
         expect(H2hMatch.order(:match_order).collect { |h2h| h2h.away_manager.fpl_id }).to eq(moderator_fpl_ids)
       end

@@ -16,6 +16,12 @@ class GameWeek < ApplicationRecord
     matches.each(&:fpl_sync)
   end
 
+  def setup
+    matches.each do |match|
+      match.set_up_match!(skip_fpl_sync: true)
+    end
+  end
+
   private
 
   def generate_access_token
