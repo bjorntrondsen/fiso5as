@@ -2,7 +2,8 @@ source 'https://rubygems.org'
 ruby File.read(".ruby-version").strip
 
 gem 'rails', '5.1.3'
-gem 'pg'
+gem 'mysql2'
+gem 'unicorn'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'
@@ -15,8 +16,11 @@ gem 'newrelic_rpm'
 gem "roo", "~> 2.7"
 gem "figaro"
 
+group :development do
+  gem 'capistrano', '2.15.6'
+end
+
 group :development, :test do
-  gem 'heroku'
   gem 'pry'
   gem 'ruby-prof'
   gem 'awesome_print'
