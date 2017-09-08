@@ -29,6 +29,7 @@ namespace(:custom) do
   task :symlinking, :roles => :app do
     run "ln -nfs /data/rails_data/#{application}/unicorn.rb #{release_path}/config/unicorn.rb"
     run "ln -nfs /data/rails_data/#{application}/database.yml #{release_path}/config/database.yml"
+    run "ln -nfs /data/rails_data/#{application}/application.yml #{release_path}/config/application.yml"
     run "ln -nfs /data/rails_shared/newrelic.yml #{release_path}/config/newrelic.yml"
   end
 end
