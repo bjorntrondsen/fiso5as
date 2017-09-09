@@ -65,6 +65,8 @@ class FplScraper
   def fetch_data(manager, side)
     picks_url = "https://fantasy.premierleague.com/drf/entry/#{manager.fpl_id}/event/#{@game_week}/picks"
     picks_data = JSON.parse open(picks_url).read
+    active_chip = picks_data['active_chip']
+    @h2h_match.update_attributes!("#{side}_chip": active_chip)
     #score = picks_data['entry_history']['points']
     score = 0
     picks_data['picks'].each do |player_json|
