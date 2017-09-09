@@ -50,7 +50,7 @@
             - h2h_match.info[:away].each do |msg|
               %div= msg
     - h_now = match.playing_now(:home).collect{|name,count| "#{count}x#{name}" if count > 1}.join(' ')
-    - h_later = match.playing_now(:home).collect{|name,count| "#{count}x#{name}" if count > 1}.join(' ')
+    - h_later = match.playing_later(:home).collect{|name,count| "#{count}x#{name}" if count > 1}.join(' ')
     - a_now = match.playing_now(:away).collect{|name,count| "#{count}x#{name}" if count > 1}.join(' ')
     - a_later = match.playing_later(:away).collect{|name,count| "#{count}x#{name}" if count > 1}.join(' ')
     - unless h_now.blank? && h_later.blank? && a_now.blank? && a_later.blank?
