@@ -5,49 +5,49 @@ describe Player do
     example '#not_benched'do
       player1 = Fabricate(:player, bench: true)
       player2 = Fabricate(:player, bench: false)
-      Player.not_benched.should_not include(player1)
-      Player.not_benched.should include(player2)
+      expect(Player.not_benched).to_not include(player1)
+       expect(Player.not_benched).to include(player2)
     end
 
     example '#benched'do
       player1 = Fabricate(:player, bench: true)
       player2 = Fabricate(:player, bench: false)
-      Player.benched.should include(player1)
-      Player.benched.should_not include(player2)
+      expect(Player.benched).to include(player1)
+      expect(Player.benched).to_not include(player2)
     end
   end
 
   describe '#didnt_play'do
     it "should include a player whos match is over with 0 minutes played" do
       Fabricate(:player, match_over: true, minutes_played: 0)
-      Player.didnt_play.count.should eq(1)
+      expect(Player.didnt_play.count).to eq(1)
     end
 
     it "should_not include a player whos match isnt over" do
       Fabricate(:player, match_over: false, minutes_played: 0)
-      Player.didnt_play.should eq([])
+      expect(Player.didnt_play).to eq([])
     end
 
     it "should_not include a player whos has minutes played" do
       Fabricate(:player, match_over: true, minutes_played: 1)
-      Player.didnt_play.should eq([])
+      expect(Player.didnt_play).to eq([])
     end
   end
 
   describe '#might_play'do
     it "should include a player whos match isnt over" do
       Fabricate(:player, match_over: false, minutes_played: 0)
-      Player.might_play.count.should eq(1)
+      expect(Player.might_play.count).to eq(1)
     end
 
     it "should include a player who has minutes played" do
       Fabricate(:player, match_over: true, minutes_played: 1)
-      Player.might_play.count.should eq(1)
+      expect(Player.might_play.count).to eq(1)
     end
 
     it "should not include a player whos match is over with 0 minutes played" do
       Fabricate(:player, match_over: true, minutes_played: 0)
-      Player.might_play.count.should eq(0)
+      expect(Player.might_play.count).to eq(0)
     end
   end
 
@@ -60,19 +60,19 @@ describe Player do
     end
 
     example '#goal_keepers' do
-      Player.goal_keepers.should eq([@gk])
+      expect(Player.goal_keepers).to eq([@gk])
     end
 
     example '#defenders' do
-      Player.defenders.should eq([@defe])
+      expect(Player.defenders).to eq([@defe])
     end
 
     example '#forwards' do
-      Player.forwards.should eq([@fwd])
+      expect(Player.forwards).to eq([@fwd])
     end
 
     example '#outfield_players' do
-      Player.outfield_players.should eq([@defe, @mid, @fwd])
+      expect(Player.outfield_players).to eq([@defe, @mid, @fwd])
     end
   end
 end
