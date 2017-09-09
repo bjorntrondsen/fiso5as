@@ -42,10 +42,11 @@ class FplScraper
   end
 
   def self.live_data(game_week)
-    return @live_data if @live_data
+    @live_data ||= []
+    return @live_data[game_week] if @live_data[game_week]
     data_url = "https://fantasy.premierleague.com/drf/event/#{game_week}/live"
-    @live_data = JSON.parse(open(data_url).read)
-    @live_data
+    @live_data[game_week] = JSON.parse(open(data_url).read)
+    @live_data[game_week]
   end
 
   def initialize(h2h_match)

@@ -1,11 +1,6 @@
 require 'open-uri'
 
 class Match < ActiveRecord::Base
-  class << self # TODO: No longer in use?
-    # Fields used for caching when syncing to prevent unnecessary scraping
-    attr_accessor :pl_match_over, :teams
-  end
-
   belongs_to :game_week, inverse_of: :matches
   belongs_to :home_team, class_name: 'Team'
   belongs_to :away_team, class_name: 'Team'
@@ -25,15 +20,6 @@ class Match < ActiveRecord::Base
 
   def self.with_all_data
     includes(:home_team, :away_team, :h2h_matches => [:players, :home_manager, :away_manager])
-  end
-
-  def self.sync_all
-    FplScraper.clear_cache
-    self.pl_match_over = nil
-    self.teams = nil
-    time = Time.zone.now
-    active.each{|m| m.fpl_sync }
-    puts Time.zone.now - time
   end
 
   def fpl_sync

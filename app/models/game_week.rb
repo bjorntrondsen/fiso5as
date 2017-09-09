@@ -8,12 +8,20 @@ class GameWeek < ApplicationRecord
   before_validation :generate_access_token, on: :create
   before_validation :set_deadline, on: :create
 
+  def self.sync_open
+    FplScraper.clear_cache
+    scope = where(finished: false)
+    raise "Something is wrong. Found #{scope.count} open gameweeks" if scope.count > 2
+    scope.each(&:fpl_sync)
+  end
+
   def name
     "Game week #{gw_no}"
   end
 
   def fpl_sync
     matches.each(&:fpl_sync)
+    set_finished
   end
 
   def setup
@@ -30,7 +38,16 @@ class GameWeek < ApplicationRecord
 
   def set_deadline
     return if deadline_at.present?
-    fpl_timestamp = FplScraper.static_data['events'].find{|x| x['name'] == "Gameweek #{gw_no}"}['deadline_time']
+    fpl_timestamp = fpl_data['deadline_time']
     self.deadline_at ||= Time.zone.parse(fpl_timestamp)
+  end
+
+  def set_finished
+    self.finished = fpl_data['finished'] && fpl_data['data_checked']
+    self.save!
+  end
+
+  def fpl_data
+    FplScraper.static_data['events'].find{|x| x['name'] == "Gameweek #{gw_no}"}
   end
 end

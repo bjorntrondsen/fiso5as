@@ -27,5 +27,5 @@ job_type :runner_with_lock, "cd :path && flock -n /var/lock/:lock.lock bin/rails
 
 # Runs every 2 minutes from 10:00 to 23:00
 every '*/2 10-23 * * *' do
-  runner_with_lock "Match.sync_all", lock: 'job_runner_fiso5as'
+  runner_with_lock "GameWeek.sync_open", lock: 'job_runner_fiso5as'
 end
