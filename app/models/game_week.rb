@@ -1,4 +1,6 @@
 class GameWeek < ApplicationRecord
+  DEADLINE_PADDING = 30.minutes
+
   has_many :matches, -> { order(:gw_fixture_no) }, dependent: :destroy
 
   validates_presence_of :season, :gw_no, :access_token, :deadline_at
@@ -24,7 +26,7 @@ class GameWeek < ApplicationRecord
   end
 
   def ongoing?
-    !finished && (deadline_at + 30.minutes) < Time.zone.now
+    !finished && (deadline_at + DEADLINE_PADDING) < Time.zone.now
   end
 
   def name

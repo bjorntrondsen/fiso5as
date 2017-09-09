@@ -53,7 +53,7 @@ class Match < ActiveRecord::Base
   end
 
   def started?
-    Time.zone.now > game_week.deadline_at + 30.minutes
+    Time.zone.now > game_week.deadline_at + GameWeek::DEADLINE_PADDING
   end
 
   def ongoing?
