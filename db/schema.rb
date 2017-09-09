@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170909111658) do
+ActiveRecord::Schema.define(version: 20170909120823) do
 
   create_table "game_weeks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_danish_ci" do |t|
     t.datetime "deadline_at"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20170909111658) do
     t.boolean "finished", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "last_sync_took", precision: 5, scale: 1
   end
 
   create_table "h2h_matches", id: :bigint, unsigned: true, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_danish_ci" do |t|

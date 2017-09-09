@@ -44,8 +44,9 @@ class GameWeek < ApplicationRecord
     ActiveRecord::Base.transaction do
       matches.each(&:fpl_sync)
     end
-    puts Time.zone.now - time if Rails.env.development?
     set_finished
+    self.last_sync_took = Time.zone.now - time
+    self.save
   end
 
   def setup

@@ -9,12 +9,14 @@
         &nbsp;
         %span.weak
           - if game_week.ongoing?
-            (ongoing)
+            ongoing
           - elsif game_week.finished?
-            (finished)
+            finished
           - else
             starts
             = l game_week.deadline_at.to_date, format: '%d %b'
+          - if game_week.last_sync_took
+            \- last sync took #{game_week.last_sync_took}s
       %br/
       %span.match-name All scoreboards:
       = link_to fiveaside_gw_url(game_week.access_token), fiveaside_gw_url(game_week.access_token)
