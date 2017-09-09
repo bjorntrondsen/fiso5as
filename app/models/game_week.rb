@@ -36,7 +36,9 @@ class GameWeek < ApplicationRecord
   end
 
   def fpl_sync
+    time = Time.zone.now
     matches.each(&:fpl_sync)
+    puts Time.zone.now - time
     set_finished
   end
 
