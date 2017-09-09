@@ -2,6 +2,9 @@
 
 require 'bundler/capistrano'
 
+require "whenever/capistrano"
+set :whenever_command, "bundle exec whenever"
+
 load 'deploy/assets'
 
 set :application, "fiso5as"

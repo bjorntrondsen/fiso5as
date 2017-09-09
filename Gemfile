@@ -11,7 +11,7 @@ gem 'therubyracer', platforms: :ruby
 gem 'jquery-rails'
 gem 'turbolinks'
 gem 'haml-rails'
-gem 'rufus-scheduler'
+gem 'whenever', '~> 0.9', :require => false
 gem 'newrelic_rpm'
 gem "roo", "~> 2.7"
 gem "figaro"
