@@ -7,5 +7,5 @@ Fiso5as::Application.routes.draw do
     get '/:access_token' => 'matches#index', as: :gw
   end
 
-  root to: "fiveaside/matches#index"
+  root to: "landing_page#index"
 end
