@@ -51,6 +51,7 @@ RSpec.configure do |config|
   end
 
   config.around(:each) do |example|
+    FplScraper.clear_cache
     DatabaseCleaner.cleaning do
       example.run
     end

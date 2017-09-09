@@ -3,10 +3,6 @@ require 'spec_helper'
 
 describe FplScraper do
   before :each do
-    GameWeek.destroy_all # DatabaseCleaner broken?
-    Match.destroy_all # DatabaseCleaner broken?
-    Manager.destroy_all # DatabaseCleaner broken?
-    Player.destroy_all # DatabaseCleaner brokern?
     VCR.use_cassette('one_h2h_match') do
       @home = Fabricate(:manager, fpl_id: 1164928, fiso_name: 'Sharagoz')
       @away = Fabricate(:manager, fpl_id: 8835, fiso_name: 'Moist von Lipwig')
