@@ -4,7 +4,7 @@ class Match < ActiveRecord::Base
   belongs_to :game_week, inverse_of: :matches
   belongs_to :home_team, class_name: 'Team'
   belongs_to :away_team, class_name: 'Team'
-  has_many :h2h_matches, ->{ order('match_order ASC') }, dependent: :destroy
+  has_many :h2h_matches, ->{ order('match_order ASC') }, dependent: :destroy, autosave: true
 
   validates_presence_of :game_week, :home_team, :away_team, :gw_fixture_no
 

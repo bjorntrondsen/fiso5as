@@ -4,7 +4,7 @@ class H2hMatch < ActiveRecord::Base
   belongs_to :home_manager, class_name: 'Manager'
   belongs_to :away_manager, class_name: 'Manager'
   belongs_to :match, inverse_of: :game_week
-  has_many :players, dependent: :destroy
+  has_many :players, dependent: :destroy, autosave: true
 
   validates_presence_of :home_manager_id, :away_manager_id
 
@@ -51,7 +51,6 @@ class H2hMatch < ActiveRecord::Base
   end
 
   def fetch_data
-    self.players.destroy_all
     FplScraper.new(self).scrape
     self.save!
     set_defaults

@@ -9,6 +9,7 @@ describe FplScraper do
         match = Fabricate(:match, game_week: Fabricate(:game_week, gw_no: 2))
         h2h = match.h2h_matches.create!(home_manager_id: home.id, away_manager_id: away.id, match_order: 1)
         FplScraper.new(h2h).scrape
+        match.save! # Trigger autosave
       end
     end
 
