@@ -87,14 +87,14 @@ class FplScraper
     team_name       = get_team_name(player_details)
     minutes_played  = get_minutes_played(player_details)
     games_left      = get_games_left(player_details)
-    match_over      = match_over?(player_details)
+    matches_over    = matches_over?(player_details)
     bench           = player_json['position'] > 11 # TODO: Verify
     captain         = player_json['is_captain']
     vice_captain    = player_json['is_vice_captain']
     points          = multiplier * get_points(player_details)
     position        = get_position(player_details)
 
-   { name: name, games_left: games_left, captain: captain, vice_captain: vice_captain, bench: bench, position: position, points: points, minutes_played: minutes_played, match_over: match_over }
+   { name: name, games_left: games_left, captain: captain, vice_captain: vice_captain, bench: bench, position: position, points: points, minutes_played: minutes_played, matches_over: matches_over }
    
   end
 
@@ -136,7 +136,7 @@ class FplScraper
     self.class.live_data(@game_week)['fixtures'].find{|m| m['id'] == match_id }['started']
   end
 
-  def match_over?(player_details)
+  def matches_over?(player_details)
     match_id = player_details[:live]['explain'][0][1]
     match_data = self.class.live_data(@game_week)['fixtures'].find{|m| m['id'] == match_id }
     match_data['finished'] || match_data['finished_provisional']

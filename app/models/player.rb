@@ -21,11 +21,11 @@ class Player < ActiveRecord::Base
   end
 
   def self.didnt_play
-    self.where(match_over: true, minutes_played: 0)
+    self.where(matches_over: true, minutes_played: 0)
   end
 
   def self.might_play
-    self.where("minutes_played > 0 OR match_over = false")
+    self.where("minutes_played > 0 OR matches_over = false")
   end
 
   def self.goal_keepers
@@ -49,11 +49,11 @@ class Player < ActiveRecord::Base
   end
 
   def playing_now?
-    minutes_played > 0 && match_over == false
+    minutes_played > 0 && matches_over == false
   end
 
   def playing_later?
-    minutes_played == 0 && match_over == false
+    minutes_played == 0 && matches_over == false
   end
 
   def goal_keeper?

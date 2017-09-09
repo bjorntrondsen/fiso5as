@@ -11,7 +11,7 @@ describe FplScraper do
     end
   end
 
-  let(:player_fields) { %w(captain vice_captain bench position points minutes played match_over) }
+  let(:player_fields) { %w(captain vice_captain bench position points minutes played matches_over) }
 
   it "creates players" do
     VCR.use_cassette('one_h2h_match') do
@@ -27,7 +27,7 @@ describe FplScraper do
       "bench"=>false,
       "position"=>"GK",
       "points"=>6,
-      "match_over"=>true
+      "matches_over"=>true
     })
   end
 
@@ -39,7 +39,7 @@ describe FplScraper do
       "bench"=>false,
       "position"=>"DEF",
       "points"=>0,
-      "match_over"=>false
+      "matches_over"=>false
     })
   end
 
@@ -53,7 +53,7 @@ describe FplScraper do
       "bench"=>false,
       "position"=>"FWD",
       "points"=>12,
-      "match_over"=>true
+      "matches_over"=>true
     })
   end
 
@@ -65,7 +65,7 @@ describe FplScraper do
       "bench"=>false,
       "position"=>"FWD",
       "points"=>0,
-      "match_over"=>false
+      "matches_over"=>false
     })
   end
 end

@@ -10,12 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170905155825) do
+ActiveRecord::Schema.define(version: 20170909095314) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
-  create_table "game_weeks", force: :cascade do |t|
+  create_table "game_weeks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_danish_ci" do |t|
     t.datetime "deadline_at"
     t.string "season"
     t.integer "gw_no"
@@ -25,7 +22,7 @@ ActiveRecord::Schema.define(version: 20170905155825) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "h2h_matches", id: :serial, force: :cascade do |t|
+  create_table "h2h_matches", id: :bigint, unsigned: true, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_danish_ci" do |t|
     t.integer "match_id"
     t.integer "match_order"
     t.integer "home_manager_id"
@@ -37,17 +34,17 @@ ActiveRecord::Schema.define(version: 20170905155825) do
     t.datetime "updated_at"
   end
 
-  create_table "managers", id: :serial, force: :cascade do |t|
+  create_table "managers", id: :bigint, unsigned: true, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_danish_ci" do |t|
     t.integer "fpl_id"
     t.integer "team_id"
-    t.string "fpl_name", limit: 255
-    t.string "fiso_name", limit: 255
+    t.string "fpl_name"
+    t.string "fiso_name"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string "squad_name"
   end
 
-  create_table "matches", id: :serial, force: :cascade do |t|
+  create_table "matches", id: :bigint, unsigned: true, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_danish_ci" do |t|
     t.integer "home_team_id"
     t.integer "away_team_id"
     t.datetime "created_at"
@@ -56,26 +53,26 @@ ActiveRecord::Schema.define(version: 20170905155825) do
     t.integer "game_week_id"
   end
 
-  create_table "players", id: :serial, force: :cascade do |t|
+  create_table "players", id: :bigint, unsigned: true, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_danish_ci" do |t|
     t.integer "h2h_match_id"
     t.integer "manager_id"
-    t.string "name", limit: 255
+    t.string "name"
     t.integer "games_left"
     t.boolean "captain"
     t.boolean "vice_captain"
     t.boolean "bench"
-    t.string "position", limit: 255
+    t.string "position"
     t.integer "points"
     t.integer "minutes_played"
-    t.boolean "match_over"
+    t.boolean "matches_over"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string "side"
     t.index ["side", "h2h_match_id"], name: "index_players_on_side_and_h2h_match_id"
   end
 
-  create_table "teams", id: :serial, force: :cascade do |t|
-    t.string "name", limit: 255
+  create_table "teams", id: :bigint, unsigned: true, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_danish_ci" do |t|
+    t.string "name"
     t.integer "fpl_id"
     t.datetime "created_at"
     t.datetime "updated_at"

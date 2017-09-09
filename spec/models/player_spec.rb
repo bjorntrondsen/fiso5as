@@ -19,34 +19,34 @@ describe Player do
 
   describe '#didnt_play'do
     it "should include a player whos match is over with 0 minutes played" do
-      Fabricate(:player, match_over: true, minutes_played: 0)
+      Fabricate(:player, matches_over: true, minutes_played: 0)
       expect(Player.didnt_play.count).to eq(1)
     end
 
     it "should_not include a player whos match isnt over" do
-      Fabricate(:player, match_over: false, minutes_played: 0)
+      Fabricate(:player, matches_over: false, minutes_played: 0)
       expect(Player.didnt_play).to eq([])
     end
 
     it "should_not include a player whos has minutes played" do
-      Fabricate(:player, match_over: true, minutes_played: 1)
+      Fabricate(:player, matches_over: true, minutes_played: 1)
       expect(Player.didnt_play).to eq([])
     end
   end
 
   describe '#might_play'do
     it "should include a player whos match isnt over" do
-      Fabricate(:player, match_over: false, minutes_played: 0)
+      Fabricate(:player, matches_over: false, minutes_played: 0)
       expect(Player.might_play.count).to eq(1)
     end
 
     it "should include a player who has minutes played" do
-      Fabricate(:player, match_over: true, minutes_played: 1)
+      Fabricate(:player, matches_over: true, minutes_played: 1)
       expect(Player.might_play.count).to eq(1)
     end
 
     it "should not include a player whos match is over with 0 minutes played" do
-      Fabricate(:player, match_over: true, minutes_played: 0)
+      Fabricate(:player, matches_over: true, minutes_played: 0)
       expect(Player.might_play.count).to eq(0)
     end
   end
