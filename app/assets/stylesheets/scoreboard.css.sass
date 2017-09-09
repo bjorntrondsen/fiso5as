@@ -1,21 +1,15 @@
 @import 'mixins'
 
-$squad_width: 290px
+html *
+  box-sizing: border-box
+
+$squad_width: 310px
 $logo_height: 3em
 
 .scoreboard
   max-width: 1000px
   min-height: 140px
   margin: auto
-
-  .home_logo, .away_logo
-    height: $logo_height
-
-  .home_logo
-    float: left
-
-  .away_logo
-    float: right
 
   table
     width: 700px
@@ -30,13 +24,13 @@ $logo_height: 3em
     color: blue
 
   td, th
-    padding: 0px 9px
+    padding: 0px 0.5625rem
     border: 0
 
   th
     font-weight: bold
     text-align: left
-    padding-top: 7px
+    padding-top: 0.4375rem
 
     a
       color: #000
@@ -45,15 +39,18 @@ $logo_height: 3em
         color: blue
 
   td
-    padding-bottom: 7px
+    padding-bottom: 0.4375rem
     vertical-align: top
 
+  td:last-child, th:last-child
+    padding-left: 0
+
   tr.headline th
+    position: relative
     background-color: $scoreboard_blue
     text-shadow: 1px 1px 1px #555
     padding: 0
-    text-align: center
-    font-size: 22px
+    font-size: 1.1875rem
     line-height: $logo_height
     white-space: nowrap
     overflow: hidden
@@ -73,6 +70,17 @@ $logo_height: 3em
     &:first-child, &:last-child
       width: $squad_width
 
+    .home_logo, .away_logo
+      height: $logo_height
+
+    .home_logo
+      float: left
+      margin-right: 0.25em
+
+    .away_logo
+      position: absolute
+      right: 0
+
   tr.odd
     background-color: $scoreboard_light_blue
 
@@ -82,7 +90,7 @@ $logo_height: 3em
   tr.footer td
     font-size: 13px
     background-color: #CCC
-    padding-top: 7px
+    padding-top: 0.4375rem
     text-shadow: 1px 1px 1px #DDD
 
   .disadvantage, .advantage, .tctc
@@ -90,9 +98,9 @@ $logo_height: 3em
     text-align: center
     font-weight: normal
     text-transform: uppercase
-    font-size: 11px
+    font-size: 0.6875rem
     white-space: nowrap
-    padding: 0 5px
+    padding: 0 0.3125rem
 
   .advantage
     background-color: #007A21
@@ -107,7 +115,7 @@ $logo_height: 3em
 
   .squad
     width: $squad_width
-    font-size: 13px
+    font-size: 0.8rem
 
   .playing_now
     color: #892FC4
@@ -117,6 +125,7 @@ $logo_height: 3em
     text-shadow: 1px 1px 0px #FFF
 
   .pts_total
+    text-align: center
     white-space: nowrap
 
   .pts_total span
@@ -127,8 +136,8 @@ $logo_height: 3em
 
   .pts_total .ahead, .pts_total .behind
     display: inline-block
-    min-width: 23px
-    line-height: 21px
+    min-width: 2.00em
+    line-height: 1.35em
     text-align: center
 
   .pts_total .ahead 
@@ -140,7 +149,7 @@ $logo_height: 3em
     background-color: #FF7272
 
 .last_update
-  font-size: 10px
+  font-size: 0.65px
   color: #777
   text-align: center
   margin-bottom: 2rem

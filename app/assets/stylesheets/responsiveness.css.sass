@@ -1,0 +1,68 @@
+
+// Set trigger width to 1000px if it hasnt been set already
+$responsive_trigger_width: 1000px !default
+
+// Workaround that disables font-boosting
+html *
+  max-height: 9999999px
+
+html
+  -webkit-text-size-adjust: 100%
+  -moz-text-size-adjust: 100%
+  text-size-adjust: 100%
+  font-weight: normal
+
+@media (max-width: $responsive_trigger_width)
+
+  html, body
+    font-size: 3vw !important
+
+  .scoreboard, .scoreboard table
+    width: 100%
+
+  .scoreboard
+
+    .name_prefix
+      display: none
+
+    table
+      table-layout: fixed
+      margin-left: 0
+      margin-right: 0
+
+      th:first-child, td:first-child, th:last-child, td:last-child
+        width: 40%
+      th:nth-child(2), td:nth-child(2)
+        width: 20%
+
+
+    tr.headline th
+      &:first-child, &:last-child
+        width: auto
+
+    .squad
+      width: auto
+
+@media (max-width: $responsive_trigger_width) and (min-width: 601px)
+
+
+@media (max-width: 600px)
+
+  html, body
+    font-size: 5vw !important
+
+  .scoreboard
+
+    .home_logo, .away_logo
+      display: none
+
+    table
+      table-layout: fixed
+      margin-left: 0
+      margin-right: 0
+
+      th:first-child, td:first-child, th:last-child, td:last-child
+        width: auto
+
+      th:nth-child(2), td:nth-child(2)
+        width: auto

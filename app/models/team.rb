@@ -15,7 +15,4 @@ class Team < ActiveRecord::Base
     "2017_logos/#{fiso_team_id}.png"
   end
 
-  def full_name
-    "FISO 5AS #{name}"
-  end
 end

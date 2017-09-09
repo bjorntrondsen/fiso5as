@@ -1,16 +1,20 @@
 //
 //= require scoreboard
+//= require responsiveness
 //= require_self
 
 @import 'mixins'
 
+html *
+  box-sizing: border-box
+
 html, body
   margin: 0
   padding: 0
+  font-size: 16px
 
 html
   font-family: 'Lato'
-  font-size: 16px
 
 body
   padding-bottom: 7rem
@@ -23,7 +27,6 @@ a, a:visited
   text-align: center
   padding: 0.5em
   margin: 0
-  margin-bottom: 1em
 
   a
     padding: 0 2em

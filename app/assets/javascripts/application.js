@@ -15,7 +15,7 @@
 //= require turbolinks
 //= require_self
 
-$(function(){
-  if($('.scoreboard').size() > 0)
-    setInterval("window.location.reload()", 30000)
-})
+//$(function(){
+  //if($('.scoreboard').size() > 0)
+    //setInterval("window.location.reload()", 30000)
+//})
