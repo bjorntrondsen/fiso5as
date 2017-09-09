@@ -29,7 +29,7 @@ class Match < ActiveRecord::Base
       self.touch
       self.save
     end
-    puts "Done (match #{self.id}) Took #{Time.zone.now - time}"
+    puts "Done (match #{self.id}) Took #{Time.zone.now - time}" if Rails.env.development?
   end
 
   def home_score
