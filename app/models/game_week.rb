@@ -8,11 +8,18 @@ class GameWeek < ApplicationRecord
   before_validation :generate_access_token, on: :create
   before_validation :set_deadline, on: :create
 
+  def self.ongoing
+    where(finished: false).where('deadline_at < ?', Time.zone.now - 30.minutes)
+  end
+
   def self.sync_open
     FplScraper.clear_cache
-    scope = where(finished: false)
-    raise "Something is wrong. Found #{scope.count} open gameweeks" if scope.count > 2
-    scope.each(&:fpl_sync)
+    raise "Something is wrong. Found #{ongoing.count} ongoing gameweeks" if ongoing.count > 2
+    ongoing.each(&:fpl_sync)
+  end
+
+  def ongoing?
+    !finished && (deadline_at + 30.minutes) < Time.zone.now
   end
 
   def name

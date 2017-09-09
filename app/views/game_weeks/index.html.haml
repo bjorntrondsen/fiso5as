@@ -3,7 +3,18 @@
 
   - @game_weeks.each do |game_week|
     %p
-      %b= game_week.name
+      %b
+        = game_week.name
+        &nbsp;
+        &nbsp;
+        %span.weak
+          - if game_week.ongoing?
+            (ongoing)
+          - elsif game_week.finished?
+            (finished)
+          - else
+            starts
+            = l game_week.deadline_at.to_date, format: '%d %b'
       %br/
       %span.match-name All scoreboards:
       = link_to fiveaside_gw_url(game_week.access_token), fiveaside_gw_url(game_week.access_token)
