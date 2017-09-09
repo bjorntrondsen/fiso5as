@@ -8,14 +8,17 @@ class GameWeek < ApplicationRecord
   before_validation :generate_access_token, on: :create
   before_validation :set_deadline, on: :create
 
-  def self.ongoing
-    where(finished: false).where('deadline_at < ?', Time.zone.now - 30.minutes)
+  def self.active
+    where(finished: false).where('deadline_at < ?', Time.zone.now + 48.hours)
   end
 
   def self.sync_open
     FplScraper.clear_cache
-    raise "Something is wrong. Found #{ongoing.count} ongoing gameweeks" if ongoing.count > 2
-    ongoing.each(&:fpl_sync)
+    raise "Something is wrong. Found #{active.count} active gameweeks" if active.count > 2
+    active.each do |game_week|
+      game_week.set_up
+      game_week.fpl_sync if game_week.ongoing?
+    end
   end
 
   def ongoing?
@@ -24,6 +27,12 @@ class GameWeek < ApplicationRecord
 
   def name
     "Game week #{gw_no}"
+  end
+
+  def set_up
+    matches.each do |match|
+      match.set_up_match!(skip_fpl_sync: true) if match.h2h_matches.count == 0
+    end
   end
 
   def fpl_sync
