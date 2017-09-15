@@ -19,7 +19,10 @@
       - klass = cycle('odd','even')
       %tr{class: klass}
         %th
-          = link_to h2h_match.home_manager.name, h2h_match.home_manager.gw_url(match.game_week.gw_no), target: '_blank'
+          - if match.started?
+            = link_to h2h_match.home_manager.name, h2h_match.home_manager.gw_url(match.game_week.gw_no), target: '_blank'
+          - else
+            = link_to h2h_match.home_manager.name, h2h_match.home_manager.gw_url(match.game_week.gw_no - 1), target: '_blank'
           - if h2h_match.home_chip.present?
             %span.chip= h2h_match.home_chip
           - if h2h_match.home_ahead?
@@ -30,7 +33,10 @@
           %span{class: h2h_match.away_ahead? ? 'ahead' : 'behind'}
             = h2h_match.away_score
         %th
-          = link_to h2h_match.away_manager.name, h2h_match.away_manager.gw_url(match.game_week.gw_no), target: '_blank'
+          - if match.started?
+            = link_to h2h_match.away_manager.name, h2h_match.away_manager.gw_url(match.game_week.gw_no), target: '_blank'
+          - else
+            = link_to h2h_match.away_manager.name, h2h_match.away_manager.gw_url(match.game_week.gw_no - 1), target: '_blank'
           - if h2h_match.away_chip.present?
             %span.chip= h2h_match.away_chip
           - if h2h_match.away_ahead?
