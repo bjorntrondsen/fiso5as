@@ -107,7 +107,7 @@ class FplScraper
 
   # TODO: DGW not handled
   def get_games_left(player_details)
-    match_started?(player_details) ? 0 : 1
+    matches_over?(player_details) ? 0 : 1
   end
 
   def get_team_name(player_details)
