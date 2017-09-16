@@ -64,7 +64,7 @@
     - a_now = match.playing_now(:away).collect{|name,count| "#{count}x#{name}" if count > 1}.join(' ')
     - a_later = match.playing_later(:away).collect{|name,count| "#{count}x#{name}" if count > 1}.join(' ')
     - unless h_now.blank? && h_later.blank? && a_now.blank? && a_later.blank?
-      %tr.footer
+      %tr.footer{title: 'Differentiators present in more than one tie'}
         %td
           %span.playing_now= h_now
           = h_later
