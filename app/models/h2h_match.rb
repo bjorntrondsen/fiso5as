@@ -31,11 +31,11 @@ class H2hMatch < ActiveRecord::Base
   end
 
   def home_ahead?
-    home_score > away_score
+    (home_score + extra_points_home) > (away_score + extra_points_away)
   end
 
   def away_ahead?
-    away_score > home_score
+    (home_score + extra_points_home) < (away_score + extra_points_away)
   end
 
   def score_diff
@@ -54,10 +54,7 @@ class H2hMatch < ActiveRecord::Base
     FplScraper.new(self).scrape
     self.save!
     set_defaults
-    inform_of_pending_substitutions(:home)
-    inform_of_pending_substitutions(:away)
-    inform_of_captain_change(:home)
-    inform_of_captain_change(:away)
+    add_predictions!
     self.save!
   end
 
@@ -69,9 +66,13 @@ class H2hMatch < ActiveRecord::Base
       candidates = squad.might_play.benched
       if sub = find_sub(player,candidates,squad,already_subed)
         already_subed << sub
-        pts =  sub.playing_later? ? '' : " (#{sub.points}pts)"
-        msg = "#{sub.name+pts} will replace #{player.name}"
-        #self.predicted_extra += pts
+        if sub.playing_later?
+          pts_str = ''
+        else
+          self.send("extra_points_#{side}=", self.send("extra_points_#{side}").send(:+, sub.points))
+          pts_str = " (#{sub.points}pts)"
+        end
+        msg = "#{sub.name+pts_str} will replace #{player.name}"
         self.info[side] <<  msg
       end
     end
@@ -106,6 +107,18 @@ class H2hMatch < ActiveRecord::Base
   end
 
   private
+
+  def add_predictions!
+    self.info = { home: [], away: [] }
+    self.extra_points_home = 0
+    self.extra_points_away = 0
+    self.bp_prediction_home = 0
+    self.bp_prediction_away = 0
+    inform_of_pending_substitutions(:home)
+    inform_of_pending_substitutions(:away)
+    inform_of_captain_change(:home)
+    inform_of_captain_change(:away)
+  end
 
   def set_defaults
     self.home_score  ||= 0

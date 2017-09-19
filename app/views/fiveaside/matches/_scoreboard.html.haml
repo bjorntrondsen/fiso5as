@@ -30,8 +30,10 @@
         %th.pts_total
           %span{class: h2h_match.home_ahead? ? 'ahead' : 'behind'}
             = h2h_match.home_score
+            = extra_points(h2h_match.extra_points_home)
           %span{class: h2h_match.away_ahead? ? 'ahead' : 'behind'}
             = h2h_match.away_score
+            = extra_points(h2h_match.extra_points_away)
         %th
           - if match.started?
             = link_to h2h_match.away_manager.name, h2h_match.away_manager.gw_url(match.game_week.gw_no), target: '_blank'

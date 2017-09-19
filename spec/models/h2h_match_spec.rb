@@ -25,6 +25,7 @@ describe H2hMatch do
       expect { h2h.inform_of_pending_substitutions(:home) }.to change {
         h2h.info[:home]
       }.to(["#{squad.benched[1].name} (2pts) will replace #{squad.defenders.first.name}"])
+      expect(h2h.extra_points_home).to eq(2)
     end
 
     it "replaces a midfielder with a forward when the first sub is a forward" do

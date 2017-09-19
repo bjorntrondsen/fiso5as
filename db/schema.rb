@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170909120823) do
+ActiveRecord::Schema.define(version: 20170919194147) do
 
   create_table "game_weeks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_danish_ci" do |t|
     t.datetime "deadline_at"
@@ -35,6 +35,10 @@ ActiveRecord::Schema.define(version: 20170909120823) do
     t.datetime "updated_at"
     t.string "home_chip"
     t.string "away_chip"
+    t.integer "bp_prediction_home", default: 0
+    t.integer "bp_prediction_away", default: 0
+    t.integer "extra_points_home", default: 0
+    t.integer "extra_points_away", default: 0
   end
 
   create_table "managers", id: :bigint, unsigned: true, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_danish_ci" do |t|
