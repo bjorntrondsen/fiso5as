@@ -115,7 +115,7 @@ class FplScraper
     minutes_played  = get_minutes_played(player_details)
     games_left      = get_games_left(match_id)
     matches_over    = matches_over?(match_id)
-    bench           = player_json['position'] > 11 # TODO: Verify
+    bench           = player_json['position'] > 11 # TODO: Bench boost handling
     captain         = player_json['is_captain']
     vice_captain    = player_json['is_vice_captain']
     points          = multiplier * get_points(player_details)

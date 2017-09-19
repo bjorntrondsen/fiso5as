@@ -100,7 +100,10 @@ class H2hMatch < ActiveRecord::Base
       vice_captain = squad.might_play.where(vice_captain: true).first
       if vice_captain
         msg = "Armband will switch to #{vice_captain.name}"
-        msg += " (#{vice_captain.points}pts)" unless vice_captain.playing_later?
+        unless vice_captain.playing_later?
+          msg += " (#{vice_captain.points}pts)"
+          self.send("extra_points_#{side}=", self.send("extra_points_#{side}").send(:+, sub.points_with_bp))
+        end
         self.info[side] << msg
       end
     end
@@ -128,8 +131,6 @@ class H2hMatch < ActiveRecord::Base
     self.info = { home: [], away: [] }
     self.extra_points_home = 0
     self.extra_points_away = 0
-    self.bp_prediction_home = 0
-    self.bp_prediction_away = 0
     inform_of_pending_substitutions(:home)
     inform_of_pending_substitutions(:away)
     inform_of_captain_change(:home)

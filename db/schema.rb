@@ -35,8 +35,6 @@ ActiveRecord::Schema.define(version: 20170919215642) do
     t.datetime "updated_at"
     t.string "home_chip"
     t.string "away_chip"
-    t.integer "bp_prediction_home", default: 0
-    t.integer "bp_prediction_away", default: 0
     t.integer "extra_points_home", default: 0
     t.integer "extra_points_away", default: 0
   end
