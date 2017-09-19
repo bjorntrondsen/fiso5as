@@ -30,16 +30,24 @@ class H2hMatch < ActiveRecord::Base
     end
   end
 
+  def predicted_home_score
+    home_score + extra_points_home + bp_prediction(:home)
+  end
+
+  def predicted_away_score
+    away_score + extra_points_away + bp_prediction(:away)
+  end
+
   def home_ahead?
-    (home_score + extra_points_home) > (away_score + extra_points_away)
+    predicted_home_score > predicted_away_score
   end
 
   def away_ahead?
-    (home_score + extra_points_home) < (away_score + extra_points_away)
+    predicted_away_score > predicted_home_score
   end
 
   def score_diff
-    (away_score - home_score).abs
+    (predicted_away_score - predicted_home_score).abs
   end
 
   def playing_now(side)
@@ -48,6 +56,14 @@ class H2hMatch < ActiveRecord::Base
 
   def playing_later(side)
     differentiators(side).collect{|p| p if(p.playing_later?)}.compact
+  end
+
+  def bp_prediction(side)
+    send("#{side}_squad").inject(0){|sum,p| sum += p.bp_prediction unless p.bench; sum }
+  end
+
+  def bp_prediction_names(side)
+    send("#{side}_squad").collect{|p| "#{p.name}:#{p.bp_prediction}" if p.bp_prediction > 0 && !p.bench }.compact.join(" ")
   end
 
   def fetch_data
@@ -69,8 +85,8 @@ class H2hMatch < ActiveRecord::Base
         if sub.playing_later?
           pts_str = ''
         else
-          self.send("extra_points_#{side}=", self.send("extra_points_#{side}").send(:+, sub.points))
-          pts_str = " (#{sub.points}pts)"
+          self.send("extra_points_#{side}=", self.send("extra_points_#{side}").send(:+, sub.points_with_bp))
+          pts_str = " (#{sub.points_with_bp}pts)"
         end
         msg = "#{sub.name+pts_str} will replace #{player.name}"
         self.info[side] <<  msg

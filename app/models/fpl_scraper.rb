@@ -32,6 +32,9 @@ class FplScraper
   def self.clear_cache
     @static_data = nil
     @live_data = nil
+    @match_data = nil
+    @bonus_added = nil
+    @bp_prediction = nil
   end
 
   def self.static_data
@@ -47,6 +50,26 @@ class FplScraper
     data_url = "https://fantasy.premierleague.com/drf/event/#{game_week}/live"
     @live_data[game_week] = JSON.parse(open(data_url).read)
     @live_data[game_week]
+  end
+
+  def self.match_data(match_id, game_week)
+    @match_data ||= []
+    return @match_data[match_id] if @match_data[match_id]
+    @match_data[match_id] = live_data(game_week)['fixtures'].find { |m| m['id'] == match_id }
+  end
+
+  def self.bonus_added?(match_id, game_week)
+    @bonus_added ||= []
+    return @bonus_added[match_id] if @bonus_added[match_id]
+    bonus = @bonus_added[match_id] = match_data(match_id, game_week)['stats'].find{|s| s['bonus'] && (s['bonus']['a'].present? || s['bonus']['h'].present?) }
+    @bonus_added[match_id] = bonus.present?
+  end
+
+  def self.bp_prediction(match_id, game_week)
+    @bp_prediction ||= []
+    return @bp_prediction[match_id] if @bp_prediction[match_id]
+    bps_data = match_data(match_id, game_week)['stats'].find{|s| s['bps'] && (s['bps']['a'].present? || s['bps']['h'].present?) }
+    @bp_prediction[match_id] = bps_data.present? ? BonusPointPredictor.predict(bps_data) : {}
   end
 
   def initialize(h2h_match)
@@ -83,21 +106,24 @@ class FplScraper
   end
 
   def player_data(player_json)
-    player_id = player_json['element']
-    player_details = player_details(player_id)
-    multiplier = player_json['multiplier']
+    player_id       = player_json['element']
+    player_details  = player_details(player_id)
+    match_id        = player_details[:live]['explain'][0][1]
+    multiplier      = player_json['multiplier']
     name            = get_player_name(player_details)
     team_name       = get_team_name(player_details)
     minutes_played  = get_minutes_played(player_details)
-    games_left      = get_games_left(player_details)
-    matches_over    = matches_over?(player_details)
+    games_left      = get_games_left(match_id)
+    matches_over    = matches_over?(match_id)
     bench           = player_json['position'] > 11 # TODO: Verify
     captain         = player_json['is_captain']
     vice_captain    = player_json['is_vice_captain']
     points          = multiplier * get_points(player_details)
     position        = get_position(player_details)
+    bp_prediction   = self.class.bp_prediction(match_id, @game_week)[player_id] || 0
+    bp_prediction   = 0 if self.class.bonus_added?(match_id, @game_week) || match_minutes?(match_id) < 44
 
-   { name: name, games_left: games_left, captain: captain, vice_captain: vice_captain, bench: bench, position: position, points: points, minutes_played: minutes_played, matches_over: matches_over }
+   { name: name, games_left: games_left, captain: captain, vice_captain: vice_captain, bench: bench, position: position, points: points, minutes_played: minutes_played, matches_over: matches_over, bp_prediction: bp_prediction }
    
   end
 
@@ -106,8 +132,8 @@ class FplScraper
   end
 
   # TODO: DGW not handled
-  def get_games_left(player_details)
-    matches_over?(player_details) ? 0 : 1
+  def get_games_left(match_id)
+    matches_over?(match_id) ? 0 : 1
   end
 
   def get_team_name(player_details)
@@ -134,15 +160,16 @@ class FplScraper
     player_details[:live]['stats']['total_points']
   end
 
-  def match_started?(player_details)
-    match_id = player_details[:live]['explain'][0][1]
-    self.class.live_data(@game_week)['fixtures'].find{|m| m['id'] == match_id }['started']
+  def match_minutes?(match_id)
+    self.class.match_data(match_id, @game_week)['minutes']
   end
 
-  def matches_over?(player_details)
-    match_id = player_details[:live]['explain'][0][1]
-    match_data = self.class.live_data(@game_week)['fixtures'].find{|m| m['id'] == match_id }
-    match_data['finished'] || match_data['finished_provisional']
+  def match_started?(match_id)
+    self.class.match_data(match_id, @game_week)['started']
+  end
+
+  def matches_over?(match_id)
+    self.class.match_data(match_id, @game_week)['finished'] || self.class.match_data(match_id, @game_week)['finished_provisional']
   end
 
   def gzip_fetch(url)

@@ -89,4 +89,9 @@ class Player < ActiveRecord::Base
     name.gsub(' ', '')
   end
 
+  def points_with_bp
+    return nil unless points
+    points + (bp_prediction || 0)
+  end
+
 end

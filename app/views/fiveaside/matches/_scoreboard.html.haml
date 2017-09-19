@@ -30,10 +30,10 @@
         %th.pts_total
           %span{class: h2h_match.home_ahead? ? 'ahead' : 'behind'}
             = h2h_match.home_score
-            = extra_points(h2h_match.extra_points_home)
+            = extra_points(h2h_match.extra_points_home + h2h_match.bp_prediction(:home))
           %span{class: h2h_match.away_ahead? ? 'ahead' : 'behind'}
             = h2h_match.away_score
-            = extra_points(h2h_match.extra_points_away)
+            = extra_points(h2h_match.extra_points_away + h2h_match.bp_prediction(:away))
         %th
           - if match.started?
             = link_to h2h_match.away_manager.name, h2h_match.away_manager.gw_url(match.game_week.gw_no), target: '_blank'
@@ -52,6 +52,8 @@
           .info
             - h2h_match.info[:home].each do |msg|
               %div= msg
+            - if h2h_match.bp_prediction(:home) > 0
+              %div{title: h2h_match.bp_prediction_names(:home)} BPs predicted: #{h2h_match.bp_prediction(:home)}
         %td
         %td.squad
           %span.playing_now{title: 'Ongoing match'}
@@ -61,6 +63,8 @@
           .info
             - h2h_match.info[:away].each do |msg|
               %div= msg
+            - if h2h_match.bp_prediction(:away) > 0
+              %div{title: h2h_match.bp_prediction_names(:away)} BPs predicted: #{h2h_match.bp_prediction(:away)}
     - h_now = match.playing_now(:home).collect{|name,count| "#{count}x#{name}" if count > 1}.join(' ')
     - h_later = match.playing_later(:home).collect{|name,count| "#{count}x#{name}" if count > 1}.join(' ')
     - a_now = match.playing_now(:away).collect{|name,count| "#{count}x#{name}" if count > 1}.join(' ')

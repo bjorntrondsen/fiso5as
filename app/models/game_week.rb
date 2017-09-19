@@ -16,7 +16,6 @@ class GameWeek < ApplicationRecord
 
   def self.sync_open
     RailsExceptionHandler.catch do
-      FplScraper.clear_cache
       raise "Something is wrong. Found #{active.count} active gameweeks" if active.count > 2
       active.each do |game_week|
         game_week.set_up
@@ -40,6 +39,7 @@ class GameWeek < ApplicationRecord
   end
 
   def fpl_sync
+    FplScraper.clear_cache
     time = Time.zone.now
     ActiveRecord::Base.transaction do
       matches.each(&:fpl_sync)
