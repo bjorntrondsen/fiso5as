@@ -36,6 +36,10 @@ class Player < ActiveRecord::Base
     self.where("position = 'FWD'")
   end
 
+  def self.midfielders
+    self.where("position = 'MID'")
+  end
+
   def self.defenders
     self.where("position = 'DEF'")
   end

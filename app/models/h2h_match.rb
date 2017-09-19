@@ -66,11 +66,12 @@ class H2hMatch < ActiveRecord::Base
     to_replace = squad.not_benched.didnt_play
     already_subed = []
     to_replace.each do |player|
-      candidates = squad.might_play
+      candidates = squad.might_play # TODO: Add benched scope and remove it from find_sub
       if sub = find_sub(player,candidates,squad,already_subed)
         already_subed << sub
         pts =  sub.playing_later? ? '' : " (#{sub.points}pts)"
         msg = "#{sub.name+pts} will replace #{player.name}"
+        #self.predicted_extra += pts
         self.info[side] <<  msg
       end
     end
