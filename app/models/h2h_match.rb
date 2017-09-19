@@ -66,7 +66,7 @@ class H2hMatch < ActiveRecord::Base
     to_replace = squad.not_benched.didnt_play
     already_subed = []
     to_replace.each do |player|
-      candidates = squad.might_play # TODO: Add benched scope and remove it from find_sub
+      candidates = squad.might_play.benched
       if sub = find_sub(player,candidates,squad,already_subed)
         already_subed << sub
         pts =  sub.playing_later? ? '' : " (#{sub.points}pts)"
@@ -90,14 +90,14 @@ class H2hMatch < ActiveRecord::Base
   end
 
   def find_sub(player, candidates, squad, already_subed)
-    if player.goal_keeper? # GK and only replace GK
+    if player.goal_keeper? # GK can only replace GK
       return candidates.goal_keepers.first
-    elsif player.defender? && squad.not_benched.defenders.might_play.count < 3 # 3 defs required
-      candidates = candidates.defenders.benched.might_play
+    elsif player.defender? && squad.not_benched.defenders.might_play.count < 3 # 3 DEFs required
+      candidates = candidates.defenders
     elsif player.forward? && squad.forwards.not_benched.might_play.count == 0 # 1 FWD required
-      candidates = candidates.forwards.benched.might_play
+      candidates = candidates.forwards
     else # No special rule applies, take first sub
-      candidates = candidates.outfield_players.benched.might_play
+      candidates = candidates.outfield_players
     end
     if !already_subed.empty?
       candidates.where!("players.id NOT IN (#{already_subed.collect{|p| p.id}.join(',')})")
