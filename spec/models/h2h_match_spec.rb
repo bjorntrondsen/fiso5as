@@ -56,6 +56,18 @@ describe H2hMatch do
       }.to(["#{squad.benched[3].name} (2pts) will replace #{squad.forwards.first.name}"])
     end
 
+    it "should use the same substitute more than once" do
+      expect(squad.benched.pluck(:position)).to eq(['GK','DEF','DEF','MID'])
+      squad.forwards.first.update_attributes!(minutes_played: 0)
+      squad.midfielders.first.update_attributes!(minutes_played: 0)
+      expect { h2h.inform_of_pending_substitutions(:home) }.to change {
+        h2h.info[:home]
+      }.to([
+        "#{squad.benched[1].name} (2pts) will replace #{squad.midfielders.first.name}",
+        "#{squad.benched[2].name} (2pts) will replace #{squad.forwards.first.name}",
+      ])
+    end
+
     context 'special squad requirement rules' do
       context 'goal keepers' do
         it "should replace a goal keeper with a goal keeper" do

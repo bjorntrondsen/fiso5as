@@ -99,8 +99,8 @@ class H2hMatch < ActiveRecord::Base
     else # No special rule applies, take first sub
       candidates = candidates.outfield_players
     end
-    if !already_subed.empty?
-      candidates.where!("players.id NOT IN (#{already_subed.collect{|p| p.id}.join(',')})")
+    unless already_subed.empty? # Dont use the same substitute more than once
+      candidates = candidates.where.not(id: already_subed.collect(&:id))
     end
     return candidates.first
   end
