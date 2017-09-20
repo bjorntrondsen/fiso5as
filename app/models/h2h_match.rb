@@ -101,8 +101,8 @@ class H2hMatch < ActiveRecord::Base
       if vice_captain
         msg = "Armband will switch to #{vice_captain.name}"
         unless vice_captain.playing_later?
-          msg += " (#{vice_captain.points}pts)"
-          self.send("extra_points_#{side}=", self.send("extra_points_#{side}").send(:+, sub.points_with_bp))
+          msg += " (#{vice_captain.points_with_bp}pts)"
+          self.send("extra_points_#{side}=", self.send("extra_points_#{side}").send(:+, vice_captain.points_with_bp))
         end
         self.info[side] << msg
       end

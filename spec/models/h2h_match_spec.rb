@@ -139,4 +139,23 @@ describe H2hMatch do
       end
     end
   end
+
+  describe '#inform_of_pending_substitutions' do
+    let(:squad) { h2h.players.home }
+
+    it "should inform of captain change when the match is over and he didnt play" do
+      squad.first.update_attributes(captain: true, minutes_played: 0, matches_over: true)
+      squad.second.update_attributes(vice_captain: true, minutes_played: 90, matches_over: true, points: 3, bp_prediction: 1)
+      expect { h2h.inform_of_captain_change(:home) }.to change {
+        h2h.info[:home]
+      }.to(["Armband will switch to #{squad.second.name} (4pts)"])
+      expect(h2h.extra_points_home).to eq(4)
+    end
+
+    it "should not inform of armband change if the vice captain didnt change" do
+      squad.first.update_attributes(captain: true, minutes_played: 0, matches_over: true)
+      squad.second.update_attributes(vice_captain: true, minutes_played: 0, matches_over: true)
+      expect { h2h.inform_of_captain_change(:home) }.to_not change { h2h.info[:home] }
+    end
+  end
 end

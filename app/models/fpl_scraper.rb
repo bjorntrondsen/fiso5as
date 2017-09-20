@@ -124,7 +124,6 @@ class FplScraper
     bp_prediction   = 0 if self.class.bonus_added?(match_id, @game_week) || match_minutes?(match_id) < 44
 
    { name: name, games_left: games_left, captain: captain, vice_captain: vice_captain, bench: bench, position: position, points: points, minutes_played: minutes_played, matches_over: matches_over, bp_prediction: bp_prediction }
-   
   end
 
   def get_minutes_played(player_details)
