@@ -158,4 +158,37 @@ describe H2hMatch do
       expect { h2h.inform_of_captain_change(:home) }.to_not change { h2h.info[:home] }
     end
   end
+
+  describe '#differentiators' do
+    let(:home_squad) { h2h.players.home }
+    let(:away_squad) { h2h.players.away}
+
+    it "should include all non shared players" do
+      expect(h2h.send(:differentiators, :home).length).to eq(11)
+      expect(h2h.send(:differentiators, :away).length).to eq(11)
+    end
+
+    it "should remove shared players with the same name" do
+      home_squad.first.update_attributes!(name: away_squad[rand(10)].name)
+      home_squad.second.update_attributes!(name: away_squad[rand(10)].name)
+      h2h.reload
+      expect(h2h.send(:differentiators, :home).length).to eq(9)
+      expect(h2h.send(:differentiators, :away).length).to eq(9)
+    end
+
+    it "should include a shared player if he has the armband on one side" do
+      home_squad.first.update_attributes!(name: away_squad.first.name, captain: true)
+      h2h.reload
+      expect(h2h.send(:differentiators, :home).length).to eq(11)
+      expect(h2h.send(:differentiators, :away).length).to eq(10)
+    end
+
+    it "should not include a shared player if he has the armband on both sides" do
+      home_squad.first.update_attributes!(name: away_squad.first.name, captain: true)
+      away_squad.first.update_attributes!(captain: true)
+      h2h.reload
+      expect(h2h.send(:differentiators, :home).length).to eq(10)
+      expect(h2h.send(:differentiators, :away).length).to eq(10)
+    end
+  end
 end

@@ -146,15 +146,15 @@ class H2hMatch < ActiveRecord::Base
   def differentiators(side)
     differentiators = []
     if side == :home
-      my_players = home_squad.collect { |p| p if p.bench == false }.compact
+      my_players    = home_squad.collect { |p| p if p.bench == false }.compact
       their_players = away_squad.collect { |p| p if p.bench == false }.compact
     end
     if side == :away
-      my_players = away_squad.collect{ |p| p if p.bench == false }.compact
+      my_players    = away_squad.collect { |p| p if p.bench == false }.compact
       their_players = home_squad.collect { |p| p if p.bench == false }.compact
     end
     my_players.each do |my_player|
-      their_player = their_players.find{|p| p.name == my_player.name}
+      their_player = their_players.find { |p| p.name == my_player.name}
       if !their_player  || (my_player.captain? && !their_player.captain?)
         differentiators << my_player
       end
