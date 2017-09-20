@@ -3,6 +3,8 @@ class Player < ActiveRecord::Base
   belongs_to :manager
 
   validates_inclusion_of :side, in: %w(home away)
+  validates_presence_of :fpl_id
+  validates_uniqueness_of :fpl_id, scope: [:h2h_match_id, :side]
 
   def self.home
     self.where(side: 'home')

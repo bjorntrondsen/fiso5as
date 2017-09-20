@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170919215642) do
+ActiveRecord::Schema.define(version: 20170920200835) do
 
   create_table "game_weeks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_danish_ci" do |t|
     t.datetime "deadline_at"
@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(version: 20170919215642) do
     t.datetime "updated_at"
     t.string "side"
     t.integer "bp_prediction"
+    t.integer "fpl_id"
     t.index ["side", "h2h_match_id"], name: "index_players_on_side_and_h2h_match_id"
   end
 

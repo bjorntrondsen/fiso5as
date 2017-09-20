@@ -1,4 +1,5 @@
 Fabricator(:player) do
+  fpl_id { Fabricate.sequence(:player_fpl_id) { |i| i } }
   name { (0...6).map{ ('a'..'z').to_a[rand(26)] }.join }
   bench false
   matches_over true
