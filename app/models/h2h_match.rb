@@ -154,7 +154,7 @@ class H2hMatch < ActiveRecord::Base
       their_players = home_squad.collect { |p| p if p.bench == false }.compact
     end
     my_players.each do |my_player|
-      their_player = their_players.find { |p| p.name == my_player.name}
+      their_player = their_players.find { |p| p.fpl_id == my_player.fpl_id }
       if !their_player  || (my_player.captain? && !their_player.captain?)
         differentiators << my_player
       end

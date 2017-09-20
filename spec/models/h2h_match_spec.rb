@@ -168,23 +168,30 @@ describe H2hMatch do
       expect(h2h.send(:differentiators, :away).length).to eq(11)
     end
 
-    it "should remove shared players with the same name" do
-      home_squad.first.update_attributes!(name: away_squad[rand(10)].name)
-      home_squad.second.update_attributes!(name: away_squad[rand(10)].name)
+    it "should remove shared players with the same fpl_id" do
+      home_squad.first.update_attributes!(fpl_id: away_squad.first.fpl_id)
+      home_squad.second.update_attributes!(fpl_id: away_squad.second.fpl_id)
       h2h.reload
       expect(h2h.send(:differentiators, :home).length).to eq(9)
       expect(h2h.send(:differentiators, :away).length).to eq(9)
     end
 
+    it "should keep a shared player who is benched by the other side" do
+      home_squad.first.update_attributes!(fpl_id: away_squad.last.fpl_id)
+      h2h.reload
+      expect(h2h.send(:differentiators, :home).length).to eq(11)
+      expect(h2h.send(:differentiators, :away).length).to eq(11)
+    end
+
     it "should include a shared player if he has the armband on one side" do
-      home_squad.first.update_attributes!(name: away_squad.first.name, captain: true)
+      home_squad.first.update_attributes!(fpl_id: away_squad.first.fpl_id, captain: true)
       h2h.reload
       expect(h2h.send(:differentiators, :home).length).to eq(11)
       expect(h2h.send(:differentiators, :away).length).to eq(10)
     end
 
     it "should not include a shared player if he has the armband on both sides" do
-      home_squad.first.update_attributes!(name: away_squad.first.name, captain: true)
+      home_squad.first.update_attributes!(fpl_id: away_squad.first.fpl_id, captain: true)
       away_squad.first.update_attributes!(captain: true)
       h2h.reload
       expect(h2h.send(:differentiators, :home).length).to eq(10)
