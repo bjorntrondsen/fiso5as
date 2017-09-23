@@ -81,8 +81,11 @@ class Player < ActiveRecord::Base
       str += "#{games_left}x"
     end
     str += name.gsub(" ",'')
-    if captain? && !h2h_match.opposing_squad(self.manager_id).find{|p| p.name == self.name}
+    multiplier_diff = multiplier - (h2h_match.opposing_squad(self.manager_id).find{|p| p.fpl_id == self.fpl_id}&.multiplier || 0)
+    if multiplier_diff == 2
       str += "(c)"
+    elsif multiplier_diff == 3
+      str += "(tc)"
     end
     return str
   end
