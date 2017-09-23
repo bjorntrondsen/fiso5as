@@ -198,7 +198,7 @@ describe H2hMatch do
       expect(h2h.send(:differentiators, :away).length).to eq(10)
     end
 
-    it "should include a shared player if he is triple captain on one side" do
+    it "should include a shared player if he is triple captain on one side and captain on the other" do
       home_squad.first.update_attributes!(fpl_id: away_squad.first.fpl_id, captain: true, multiplier: 3)
       away_squad.first.update_attributes!(captain: true, multiplier: 2)
       h2h.reload
