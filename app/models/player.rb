@@ -77,7 +77,7 @@ class Player < ActiveRecord::Base
   def name_with_armband
     str = name
     str += '(c)' if multiplier == 2
-    str += '(tc)' if multiplier == 3
+    str += '(3xc)' if multiplier == 3
     str
   end
 
@@ -92,7 +92,7 @@ class Player < ActiveRecord::Base
     if multiplier_diff == 2
       str += "(c)"
     elsif multiplier_diff == 3
-      str += "(tc)"
+      str += "(3xc)"
     end
     return str
   end
