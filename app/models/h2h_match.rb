@@ -66,6 +66,10 @@ class H2hMatch < ActiveRecord::Base
     send("#{side}_squad").collect{|p| "#{p.name_with_armband}:#{p.bp_prediction}" if p.bp_prediction > 0 && !p.bench }.compact.join(" ")
   end
 
+  def triple_captain?(side)
+    send("#{side}_chip") == '3xc'
+  end
+
   def fetch_data
     FplScraper.new(self).scrape
     self.save!
@@ -101,8 +105,8 @@ class H2hMatch < ActiveRecord::Base
       if vice_captain
         msg = "Armband will switch to #{vice_captain.name}"
         unless vice_captain.playing_later?
-          msg += " (#{vice_captain.points_with_bp}pts)"
-          self.send("extra_points_#{side}=", self.send("extra_points_#{side}").send(:+, vice_captain.points_with_bp))
+          msg += " (#{vice_captain.vice_captain_points}pts)"
+          self.send("extra_points_#{side}=", self.send("extra_points_#{side}").send(:+, vice_captain.vice_captain_points))
         end
         self.info[side] << msg
       end

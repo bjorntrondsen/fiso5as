@@ -106,4 +106,9 @@ class Player < ActiveRecord::Base
     points + (bp_prediction || 0)
   end
 
+  def vice_captain_points
+    return nil unless points
+    h2h_match.triple_captain?(side) ? points_with_bp * 2 : points_with_bp
+  end
+
 end
