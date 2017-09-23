@@ -9,4 +9,5 @@ Fabricator(:player) do
   captain false
   vice_captain false
   points 2
+  multiplier 1
 end

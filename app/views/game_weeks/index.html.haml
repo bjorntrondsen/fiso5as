@@ -23,6 +23,7 @@
       = link_to fiveaside_gw_url(game_week.access_token), fiveaside_gw_url(game_week.access_token)
       %br/
       - game_week.matches.each do |match|
+        = match.id
         %span.match-name= match.name
         = link_to friendly_match_url(match), friendly_match_url(match)
         %br/

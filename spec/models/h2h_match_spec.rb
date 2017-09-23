@@ -184,17 +184,25 @@ describe H2hMatch do
     end
 
     it "should include a shared player if he has the armband on one side" do
-      home_squad.first.update_attributes!(fpl_id: away_squad.first.fpl_id, captain: true)
+      home_squad.first.update_attributes!(fpl_id: away_squad.first.fpl_id, captain: true, multiplier: 2)
       h2h.reload
       expect(h2h.send(:differentiators, :home).length).to eq(11)
       expect(h2h.send(:differentiators, :away).length).to eq(10)
     end
 
     it "should not include a shared player if he has the armband on both sides" do
-      home_squad.first.update_attributes!(fpl_id: away_squad.first.fpl_id, captain: true)
-      away_squad.first.update_attributes!(captain: true)
+      home_squad.first.update_attributes!(fpl_id: away_squad.first.fpl_id, captain: true, multiplier: 2)
+      away_squad.first.update_attributes!(captain: true, multiplier: 2)
       h2h.reload
       expect(h2h.send(:differentiators, :home).length).to eq(10)
+      expect(h2h.send(:differentiators, :away).length).to eq(10)
+    end
+
+    it "should include a shared player if he is triple captain on one side" do
+      home_squad.first.update_attributes!(fpl_id: away_squad.first.fpl_id, captain: true, multiplier: 3)
+      away_squad.first.update_attributes!(captain: true, multiplier: 2)
+      h2h.reload
+      expect(h2h.send(:differentiators, :home).length).to eq(11)
       expect(h2h.send(:differentiators, :away).length).to eq(10)
     end
   end

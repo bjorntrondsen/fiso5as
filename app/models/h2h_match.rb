@@ -155,7 +155,7 @@ class H2hMatch < ActiveRecord::Base
     end
     my_players.each do |my_player|
       their_player = their_players.find { |p| p.fpl_id == my_player.fpl_id }
-      if !their_player  || (my_player.captain? && !their_player.captain?)
+      if !their_player  || my_player.multiplier > their_player.multiplier
         differentiators << my_player
       end
     end
