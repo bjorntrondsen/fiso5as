@@ -74,6 +74,13 @@ class Player < ActiveRecord::Base
     position == "FWD"
   end
 
+  def name_with_armband
+    str = name
+    str += '(c)' if multiplier == 2
+    str += '(tc)' if multiplier == 3
+    str
+  end
+
   # TODO: Probably belongs in a decorator
   def info
     str = ""

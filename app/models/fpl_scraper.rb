@@ -121,7 +121,8 @@ class FplScraper
     points          = multiplier * get_points(player_details)
     position        = get_position(player_details)
     bp_prediction   = self.class.bp_prediction(match_id, @game_week)[player_id] || 0
-    bp_prediction   = 0 if self.class.bonus_added?(match_id, @game_week) || match_minutes?(match_id) < 44
+    bp_prediction   = 0 if self.class.bonus_added?(match_id, @game_week)
+    bp_prediction   = bp_prediction * multiplier
 
    { fpl_id: player_id, name: name, games_left: games_left, captain: captain, vice_captain: vice_captain, bench: bench, position: position, points: points, minutes_played: minutes_played, matches_over: matches_over, multiplier: multiplier, bp_prediction: bp_prediction }
   end

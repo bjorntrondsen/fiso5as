@@ -63,7 +63,7 @@ class H2hMatch < ActiveRecord::Base
   end
 
   def bp_prediction_names(side)
-    send("#{side}_squad").collect{|p| "#{p.name}:#{p.bp_prediction}" if p.bp_prediction > 0 && !p.bench }.compact.join(" ")
+    send("#{side}_squad").collect{|p| "#{p.name_with_armband}:#{p.bp_prediction}" if p.bp_prediction > 0 && !p.bench }.compact.join(" ")
   end
 
   def fetch_data

@@ -4,6 +4,7 @@ class BonusPointPredictor
     sorted = (data['bps']['h'] + data['bps']['a']).sort_by{|h| h['value']}.reverse
     current_bp = 4
     last_val = nil
+    return result if sorted.first['value'] < 10 # Avoids showing BPs when everyone has the same score
     sorted.each do |bps|
       unless last_val == bps['value']
         current_bp = 3 - result.length
