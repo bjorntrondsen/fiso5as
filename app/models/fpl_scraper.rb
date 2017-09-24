@@ -96,7 +96,7 @@ class FplScraper
       attributes = player_data(player_json)
       attributes[:manager_id] = manager.id
       attributes[:side] = side.to_s
-      saved_player = @h2h_match.players.find{|p| p.side == side.to_s && p.name == attributes[:name] }
+      saved_player = @h2h_match.players.find{|p| p.side == side.to_s && p.fpl_id == attributes[:fpl_id] }
       saved_player ||= @h2h_match.players.new
       saved_player.attributes = attributes
       score += saved_player.points unless saved_player.bench
