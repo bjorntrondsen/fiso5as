@@ -94,6 +94,7 @@ class FplScraper
     score = 0
     picks_data['picks'].each do |player_json|
       attributes = player_data(player_json)
+      attributes[:bench] = false if active_chip == 'bboost'
       attributes[:manager_id] = manager.id
       attributes[:side] = side.to_s
       saved_player = @h2h_match.players.find{|p| p.side == side.to_s && p.fpl_id == attributes[:fpl_id] }
