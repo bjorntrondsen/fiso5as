@@ -152,9 +152,15 @@ describe H2hMatch do
       expect(h2h.extra_points_home).to eq(4)
     end
 
-    it "should not inform of armband change if the vice captain didnt change" do
+    it "should not inform of armband change if the vice captain didnt play" do
       squad.first.update_attributes(captain: true, minutes_played: 0, matches_over: true)
       squad.second.update_attributes(vice_captain: true, minutes_played: 0, matches_over: true)
+      expect { h2h.inform_of_captain_change(:home) }.to_not change { h2h.info[:home] }
+    end
+
+    it "should not inform of armband change if multiplier has been bumped" do
+      squad.first.update_attributes(captain: true, minutes_played: 0, matches_over: true)
+      squad.second.update_attributes(vice_captain: true, minutes_played: 90, matches_over: true, multiplier: 2)
       expect { h2h.inform_of_captain_change(:home) }.to_not change { h2h.info[:home] }
     end
   end

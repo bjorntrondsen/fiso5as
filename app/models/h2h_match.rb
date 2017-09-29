@@ -102,7 +102,7 @@ class H2hMatch < ActiveRecord::Base
     squad = players.send(side)
     if squad.might_play.where(captain: true).count == 0
       vice_captain = squad.might_play.where(vice_captain: true).first
-      if vice_captain
+      if vice_captain && vice_captain.multiplier == 1 # if the multiplier is bumped then FPL has made the switch
         msg = "Armband will switch to #{vice_captain.name}"
         unless vice_captain.playing_later?
           msg += " (#{vice_captain.vice_captain_points}pts)"
