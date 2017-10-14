@@ -34,7 +34,6 @@ class GameWeek < ApplicationRecord
 
   def set_up
     matches.each do |match|
-      next if match.id == 82
       match.set_up_match!(skip_fpl_sync: true) if match.h2h_matches.count == 0
     end
   end
