@@ -1,5 +1,6 @@
 class GameWeek < ApplicationRecord
   DEADLINE_PADDING = 30.minutes
+  ACTIVATION_HOURS = 24
 
   has_many :matches, -> { order(:gw_fixture_no) }, dependent: :destroy
 
@@ -11,7 +12,7 @@ class GameWeek < ApplicationRecord
   before_validation :set_deadline, on: :create
 
   def self.active
-    where(finished: false).where('deadline_at < ?', Time.zone.now + 48.hours)
+    where(finished: false).where('deadline_at < ?', Time.zone.now + ACTIVATION_HOURS.hours)
   end
 
   def self.sync_open

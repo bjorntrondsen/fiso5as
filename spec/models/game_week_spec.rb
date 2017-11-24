@@ -31,7 +31,7 @@ describe GameWeek do
       end
 
       it "should set up matches if there are less than 48 hours until the deadline" do
-        game_week.update_attributes!(deadline_at: 47.hours.from_now)
+        game_week.update_attributes!(deadline_at: 23.hours.from_now)
         VCR.use_cassette('game_week_4_one_match') do
           expect { GameWeek.sync_open }.to change { match.h2h_matches.count }.from(0).to(5)
         end

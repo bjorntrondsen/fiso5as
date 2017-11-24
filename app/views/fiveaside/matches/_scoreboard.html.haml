@@ -17,7 +17,7 @@
         = image_tag match.away_team.logo_path, class: 'away_logo'
     - if match.h2h_matches.blank?
       %tr
-        %td{colspan: 3, style: 'text-align: center'} H2H matches will be set up 48h before the GW deadline
+        %td{colspan: 3, style: 'text-align: center'} H2H matches will be set up #{GameWeek::ACTIVATION_HOURS}h before the GW deadline
     - match.h2h_matches.each do |h2h_match|
       - klass = cycle('odd','even')
       %tr{class: klass}
