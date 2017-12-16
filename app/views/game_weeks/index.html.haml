@@ -15,7 +15,7 @@
             finished
           - else
             starts
-            = l game_week.deadline_at.to_date, format: '%d %b'
+            = l game_week.deadline_at, format: '%d %b %H:%M'
           - if game_week.last_sync_took
             \- last sync took #{game_week.last_sync_took}s
       %br/

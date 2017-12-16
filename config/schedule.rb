@@ -29,3 +29,7 @@ job_type :runner_with_lock, "cd :path && flock -n /var/lock/:lock.lock bin/rails
 every '*/2 * * * *' do
   runner_with_lock "GameWeek.sync_open", lock: 'job_runner_fiso5as'
 end
+
+every '0 6 * * *' do
+  runner "GameWeek.update_deadlines"
+end

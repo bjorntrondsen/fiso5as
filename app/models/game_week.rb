@@ -25,6 +25,15 @@ class GameWeek < ApplicationRecord
     end
   end
 
+  def self.update_deadlines
+    RailsExceptionHandler.catch do
+      where(finished: false).each do |gw|
+        gw.send(:set_deadline, force: true)
+        gw.save!
+      end
+    end
+  end
+
   def ongoing?
     !finished && (deadline_at + DEADLINE_PADDING) < Time.zone.now
   end
@@ -62,10 +71,10 @@ class GameWeek < ApplicationRecord
     self.access_token ||= (0...8).map{ ('A'..'Z').to_a[rand(26)] }.join
   end
 
-  def set_deadline
-    return if deadline_at.present?
+  def set_deadline(force: false)
+    return if deadline_at.present? && !force
     fpl_timestamp = fpl_data['deadline_time']
-    self.deadline_at ||= Time.zone.parse(fpl_timestamp)
+    self.deadline_at = Time.zone.parse(fpl_timestamp)
   end
 
   def set_finished
