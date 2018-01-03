@@ -1,0 +1,13 @@
+:remote_machine:
+  :ssh:
+    :host: thor
+    :user: sysadmin
+  :db:
+    :name: fiso5as_production
+    :user: root
+    :password: secret
+:local_machine:
+  :db:
+    :name: fiso5as_development
+    :user: root
+    :password: secret

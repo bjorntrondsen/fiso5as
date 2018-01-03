@@ -8,6 +8,7 @@ log
 
 # Files
 config/database.yml
+config/import_prod_data.yml
 *.sqlite3
 *.log
 *~
