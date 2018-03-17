@@ -94,6 +94,7 @@ class FplScraper
     score = 0
     picks_data['picks'].each do |player_json|
       attributes = player_data(player_json)
+      next unless attributes
       attributes[:bench] = false if active_chip == 'bboost'
       attributes[:manager_id] = manager.id
       attributes[:side] = side.to_s
@@ -109,7 +110,8 @@ class FplScraper
   def player_data(player_json)
     player_id       = player_json['element']
     player_details  = player_details(player_id)
-    match_id        = player_details[:live]['explain'][0][1]
+    match_id        = ((player_details[:live]['explain'] || [])[0] || [] )[1]
+    return nil unless match_id
     multiplier      = player_json['multiplier']
     name            = get_player_name(player_details)
     team_name       = get_team_name(player_details)
