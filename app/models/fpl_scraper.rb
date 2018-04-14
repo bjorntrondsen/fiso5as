@@ -110,23 +110,25 @@ class FplScraper
   def player_data(player_json)
     player_id       = player_json['element']
     player_details  = player_details(player_id)
-    match_id        = ((player_details[:live]['explain'] || [])[0] || [] )[1]
-    return nil unless match_id
+    match_ids        = (player_details[:live]['explain'] || []).collect(&:last)
+    return nil unless match_ids.present?
     multiplier      = player_json['multiplier']
     name            = get_player_name(player_details)
     team_name       = get_team_name(player_details)
     minutes_played  = get_minutes_played(player_details)
-    games_left      = get_games_left(match_id)
-    matches_over    = matches_over?(match_id)
+    games_left      = get_games_left(match_ids)
+    matches_over    = games_left == 0
     bench           = player_json['position'] > 11 # TODO: Bench boost handling
     captain         = player_json['is_captain']
     vice_captain    = player_json['is_vice_captain']
     points          = multiplier * get_points(player_details)
     position        = get_position(player_details)
-    bp_prediction   = self.class.bp_prediction(match_id, @game_week)[player_id] || 0
-    bp_prediction   = 0 if self.class.bonus_added?(match_id, @game_week)
+    bp_prediction   = 0
+    match_ids.each do |match_id|
+      next if self.class.bonus_added?(match_id, @game_week)
+      bp_prediction += self.class.bp_prediction(match_id, @game_week)[player_id] || 0
+    end
     bp_prediction   = bp_prediction * multiplier
-
    { fpl_id: player_id, name: name, games_left: games_left, captain: captain, vice_captain: vice_captain, bench: bench, position: position, points: points, minutes_played: minutes_played, matches_over: matches_over, multiplier: multiplier, bp_prediction: bp_prediction }
   end
 
@@ -135,8 +137,12 @@ class FplScraper
   end
 
   # TODO: DGW not handled
-  def get_games_left(match_id)
-    matches_over?(match_id) ? 0 : 1
+  def get_games_left(match_ids)
+    result = 0
+    match_ids.each do |match_id|
+      result += 1 unless matches_over?(match_id)
+    end
+    result
   end
 
   def get_team_name(player_details)
