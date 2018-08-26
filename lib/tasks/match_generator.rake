@@ -15,4 +15,16 @@ namespace :matches do
       end
     end
   end
+
+  desc "Create test match"
+  task :test => :environment  do
+    ActiveRecord::Base.transaction do
+      home_team = Team.find_or_create_by!(fpl_id: 191334, fiso_team_id: 1, name: 'FISO 5AS The Eagles')
+      away_team = Team.find_or_create_by!(fpl_id: 108290, fiso_team_id: 2, name: 'FISO 5AS Assassins')
+      game_week = GameWeek.find_or_create_by(gw_no: 3, season: '201819')
+      match = game_week.matches.create!(home_team: home_team, away_team: away_team, gw_fixture_no: 1)
+      match.set_up_match!
+    end
+  end
+
 end

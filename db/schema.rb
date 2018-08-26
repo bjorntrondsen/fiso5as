@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170923112028) do
+ActiveRecord::Schema.define(version: 20180826131613) do
 
   create_table "game_weeks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_danish_ci" do |t|
     t.datetime "deadline_at"
@@ -85,6 +85,7 @@ ActiveRecord::Schema.define(version: 20170923112028) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer "fiso_team_id"
+    t.string "season"
   end
 
 end

@@ -1,6 +1,6 @@
 require 'open-uri'
 
-class Match < ActiveRecord::Base
+class Match < ApplicationRecord
   belongs_to :game_week, inverse_of: :matches
   belongs_to :home_team, class_name: 'Team'
   belongs_to :away_team, class_name: 'Team'

@@ -9,7 +9,7 @@ task :season_setup => :environment  do
     teams = []
     doc.sheet(0).each do |row|
       next if row[0] == 'TeamID'
-      team = Team.create!(fiso_team_id: row[0], name: row[1], fpl_id: row[3])
+      team = Team.create!(fiso_team_id: row[0], name: row[1], fpl_id: row[3], season: '201718')
       teams[row[0]] = team
     end
     # Managers

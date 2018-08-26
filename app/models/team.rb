@@ -1,7 +1,7 @@
-class Team < ActiveRecord::Base
+class Team < ApplicationRecord
   has_many :managers, dependent: :destroy
-  validates_presence_of :name, :fpl_id, :fiso_team_id
-  validates_uniqueness_of :fpl_id
+  validates_presence_of :name, :fpl_id, :fiso_team_id, :season
+  validates_uniqueness_of :fpl_id, scope: :season
 
   def self.data_url(fpl_id)
     "https://fantasy.premierleague.com/drf/leagues-classic-standings/#{fpl_id}"

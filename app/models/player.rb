@@ -1,4 +1,4 @@
-class Player < ActiveRecord::Base
+class Player < ApplicationRecord
   belongs_to :h2h_match
   belongs_to :manager
 
