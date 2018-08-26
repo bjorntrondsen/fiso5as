@@ -12,7 +12,7 @@ class Team < ApplicationRecord
   end
 
   def logo_path
-    "2017_logos/#{fiso_team_id}.png"
+    "#{season}_logos/#{fiso_team_id}.png"
   end
 
 end
