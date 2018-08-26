@@ -229,4 +229,21 @@ describe H2hMatch do
       expect { h2h.inform_of_pending_substitutions(:away) }.to_not change { h2h.info[:away] }
     end
   end
+
+  example 'full stack test - DGW' do
+    VCR.use_cassette('double_game_week_34') do
+      home = Fabricate(:manager, fpl_id: 1164928, fiso_name: 'Sharagoz')
+      away = Fabricate(:manager, fpl_id: 731510, fiso_name: 'coryphaeus')
+      match = Fabricate(:match, game_week: Fabricate(:game_week, gw_no: 34))
+      h2h = match.h2h_matches.create!(home_manager_id: home.id, away_manager_id: away.id, match_order: 1)
+      FplScraper.new(h2h).scrape
+      match.save! # Trigger autosave
+      #expect(h2h.away_chip).to eq('bboost')
+      expect(h2h.send(:differentiators, :home).length).to eq(11)
+      expect(h2h.send(:differentiators, :away).length).to eq(14)
+      #expect(h2h.away_score).to eq(62)
+      #expect { h2h.inform_of_captain_change(:away) }.to_not change { h2h.info[:away] }
+      #expect { h2h.inform_of_pending_substitutions(:away) }.to_not change { h2h.info[:away] }
+    end
+  end
 end
