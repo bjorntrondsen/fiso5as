@@ -1,5 +1,7 @@
 #game_weeks
-  %h2 Game week links
+  %h2 Game week links #{@season}
+  - @seasons.each do |season|
+    = link_to_unless season == @season, season, game_weeks_path(season: season)
 
   - @game_weeks.each do |game_week|
     %p
