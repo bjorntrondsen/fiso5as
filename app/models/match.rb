@@ -77,6 +77,8 @@ class Match < ApplicationRecord
 
       fpl_sync unless skip_fpl_sync
     end
+  rescue OpenURI::HTTPError
+    return false
   end
 
  def managers_sorted_by_league_order(team)
