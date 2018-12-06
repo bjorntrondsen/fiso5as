@@ -116,7 +116,7 @@ class H2hMatch < ApplicationRecord
   def find_sub(player, candidates, squad, already_subed)
     if player.goal_keeper? # GK can only replace GK
       return candidates.goal_keepers.first
-    elsif player.defender? && squad.not_benched.defenders.might_play.count < 3 # 3 DEFs required
+    elsif player.defender? && squad.not_benched.defenders.might_play.count + already_subed.collect{|p| p if p.defender? }.compact.length < 3 # 3 DEFs required
       candidates = candidates.defenders
     elsif player.forward? && squad.forwards.not_benched.might_play.count == 0 # 1 FWD required
       candidates = candidates.forwards

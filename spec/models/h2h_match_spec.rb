@@ -39,6 +39,18 @@ describe H2hMatch do
       }.to(["#{squad.benched[1].name} (2pts) will replace #{squad.midfielders.first.name}"])
     end
 
+    it "replaces 2 defenders changes formation from 4-4-2 to 3-4-3" do
+      squad.forwards.first.update_attributes(position: 'DEF') # Switch to 4-4-2
+      expect(squad.not_benched.pluck(:position).sort).to eq(['DEF','DEF','DEF','DEF','FWD','FWD','GK','MID','MID','MID','MID'])
+      squad.benched[1].update_attributes(position: 'FWD')
+      expect(squad.benched.pluck(:position)).to eq(['GK','FWD','DEF','MID'])
+      squad.defenders.first.update_attributes!(minutes_played: 0)
+      squad.defenders.second.update_attributes!(minutes_played: 0)
+      squad.midfielders.first.update_attributes!(minutes_played: 0)
+      h2h.inform_of_pending_substitutions(:home)
+      expect(h2h.info[:home].length).to eq(3)
+    end
+
     it "replaces a forward with a defender when the first sub is a defender" do
       expect(squad.benched.pluck(:position)).to eq(['GK','DEF','DEF','MID'])
       squad.forwards.first.update_attributes!(minutes_played: 0)
