@@ -52,6 +52,21 @@ describe Match do
         expect(H2hMatch.order(:match_order).collect { |h2h| h2h.away_manager.fpl_id }).to eq(moderator_fpl_ids)
       end
     end
+
+    it "should add new entries" do
+      VCR.use_cassette('falcons_new_entries') do
+        eagles_fpl_id = 191334
+        falcon_fpl_id = 5749
+        match = Fabricate(:match, home_team: Fabricate(:team, fpl_id: 191334, name: 'Eagles'), away_team: Fabricate(:team, fpl_id: 5749, name: 'Falcons'), game_week: Fabricate(:game_week, gw_no: 23))
+        match.set_up_match!(skip_fpl_sync: true)
+        expect(match.away_team.managers.length).to eq(5)
+        expect(match.h2h_matches.find_by!(match_order: 1).away_manager.fpl_id).to eq(1030017)
+        expect(match.h2h_matches.find_by!(match_order: 2).away_manager.fpl_id).to eq(20049)
+        expect(match.h2h_matches.find_by!(match_order: 3).away_manager.fpl_id).to eq(775013)
+        expect(match.h2h_matches.find_by!(match_order: 4).away_manager.fpl_id).to eq(19613)
+        expect(match.h2h_matches.find_by!(match_order: 5).away_manager.fpl_id).to eq(18060)
+      end
+    end
   end
 
 end

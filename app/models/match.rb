@@ -89,13 +89,28 @@ class Match < ApplicationRecord
    team.name = team_name if team.name.blank?
    team.save!
    manager_data = team_data['standings']['results']
-   raise "Expected 5 managers, found #{manager_data.length}" unless manager_data.length == 5
+   manual_sorting = false
+
+   # Add new entries and enable manual sorting based on total points (Usually
+   # only happens during january transfer window)
+   if team_data['new_entries']['results'].present?
+     team_data['new_entries']['results'].each do |row|
+       row['player_name'] = "#{row['player_first_name']} #{row['player_last_name']}"
+       manager_data << row
+       manual_sorting = true
+     end
+   end
+
+   unless manager_data.length == 5 
+     raise "Match #{id}: #{home_team.name} v #{away_team.name} Expected 5 managers, found #{manager_data.length}"
+   end
    manager_data.each do |data|
      manager = team.managers.find_or_initialize_by(fpl_id: data['entry'])
      manager.fpl_name = data['player_name'] if manager.fpl_name.blank?
      manager.save!
      managers_sorted << manager
    end
+   managers_sorted.sort_by!(&:points_total).reverse! if manual_sorting
    managers_sorted
  end
 

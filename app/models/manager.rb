@@ -8,7 +8,17 @@ class Manager < ActiveRecord::Base
     "https://fantasy.premierleague.com/a/team/#{fpl_id}/event/#{gw}"
   end
 
+  def fpl_data
+    url = "https://fantasy.premierleague.com/drf/entry/#{fpl_id}"
+    @fpl_data ||= JSON.parse(open(url).read)
+  end
+
   def name
     fiso_name || fpl_name
   end
+
+  def points_total
+    fpl_data['entry']['summary_overall_points']
+  end
+
 end
