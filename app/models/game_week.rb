@@ -19,7 +19,7 @@ class GameWeek < ApplicationRecord
     #RailsExceptionHandler.catch do
       raise "Something is wrong. Found #{active.count} active gameweeks" if active.count > 2
       active.each do |game_week|
-        game_week.set_up
+        game_week.set_up unless game_week.id == 60
         game_week.fpl_sync if game_week.ongoing?
       end
     #end
