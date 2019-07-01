@@ -16,7 +16,7 @@ set :user, 'sysadmin'
 set :use_sudo, false
 
 set :deploy_to, "/apps/#{application}"
-set :keep_releases, 5
+set :keep_releases, 2
 
 # Rbenv
 set :default_environment, {
